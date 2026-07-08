@@ -1,0 +1,29 @@
+{
+  "baseIHSG": 7200,
+  "currentIHSG": 7200,
+  "transactions": [
+    {
+      "id": "tx_1783497275479",
+      "type": "income",
+      "amount": 500000,
+      "account": "Dompet",
+      "category": "Gaji",
+      "date": "2026-07-08",
+      "notes": "Gaji Bulanan"
+    }
+  ],
+  "startingBalances": {
+    "Dompet": 0,
+    "Bank BCA 1": 0,
+    "Bank BCA 2": 0,
+    "Bank Jago": 0,
+    "Saldo RDN": 0,
+    "Reksadana & Obligasi": 0,
+    "Saham": 0
+  },
+  "github": {
+    "token": "",
+    "repo": "",
+    "path": ""
+  }
+}
