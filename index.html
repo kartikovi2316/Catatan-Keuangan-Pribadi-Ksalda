@@ -68,13 +68,86 @@
                     <i class="fa-solid fa-xmark text-sm"></i>
                 </button>
             </div>
-            
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-2" id="modalMonthGrid">
                 <button onclick="setMonthFilter(-1)" id="btn-modal-month-all" class="col-span-2 sm:col-span-3 py-3 px-4 text-xs font-bold rounded-xl bg-indigo-600 text-white text-center shadow-md shadow-indigo-100 transition-all">
                     Semua Bulan (Kombinasi)
                 </button>
-                <!-- Filled dynamically by JS -->
             </div>
+        </div>
+    </div>
+
+    <!-- NEW: EDIT TRANSACTION MODAL -->
+    <div id="editTxModal" class="hidden fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-[110] flex items-center justify-center p-4 transition-all duration-300 overflow-y-auto">
+        <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl border border-slate-200/80 p-6 space-y-4 animate-[fadeIn_0.3s_ease-in-out] my-8">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-2">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-pen-to-square text-amber-500"></i>
+                    <h3 class="text-sm font-bold text-slate-900">Edit Jurnal Mutasi</h3>
+                </div>
+                <button onclick="closeEditModal()" class="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+            
+            <form id="editTransactionForm" onsubmit="saveEditTransaction(event)" class="space-y-4 text-left">
+                <input type="hidden" id="editTxId">
+                <input type="hidden" id="editTxOriginalType"> <!-- Helper to keep logic simple -->
+                
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Jenis Arus Kas (Terkuci)</label>
+                    <div class="w-full bg-slate-100 text-slate-500 px-4 py-2.5 rounded-xl text-xs font-bold capitalize flex items-center space-x-2 border border-slate-200" id="editTypeDisplay">
+                        <i class="fa-solid fa-lock text-[10px]"></i> <span>Pemasukan</span>
+                    </div>
+                    <p class="text-[9px] text-slate-400 mt-1 italic">*Tipe transaksi tidak bisa diubah. Hapus dan buat baru jika tipe salah.</p>
+                </div>
+
+                <div>
+                    <label for="editTxAmount" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Nominal Transaksi</label>
+                    <div class="relative rounded-xl shadow-inner">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span class="text-slate-400 text-xs font-bold">IDR</span>
+                        </div>
+                        <input type="text" id="editTxAmount" required oninput="formatInputNumber(this)" class="block w-full pl-12 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-extrabold text-base focus:outline-none focus:border-amber-500 focus:bg-white focus:ring-4 focus:ring-amber-500/10 transition-all">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="editTxAccount" id="lblEditTxAccount" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Penyimpanan Akun</label>
+                        <select id="editTxAccount" required class="block w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:border-amber-500 focus:bg-white">
+                            <!-- Filled by JS -->
+                        </select>
+                    </div>
+                    <div id="divEditCategory">
+                        <label for="editTxCategory" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Klasifikasi Kategori</label>
+                        <select id="editTxCategory" class="block w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:border-amber-500 focus:bg-white">
+                            <!-- Filled dynamically -->
+                        </select>
+                    </div>
+                    <div id="divEditToAccount" class="hidden">
+                        <label for="editTxToAccount" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Akun Tujuan Transfer</label>
+                        <select id="editTxToAccount" class="block w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:border-amber-500 focus:bg-white">
+                            <!-- Filled dynamically -->
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="editTxDate" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Tanggal Mutasi</label>
+                    <input type="date" id="editTxDate" required class="block w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:border-amber-500 focus:bg-white">
+                </div>
+
+                <div>
+                    <label for="editTxNotes" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Memo / Keterangan</label>
+                    <input type="text" id="editTxNotes" class="block w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:border-amber-500 focus:bg-white">
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-3 rounded-xl transition-all shadow-md shadow-amber-100 flex items-center justify-center space-x-2 text-xs uppercase tracking-wider">
+                        <i class="fa-solid fa-floppy-disk text-xs"></i> <span>Perbarui Jurnal</span>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -158,49 +231,68 @@
         <!-- TAB: DASHBOARD -->
         <div id="content-dashboard" class="tab-content active space-y-8">
             
-            <!-- MAIN CARDS GRID -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- MAIN CARDS GRID (NOW 4 COLUMNS) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- 1. Total Pendapatan -->
                 <div class="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-sm relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-[3px] bg-emerald-500"></div>
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Pendapatan</p>
-                            <h3 id="kpiIncome" class="text-2xl font-extrabold text-slate-900 mt-1">Rp 0</h3>
+                            <h3 id="kpiIncome" class="text-xl font-extrabold text-slate-900 mt-1">Rp 0</h3>
                         </div>
-                        <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl">
-                            <i class="fa-solid fa-arrow-up-right text-lg"></i>
+                        <div class="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl">
+                            <i class="fa-solid fa-arrow-up-right text-base"></i>
                         </div>
                     </div>
-                    <p class="text-[11px] text-slate-400 mt-4 font-medium" id="kpiIncomeSub">Filter Terpilih</p>
+                    <p class="text-[10px] text-slate-400 mt-4 font-medium" id="kpiIncomeSub">Filter Terpilih</p>
                 </div>
                 
+                <!-- 2. Total Pengeluaran -->
                 <div class="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-sm relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-[3px] bg-rose-500"></div>
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Pengeluaran</p>
-                            <h3 id="kpiExpense" class="text-2xl font-extrabold text-slate-900 mt-1">Rp 0</h3>
+                            <h3 id="kpiExpense" class="text-xl font-extrabold text-slate-900 mt-1">Rp 0</h3>
                         </div>
-                        <div class="p-3 bg-rose-50 text-rose-600 rounded-xl">
-                            <i class="fa-solid fa-arrow-down-left text-lg"></i>
+                        <div class="p-2.5 bg-rose-50 text-rose-600 rounded-xl">
+                            <i class="fa-solid fa-arrow-down-left text-base"></i>
                         </div>
                     </div>
-                    <p class="text-[11px] text-slate-400 mt-4 font-medium" id="kpiExpenseSub">Filter Terpilih</p>
+                    <p class="text-[10px] text-slate-400 mt-4 font-medium" id="kpiExpenseSub">Filter Terpilih</p>
                 </div>
 
+                <!-- 3. Total Aset Lancar (NEW) -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-[3px] bg-blue-500"></div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center space-x-1">
+                                <span>Aset Lancar (Kas)</span>
+                            </p>
+                            <h3 id="kpiLiquid" class="text-xl font-extrabold text-blue-900 mt-1">Rp 0</h3>
+                        </div>
+                        <div class="p-2.5 bg-blue-50 text-blue-600 rounded-xl border border-blue-100">
+                            <i class="fa-solid fa-money-bill-wave text-base"></i>
+                        </div>
+                    </div>
+                    <p class="text-[10px] text-slate-400 mt-4 font-medium leading-tight">Uang siap pakai (BCA, RDN, e-Wallet, dll)</p>
+                </div>
+
+                <!-- 4. Total Aset (Net Worth) -->
                 <div class="bg-slate-900 p-6 rounded-2xl shadow-xl text-white relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-purple-600/0 pointer-events-none"></div>
                     <div class="flex items-center justify-between relative z-10">
                         <div>
-                            <!-- FIX: Re-branded title from Liquid Asset to global Net Worth framework -->
-                            <p class="text-[11px] font-bold text-indigo-300 uppercase tracking-wider">Total Kekayaan Bersih (Net Worth)</p>
-                            <h3 id="kpiNetWorth" class="text-2xl font-extrabold text-white mt-1">Rp 0</h3>
+                            <p class="text-[11px] font-bold text-indigo-300 uppercase tracking-wider">Total Aset (Semua)</p>
+                            <h3 id="kpiNetWorth" class="text-xl font-extrabold text-white mt-1">Rp 0</h3>
                         </div>
-                        <div class="p-3 bg-indigo-500/20 text-indigo-400 rounded-xl border border-indigo-500/20">
-                            <i class="fa-solid fa-vault text-lg"></i>
+                        <div class="p-2.5 bg-indigo-500/20 text-indigo-400 rounded-xl border border-indigo-500/20">
+                            <i class="fa-solid fa-vault text-base"></i>
                         </div>
                     </div>
-                    <p class="text-[11px] text-indigo-300/70 mt-4 font-medium">Akumulasi Real-Time Seluruh Sektor Aset</p>
+                    <p class="text-[10px] text-indigo-300/70 mt-4 font-medium">Akumulasi Real-Time Seluruh Akun & Investasi</p>
                 </div>
             </div>
 
@@ -265,7 +357,6 @@
                             <span class="text-[11px] text-slate-500 block mt-1 font-medium">Lancar vs Investasi vs Saham</span>
                         </div>
                         <div class="space-y-2 mt-4">
-                            <!-- FIX: Expanded allocation bar layout into a 3-way distribution to isolate stocks -->
                             <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden flex">
                                 <div id="ratioLiquidBar" class="bg-blue-500 h-full" style="width: 33.3%"></div>
                                 <div id="ratioInvBar" class="bg-purple-500 h-full" style="width: 33.3%"></div>
@@ -311,7 +402,6 @@
                         <div class="grid grid-cols-2 gap-4 bg-white/5 p-3 rounded-xl border border-white/5 mb-4 relative z-10">
                             <div>
                                 <label class="block text-[9px] text-slate-500 uppercase font-bold tracking-wider">IHSG Base</label>
-                                <!-- FIX: Adjusted base presentation label to align with decimal updates -->
                                 <span class="text-xs font-bold text-slate-300" id="lblBaseIHSG">5.873,37</span>
                             </div>
                             <div>
@@ -320,7 +410,6 @@
                             </div>
                         </div>
                         <div class="flex space-x-2 relative z-10">
-                            <!-- FIX: Converted initial value to 5873.37 with a step multiplier of 0.01 for decimal precision -->
                             <input type="number" id="inputIHSG" value="5873.37" step="0.01" oninput="updateIHSGMultiplier()" class="w-full bg-white/10 border border-white/10 rounded-xl px-3 py-2 text-white text-sm font-bold focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/30">
                             <button onclick="resetIHSG()" class="bg-white/10 hover:bg-white/20 text-slate-300 px-3 rounded-xl text-xs transition border border-white/5 shadow-sm" title="Reset">
                                 <i class="fa-solid fa-rotate-left"></i>
@@ -401,7 +490,6 @@
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <span class="text-slate-400 text-xs font-bold">IDR</span>
                                 </div>
-                                <!-- FIX: Transformed input type to 'text' with real-time numeric dot-formatting via an oninput listener (as referenced in image_0fd0de.png layout) -->
                                 <input type="text" id="txAmount" required oninput="formatInputNumber(this)" class="block w-full pl-12 pr-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-slate-900 font-extrabold text-base focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/5 transition-all" placeholder="0">
                             </div>
                         </div>
@@ -465,6 +553,22 @@
                     </div>
                 </div>
 
+                <!-- NEW: SURPLUS / DEFICIT SUMMARY BAR -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200/60 shadow-inner">
+                    <div class="flex flex-col border-b sm:border-b-0 sm:border-r border-slate-200 pb-2 sm:pb-0 sm:pr-4">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Pendapatan</span>
+                        <span id="histIncome" class="text-sm font-extrabold text-emerald-600 mt-1">Rp 0</span>
+                    </div>
+                    <div class="flex flex-col border-b sm:border-b-0 sm:border-r border-slate-200 py-2 sm:py-0 sm:pr-4 sm:pl-2">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Pengeluaran</span>
+                        <span id="histExpense" class="text-sm font-extrabold text-rose-600 mt-1">Rp 0</span>
+                    </div>
+                    <div class="flex flex-col pt-2 sm:pt-0 sm:pl-2">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Surplus / Defisit</span>
+                        <span id="histSurplus" class="text-sm font-extrabold mt-1">Rp 0</span>
+                    </div>
+                </div>
+
                 <div class="overflow-x-auto rounded-xl border border-slate-150 relative">
                     <table class="w-full text-left text-xs border-collapse min-w-[650px]">
                         <thead>
@@ -489,7 +593,6 @@
         <div id="content-settings" class="tab-content space-y-6">
             <div class="max-w-3xl mx-auto space-y-6">
                 
-                <!-- GITHUB REALTIME CLOUD SYNC CONTROL CARD -->
                 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
                     <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2 border-b border-slate-100 pb-3">
                         <i class="fa-brands fa-github text-slate-900 text-sm"></i>
@@ -581,12 +684,14 @@
     <!-- JS ECOSYSTEM CORE ENGINE -->
     <script>
         const ACCOUNTS_LIST = ["Dompet", "Bank BCA 1", "Bank BCA 2", "Bank Jago", "Dana", "GoPay", "ShopeePay", "Saldo RDN", "Reksadana & Obligasi", "Saham"];
+        // Definisikan kategori akun likuid (uang siap pakai kapanpun) sesuai permintaan
+        const LIQUID_ACCOUNTS = ["Dompet", "Bank BCA 1", "Bank BCA 2", "Bank Jago", "Dana", "GoPay", "ShopeePay", "Saldo RDN"];
+        
         const CATEGORIES = {
             income: ["Gaji", "Dividen", "Keuntungan Investasi", "Lainnya"],
             expense: ["Makanan & Minuman", "Transportasi", "Gaya Hidup", "Tagihan & Utilitas", "Investasi (Bibit/RDN)", "Lainnya"]
         };
 
-        // FIX: Realigned normal/base values to 5873.37 across framework blueprints
         const SEED_DATA = {
             baseIHSG: 5873.37,
             currentIHSG: 5873.37,
@@ -622,7 +727,7 @@
             initScrollDetection();
         });
 
-        // FIX: Implemented real-time dynamic masking logic for thousand separators
+        // Masking nominal dengan titik
         function formatInputNumber(input) {
             let value = input.value.replace(/\D/g, "");
             if (value === "") {
@@ -647,6 +752,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // ================= FULLSCREEN MONTH MODAL =================
         function openMonthModal() {
             document.getElementById('monthModal').classList.remove('hidden');
         }
@@ -687,6 +793,104 @@
             refreshApp();
         }
 
+        // ================= EDIT TRANSACTION MODAL =================
+        function openEditModal(id) {
+            const tx = state.transactions.find(t => t.id === id);
+            if (!tx) return;
+            
+            document.getElementById('editTxId').value = tx.id;
+            document.getElementById('editTxOriginalType').value = tx.type;
+            
+            // Set display type label
+            const typeLabel = document.getElementById('editTypeDisplay');
+            if(tx.type === 'income') {
+                typeLabel.innerHTML = `<i class="fa-solid fa-arrow-trend-up"></i> <span>Pemasukan</span>`;
+                typeLabel.className = "w-full bg-emerald-50 text-emerald-600 px-4 py-2.5 rounded-xl text-xs font-bold capitalize flex items-center space-x-2 border border-emerald-200";
+            } else if(tx.type === 'expense') {
+                typeLabel.innerHTML = `<i class="fa-solid fa-arrow-trend-down"></i> <span>Pengeluaran</span>`;
+                typeLabel.className = "w-full bg-rose-50 text-rose-600 px-4 py-2.5 rounded-xl text-xs font-bold capitalize flex items-center space-x-2 border border-rose-200";
+            } else {
+                typeLabel.innerHTML = `<i class="fa-solid fa-arrows-rotate"></i> <span>Transfer</span>`;
+                typeLabel.className = "w-full bg-indigo-50 text-indigo-600 px-4 py-2.5 rounded-xl text-xs font-bold capitalize flex items-center space-x-2 border border-indigo-200";
+            }
+
+            // Adjust fields visibility based on type
+            const divCat = document.getElementById('divEditCategory');
+            const divTo = document.getElementById('divEditToAccount');
+            const catSel = document.getElementById('editTxCategory');
+            const toSel = document.getElementById('editTxToAccount');
+            const lblAcc = document.getElementById('lblEditTxAccount');
+            
+            catSel.innerHTML = '';
+            
+            if (tx.type === 'transfer') {
+                divCat.classList.add('hidden');
+                catSel.removeAttribute('required');
+                divTo.classList.remove('hidden');
+                toSel.setAttribute('required', 'required');
+                lblAcc.innerText = "Akun Asal (Sumber)";
+                toSel.value = tx.toAccount;
+            } else {
+                divCat.classList.remove('hidden');
+                catSel.setAttribute('required', 'required');
+                divTo.classList.add('hidden');
+                toSel.removeAttribute('required');
+                lblAcc.innerText = "Penyimpanan Akun";
+                
+                CATEGORIES[tx.type].forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c; opt.innerText = c;
+                    catSel.appendChild(opt);
+                });
+                catSel.value = tx.category;
+            }
+
+            document.getElementById('editTxAmount').value = new Intl.NumberFormat('id-ID').format(tx.amount);
+            document.getElementById('editTxAccount').value = tx.account;
+            document.getElementById('editTxDate').value = tx.date;
+            document.getElementById('editTxNotes').value = tx.notes !== "-" ? tx.notes : "";
+
+            document.getElementById('editTxModal').classList.remove('hidden');
+        }
+
+        function closeEditModal() {
+            document.getElementById('editTxModal').classList.add('hidden');
+        }
+
+        function saveEditTransaction(e) {
+            e.preventDefault();
+            const id = document.getElementById('editTxId').value;
+            const originalType = document.getElementById('editTxOriginalType').value;
+            
+            const rawAmount = document.getElementById('editTxAmount').value.replace(/\./g, "");
+            const amount = parseInt(rawAmount);
+            
+            const account = document.getElementById('editTxAccount').value;
+            const category = originalType === 'transfer' ? 'Transfer Aset' : document.getElementById('editTxCategory').value;
+            const toAccount = originalType === 'transfer' ? document.getElementById('editTxToAccount').value : '';
+            const date = document.getElementById('editTxDate').value;
+            const notes = document.getElementById('editTxNotes').value || "-";
+
+            if (!amount || amount <= 0) return;
+            if (originalType === 'transfer' && account === toAccount) {
+                alert("Kesalahan: Akun Sumber dan Akun Tujuan tidak boleh sama!");
+                return;
+            }
+
+            // Find and update array object directly
+            const index = state.transactions.findIndex(t => t.id === id);
+            if(index !== -1) {
+                state.transactions[index] = {
+                    ...state.transactions[index], 
+                    amount, account, category, toAccount, date, notes
+                };
+                saveState();
+                refreshApp();
+                closeEditModal();
+            }
+        }
+
+        // ================= GITHUB SYSTEM =================
         function saveGitHubConfig() {
             state.github = {
                 token: document.getElementById('ghToken').value.trim(),
@@ -699,53 +903,28 @@
 
         function showGHStatus(msg, colorClass = "text-slate-500") {
             const el = document.getElementById('ghSyncStatus');
-            if (el) {
-                el.className = `text-[10px] font-bold mt-2 italic ${colorClass}`;
-                el.innerText = msg;
-            }
+            if (el) { el.className = `text-[10px] font-bold mt-2 italic ${colorClass}`; el.innerText = msg; }
         }
 
         async function pushToGitHub() {
             const { token, repo, path } = state.github;
-            if (!token || !repo) {
-                alert("Harap isi Token dan Nama Repo terlebih dahulu di kolom atas!");
-                return;
-            }
+            if (!token || !repo) { alert("Harap isi Token dan Nama Repo terlebih dahulu di kolom atas!"); return; }
             showGHStatus("Menghubungi server GitHub...", "text-indigo-600");
-
             const url = `https://api.github.com/repos/${repo}/contents/${path}`;
             let sha = null;
-
             try {
-                const res = await fetch(url, {
-                    headers: { "Authorization": `token ${token}`, "Accept": "application/vnd.github.v3+json" }
-                });
-                if (res.ok) {
-                    const data = await res.json();
-                    sha = data.sha;
-                }
+                const res = await fetch(url, { headers: { "Authorization": `token ${token}`, "Accept": "application/vnd.github.v3+json" } });
+                if (res.ok) { const data = await res.json(); sha = data.sha; }
             } catch (err) {}
-
             try {
                 const cleanState = { ...state };
                 cleanState.github = { token: '', repo: '', path: '' }; 
-                
                 const jsonString = JSON.stringify(cleanState, null, 2);
                 const utf8Bytes = new TextEncoder().encode(jsonString);
                 const base64Content = btoa(String.fromCharCode(...utf8Bytes));
-
-                const bodyPayload = {
-                    message: `FinTrack Cloud Sync - Update: ${new Date().toISOString().slice(0,10)}`,
-                    content: base64Content
-                };
+                const bodyPayload = { message: `FinTrack Cloud Sync - Update: ${new Date().toISOString().slice(0,10)}`, content: base64Content };
                 if (sha) bodyPayload.sha = sha;
-
-                const putRes = await fetch(url, {
-                    method: "PUT",
-                    headers: { "Authorization": `token ${token}`, "Content-Type": "application/json" },
-                    body: JSON.stringify(bodyPayload)
-                });
-
+                const putRes = await fetch(url, { method: "PUT", headers: { "Authorization": `token ${token}`, "Content-Type": "application/json" }, body: JSON.stringify(bodyPayload) });
                 if (putRes.ok) {
                     showGHStatus("Sinkronisasi Sukses! Data berhasil diamankan ke cloud GitHub.", "text-emerald-600");
                     alert("Data Berhasil Diupload ke GitHub Cloud!");
@@ -753,61 +932,40 @@
                     const errData = await putRes.json();
                     showGHStatus(`Gagal push: ${errData.message}`, "text-rose-600");
                 }
-            } catch (error) {
-                showGHStatus("Error koneksi fatal saat push.", "text-rose-600");
-            }
+            } catch (error) { showGHStatus("Error koneksi fatal saat push.", "text-rose-600"); }
         }
 
         async function pullFromGitHub() {
             const { token, repo, path } = state.github;
-            if (!token || !repo) {
-                alert("Harap isi Kredensial Token dan Repo Anda untuk menarik data!");
-                return;
-            }
+            if (!token || !repo) { alert("Harap isi Kredensial Token dan Repo Anda untuk menarik data!"); return; }
             if (!confirm("Tarik data dari GitHub? Data lokal yang belum diupload akan tertimpa.")) return;
-
             showGHStatus("Mengunduh data terenkripsi dari awan...", "text-indigo-600");
             const url = `https://api.github.com/repos/${repo}/contents/${path}`;
-
             try {
-                const res = await fetch(url, {
-                    headers: { "Authorization": `token ${token}`, "Accept": "application/vnd.github.v3+json" }
-                });
-
+                const res = await fetch(url, { headers: { "Authorization": `token ${token}`, "Accept": "application/vnd.github.v3+json" } });
                 if (res.ok) {
                     const data = await res.json();
                     const rawContent = data.content.replace(/\s/g, '');
                     const decodedString = new TextDecoder().decode(Uint8Array.from(atob(rawContent), c => c.charCodeAt(0)));
-                    
                     const parsedState = JSON.parse(decodedString);
                     parsedState.github = { token, repo, path };
-                    
                     state = parsedState;
-                    saveState();
-                    refreshApp();
-                    
+                    saveState(); refreshApp();
                     showGHStatus("Sinkronisasi Selesai! Seluruh data lokal diperbarui sesuai cloud.", "text-emerald-600");
                     alert("Sinkronisasi Berhasil! Seluruh data diperbarui dari GitHub.");
                     switchTab('dashboard');
-                } else {
-                    showGHStatus("File target tidak ditemukan di GitHub. Pastikan path benar.", "text-rose-600");
-                }
-            } catch (err) {
-                showGHStatus("Gagal menarik data cloud.", "text-rose-600");
-            }
+                } else { showGHStatus("File target tidak ditemukan di GitHub. Pastikan path benar.", "text-rose-600"); }
+            } catch (err) { showGHStatus("Gagal menarik data cloud.", "text-rose-600"); }
         }
 
         function toggleMobileMenu() {
             const container = document.getElementById('mobileDropdownContainer');
             const icon = document.getElementById('mobileMenuIcon');
-            container.classList.toggle('hidden');
-            icon.classList.toggle('rotate-180');
+            container.classList.toggle('hidden'); icon.classList.toggle('rotate-180');
         }
 
         function selectMobileTab(tabId) {
-            switchTab(tabId);
-            toggleMobileMenu();
-            
+            switchTab(tabId); toggleMobileMenu();
             const textMap = {
                 'dashboard': '<i class="fa-solid fa-chart-pie mr-2"></i>Dashboard',
                 'input': '<i class="fa-solid fa-circle-plus mr-2"></i>Catat Arus Kas',
@@ -828,20 +986,26 @@
             activeYear = 2026; select.value = activeYear;
         }
 
+        // Initialize elements in main input form & the edit modal
         function initFormDropdowns() {
             const accountSelect = document.getElementById('txAccount');
             const toAccountSelect = document.getElementById('txToAccount');
-            accountSelect.innerHTML = '';
-            toAccountSelect.innerHTML = '';
+            const editAccountSelect = document.getElementById('editTxAccount');
+            const editToAccountSelect = document.getElementById('editTxToAccount');
+            
+            accountSelect.innerHTML = ''; toAccountSelect.innerHTML = '';
+            editAccountSelect.innerHTML = ''; editToAccountSelect.innerHTML = '';
             
             ACCOUNTS_LIST.forEach(acc => {
-                const opt1 = document.createElement('option');
-                opt1.value = acc; opt1.innerText = acc;
+                const opt1 = document.createElement('option'); opt1.value = acc; opt1.innerText = acc;
                 accountSelect.appendChild(opt1);
-
-                const opt2 = document.createElement('option');
-                opt2.value = acc; opt2.innerText = acc;
+                const opt2 = document.createElement('option'); opt2.value = acc; opt2.innerText = acc;
                 toAccountSelect.appendChild(opt2);
+                
+                const opt3 = document.createElement('option'); opt3.value = acc; opt3.innerText = acc;
+                editAccountSelect.appendChild(opt3);
+                const opt4 = document.createElement('option'); opt4.value = acc; opt4.innerText = acc;
+                editToAccountSelect.appendChild(opt4);
             });
             toggleTxType('income');
         }
@@ -861,7 +1025,6 @@
                     state = JSON.parse(localData);
                     if (!state.startingBalances) state.startingBalances = { ...SEED_DATA.startingBalances };
                     if (!state.github) state.github = { token: '', repo: '', path: 'fintrack_data.json' };
-                    // Apply dynamic adjustment if seed reset defaults to old values
                     if (state.baseIHSG === 7200) { state.baseIHSG = 5873.37; state.currentIHSG = 5873.37; }
                 } catch (e) { state = { ...SEED_DATA }; }
             } else {
@@ -1013,15 +1176,25 @@
             document.getElementById('kpiExpenseSub').innerText = scopeText;
 
             const balances = getLiveBalances();
-            let netWorth = 0;
-            Object.values(balances).forEach(val => netWorth += val);
-            document.getElementById('kpiNetWorth').innerText = formatRupiah(netWorth);
+            let totalNetWorth = 0;
+            let liquidAssets = 0;
+
+            Object.keys(balances).forEach(acc => {
+                const val = balances[acc];
+                totalNetWorth += val;
+                if(LIQUID_ACCOUNTS.includes(acc)) {
+                    liquidAssets += val;
+                }
+            });
+            
+            // Injecting calculated new KPI blocks
+            document.getElementById('kpiLiquid').innerText = formatRupiah(liquidAssets);
+            document.getElementById('kpiNetWorth').innerText = formatRupiah(totalNetWorth);
 
             const targetLand = 35000000;
             const targetHouse = 100000000;
-            
-            const landPercent = Math.min(100, Math.round((netWorth / targetLand) * 100));
-            const housePercent = Math.min(100, Math.round((netWorth / targetHouse) * 100));
+            const landPercent = Math.min(100, Math.round((totalNetWorth / targetLand) * 100));
+            const housePercent = Math.min(100, Math.round((totalNetWorth / targetHouse) * 100));
 
             document.getElementById('goalLandPercent').innerText = `${landPercent}%`;
             document.getElementById('goalLandBar').style.width = `${landPercent}%`;
@@ -1052,14 +1225,12 @@
                 statusEl.className = "text-[10px] font-bold text-amber-800 leading-tight";
             }
 
-            // FIX: Extracted stocks into an independent macro ratio container segment
-            const liquidSum = (balances["Dompet"] || 0) + (balances["Bank BCA 1"] || 0) + (balances["Bank BCA 2"] || 0) + (balances["Bank Jago"] || 0) + (balances["Dana"] || 0) + (balances["GoPay"] || 0) + (balances["ShopeePay"] || 0) + (balances["Saldo RDN"] || 0);
             const invSum = (balances["Reksadana & Obligasi"] || 0);
             const sahamSum = (balances["Saham"] || 0);
-            const macroTotal = liquidSum + invSum + sahamSum;
+            const macroTotal = liquidAssets + invSum + sahamSum;
 
             if (macroTotal > 0) {
-                const liquidPercent = Math.round((liquidSum / macroTotal) * 100);
+                const liquidPercent = Math.round((liquidAssets / macroTotal) * 100);
                 const invPercent = Math.round((invSum / macroTotal) * 100);
                 const sahamPercent = Math.max(0, 100 - liquidPercent - invPercent);
 
@@ -1134,8 +1305,6 @@
         function saveTransaction(e) {
             e.preventDefault();
             const type = document.querySelector('input[name="txType"]:checked').value;
-            
-            // FIX: Clean mask dots from string package before parsing numbers
             const rawAmount = document.getElementById('txAmount').value.replace(/\./g, "");
             const amount = parseInt(rawAmount);
             
@@ -1146,21 +1315,16 @@
             const notes = document.getElementById('txNotes').value || "-";
 
             if (!amount || amount <= 0) return;
-            
             if (type === 'transfer' && account === toAccount) {
                 alert("Kesalahan Fatal: Akun Sumber dan Akun Tujuan tidak boleh sama!");
                 return;
             }
 
             state.transactions.push({ id: 'tx_' + Date.now(), type, amount, account, category, toAccount, date, notes });
-            saveState(); 
-            refreshApp(); 
+            saveState(); refreshApp(); 
             
-            // FIX: Added clear feedback prompts and form-wide reset commands on safe execution
             alert("🎉 Transaksi Berhasil Dicatat ke Dalam Jurnal Finansial!");
-            e.target.reset(); 
-            toggleTxType('income'); 
-            setCurrentDateInForm();
+            e.target.reset(); toggleTxType('income'); setCurrentDateInForm();
         }
 
         function deleteTransaction(id) {
@@ -1178,6 +1342,28 @@
             const itemsToShow = filtered.filter(t => {
                 return t.category.toLowerCase().includes(searchQ) || t.account.toLowerCase().includes(searchQ) || t.notes.toLowerCase().includes(searchQ) || (t.toAccount && t.toAccount.toLowerCase().includes(searchQ));
             });
+
+            // Calculate active block Income/Expense/Surplus summary
+            let histIncTotal = 0;
+            let histExpTotal = 0;
+
+            itemsToShow.forEach(tx => {
+                if (tx.type === 'income') histIncTotal += tx.amount;
+                if (tx.type === 'expense') histExpTotal += tx.amount;
+            });
+
+            document.getElementById('histIncome').innerText = formatRupiah(histIncTotal);
+            document.getElementById('histExpense').innerText = formatRupiah(histExpTotal);
+            
+            const surplusAmount = histIncTotal - histExpTotal;
+            const surpEl = document.getElementById('histSurplus');
+            if(surplusAmount >= 0) {
+                surpEl.innerText = `+ ${formatRupiah(surplusAmount)}`;
+                surpEl.className = "text-sm font-extrabold mt-1 text-emerald-600";
+            } else {
+                surpEl.innerText = `- ${formatRupiah(Math.abs(surplusAmount))}`;
+                surpEl.className = "text-sm font-extrabold mt-1 text-rose-600";
+            }
 
             itemsToShow.sort((a, b) => new Date(b.date) - new Date(a.date));
 
@@ -1214,7 +1400,11 @@
                     <td class="p-4 text-slate-600 max-w-[200px] truncate">${displayMemo}</td>
                     <td class="p-4 text-right font-extrabold ${amtClass}">${amtSign}&nbsp;${formatRupiah(t.amount)}</td>
                     <td class="p-4 text-center">
-                        <button onclick="deleteTransaction('${t.id}')" class="text-rose-500 hover:text-rose-700 p-1 transition"><i class="fa-regular fa-trash-can"></i></button>
+                        <div class="flex items-center justify-center space-x-2">
+                            <!-- EDIT BUTTON HOOKED -->
+                            <button onclick="openEditModal('${t.id}')" class="text-amber-500 hover:text-amber-600 p-1 transition"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button onclick="deleteTransaction('${t.id}')" class="text-rose-400 hover:text-rose-600 p-1 transition"><i class="fa-solid fa-trash-can"></i></button>
+                        </div>
                     </td>
                 `;
                 tbody.appendChild(row);
