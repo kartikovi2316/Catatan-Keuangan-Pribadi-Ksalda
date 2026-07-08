@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catatan Keuangan KSA</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Custom slim scrollbar format for account list box */
+        .custom-scroll::-webkit-scrollbar {
+            width: 5px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="text-slate-900 antialiased min-h-screen flex flex-col bg-slate-50 relative">
+
+    <!-- FLOATING SCROLL UP BUTTON -->
+    <button onclick="scrollToTop()" id="scrollUpBtn" class="fixed bottom-6 right-6 bg-gradient-to-tr from-indigo-600 to-violet-600 text-white p-3.5 rounded-full shadow-xl opacity-0 translate-y-10 pointer-events-none transition-all duration-300 z-50 hover:scale-110 active:scale-95 border border-white/20" title="Kembali ke Atas">
+        <i class="fa-solid fa-arrow-up text-sm"></i>
+    </button>
+
+    <!-- PREMIUM FULL-SCREEN OVERLAY MONTH MODAL (TIMBUL FULL LAYAR) -->
+    <div id="monthModal" class="hidden fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-[100] flex items-center justify-center p-4 transition-all duration-300">
+        <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl border border-slate-200/80 p-6 space-y-4 animate-[fadeIn_0.3s_ease-in-out]">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-calendar-days text-indigo-600"></i>
+                    <h3 class="text-sm font-bold text-slate-900">Pilih Periode Bulan</h3>
+                </div>
+                <button onclick="closeMonthModal()" class="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2" id="modalMonthGrid">
+                <button onclick="setMonthFilter(-1)" id="btn-modal-month-all" class="col-span-2 sm:col-span-3 py-3 px-4 text-xs font-bold rounded-xl bg-indigo-600 text-white text-center shadow-md shadow-indigo-100 transition-all">
+                    Semua Bulan (Kombinasi)
+                </button>
+                <!-- Filled dynamically by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- TOP PREMIUM BAR -->
+    <header class="bg-white/80 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-gradient-to-tr from-indigo-600 to-violet-600 p-2.5 rounded-xl shadow-md shadow-indigo-200">
+                        <i class="fa-solid fa-chart-line text-lg text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-extrabold tracking-tight bg-gradient-to-r from-slate-900 to-indigo-950 bg-clip-text text-transparent">Catatan Keuangan KSA</h1>
+                    </div>
+                </div>
+                
+                <!-- Premium Filter Panel -->
+                <div class="flex items-center space-x-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200/60 shadow-inner">
+                    <span class="text-xs font-bold px-2 text-slate-500 uppercase tracking-wider hidden sm:inline">Periode:</span>
+                    <select id="globalYear" onchange="handleFilterChange()" class="bg-white text-slate-800 text-xs font-bold rounded-lg px-2.5 py-1.5 shadow-sm border border-slate-200/40 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 cursor-pointer">
+                        <!-- Filled by JS -->
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESPONSIVE NAVIGATION -->
+        <!-- 1. DESKTOP TABS -->
+        <div class="border-t border-slate-100 bg-white hidden sm:block">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex space-x-2 py-2">
+                    <button onclick="switchTab('dashboard')" id="tab-dashboard" class="py-2 px-4 text-xs font-bold rounded-lg bg-indigo-50 text-indigo-700 flex items-center space-x-2 transition-all duration-200">
+                        <i class="fa-solid fa-chart-pie"></i><span>Dashboard</span>
+                    </button>
+                    <button onclick="switchTab('input')" id="tab-input" class="py-2 px-4 text-xs font-bold rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-50 flex items-center space-x-2 transition-all duration-200">
+                        <i class="fa-solid fa-circle-plus"></i><span>Catat Arus Kas</span>
+                    </button>
+                    <button onclick="switchTab('history')" id="tab-history" class="py-2 px-4 text-xs font-bold rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-50 flex items-center space-x-2 transition-all duration-200">
+                        <i class="fa-solid fa-receipt"></i><span>Jurnal Transaksi</span>
+                    </button>
+                    <button onclick="switchTab('settings')" id="tab-settings" class="py-2 px-4 text-xs font-bold rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-50 flex items-center space-x-2 transition-all duration-200">
+                        <i class="fa-solid fa-database"></i><span>Backup & Jurnal Data</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. MOBILE DROPDOWN MENU -->
+        <div class="border-t border-slate-100 bg-white block sm:hidden px-4 py-2.5 relative">
+            <button onclick="toggleMobileMenu()" id="mobileMenuBtn" class="w-full flex items-center justify-between py-2.5 px-4 text-xs font-bold rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-100 shadow-sm transition-all">
+                <span id="mobileMenuCurrentText"><i class="fa-solid fa-chart-pie mr-2"></i>Dashboard</span>
+                <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200" id="mobileMenuIcon"></i>
+            </button>
+            <div id="mobileDropdownContainer" class="hidden absolute left-4 right-4 mt-1.5 bg-white border border-slate-200 rounded-xl shadow-xl z-50 overflow-hidden divide-y divide-slate-100">
+                <button onclick="selectMobileTab('dashboard')" class="w-full text-left py-3 px-4 text-xs font-bold text-slate-700 hover:bg-slate-50 flex items-center space-x-3"><i class="fa-solid fa-chart-pie text-slate-400 w-4"></i><span>Dashboard</span></button>
+                <button onclick="selectMobileTab('input')" class="w-full text-left py-3 px-4 text-xs font-bold text-slate-700 hover:bg-slate-50 flex items-center space-x-3"><i class="fa-solid fa-circle-plus text-slate-400 w-4"></i><span>Catat Arus Kas</span></button>
+                <button onclick="selectMobileTab('history')" class="w-full text-left py-3 px-4 text-xs font-bold text-slate-700 hover:bg-slate-50 flex items-center space-x-3"><i class="fa-solid fa-receipt text-slate-400 w-4"></i><span>Jurnal Transaksi</span></button>
+                <button onclick="selectMobileTab('settings')" class="w-full text-left py-3 px-4 text-xs font-bold text-slate-700 hover:bg-slate-50 flex items-center space-x-3"><i class="fa-solid fa-database text-slate-400 w-4"></i><span>Backup & Jurnal Data</span></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN APP WRAPPER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- MONTH FILTER CONTROLLER TRIGGER (Tampil di Dashboard & Jurnal) -->
+        <div id="monthFilterWrapper" class="mb-8 bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-indigo-50 p-2.5 rounded-xl text-indigo-600">
+                    <i class="fa-solid fa-calendar-days text-sm"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Filter Bulan Berjalan</p>
+                    <p id="lblCurrentMonth" class="text-xs font-extrabold text-slate-800">Semua Bulan</p>
+                </div>
+            </div>
+            <button onclick="openMonthModal()" class="bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 text-xs font-bold py-2 px-4 rounded-xl border border-slate-200/60 transition-all flex items-center space-x-2 shadow-sm">
+                <span>Ubah Bulan</span> <i class="fa-solid fa-chevron-down text-[10px]"></i>
+            </button>
+        </div>
+
+        <!-- TAB: DASHBOARD -->
+        <div id="content-dashboard" class="tab-content active space-y-8">
+            
+            <!-- MAIN CARDS GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-[3px] bg-emerald-500"></div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Pendapatan</p>
+                            <h3 id="kpiIncome" class="text-2xl font-extrabold text-slate-900 mt-1">Rp 0</h3>
+                        </div>
+                        <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl">
+                            <i class="fa-solid fa-arrow-up-right text-lg"></i>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-4 font-medium" id="kpiIncomeSub">Filter Terpilih</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-[3px] bg-rose-500"></div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Pengeluaran</p>
+                            <h3 id="kpiExpense" class="text-2xl font-extrabold text-slate-900 mt-1">Rp 0</h3>
+                        </div>
+                        <div class="p-3 bg-rose-50 text-rose-600 rounded-xl">
+                            <i class="fa-solid fa-arrow-down-left text-lg"></i>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-4 font-medium" id="kpiExpenseSub">Filter Terpilih</p>
+                </div>
+
+                <div class="bg-slate-900 p-6 rounded-2xl shadow-xl text-white relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-purple-600/0 pointer-events-none"></div>
+                    <div class="flex items-center justify-between relative z-10">
+                        <div>
+                            <p class="text-[11px] font-bold text-indigo-300 uppercase tracking-wider">Sisa Aset Lancar (Net Worth)</p>
+                            <h3 id="kpiNetWorth" class="text-2xl font-extrabold text-white mt-1">Rp 0</h3>
+                        </div>
+                        <div class="p-3 bg-indigo-500/20 text-indigo-400 rounded-xl border border-indigo-500/20">
+                            <i class="fa-solid fa-vault text-lg"></i>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-indigo-300/70 mt-4 font-medium">Akumulasi Real-Time Keseluruhan</p>
+                </div>
+            </div>
+
+            <!-- GOALS PROGRESS & EMERGENCY TRACKER -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-sm space-y-4">
+                    <h3 class="font-bold text-xs uppercase tracking-wider text-slate-400 flex items-center space-x-2">
+                        <i class="fa-solid fa-bullseye text-indigo-600"></i>
+                        <span>Progresi Target Jangka Panjang</span>
+                    </h3>
+                    
+                    <div class="space-y-1.5">
+                        <div class="flex justify-between text-xs font-bold">
+                            <span class="text-slate-700">Target 1: Beli Tanah</span>
+                            <span id="goalLandPercent" class="text-indigo-600">0%</span>
+                        </div>
+                        <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                            <div id="goalLandBar" class="bg-gradient-to-r from-indigo-500 to-indigo-600 h-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] text-slate-400 font-medium">
+                            <span>Berdasarkan Net Worth Global</span>
+                            <span>Target: Rp 35.000.000</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5 pt-2">
+                        <div class="flex justify-between text-xs font-bold">
+                            <span class="text-slate-700">Target 2: Bangun Rumah</span>
+                            <span id="goalHousePercent" class="text-violet-600">0%</span>
+                        </div>
+                        <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                            <div id="goalHouseBar" class="bg-gradient-to-r from-violet-500 to-purple-600 h-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] text-slate-400 font-medium">
+                            <span>Berdasarkan Net Worth Global</span>
+                            <span>Target: Rp 100.000.000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-sm grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="border-r border-slate-100 pr-2 flex flex-col justify-between">
+                        <div>
+                            <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center space-x-1">
+                                <i class="fa-solid fa-shield text-emerald-500"></i>
+                                <span>Benteng Dana Darurat</span>
+                            </h4>
+                            <span class="text-[11px] text-slate-500 block mt-1 font-medium">Alokasi Reksadana & Obligasi</span>
+                            <h4 id="lblEmergencyFund" class="text-lg font-extrabold text-slate-900 mt-2">Rp 0</h4>
+                        </div>
+                        <div class="mt-2 bg-emerald-50 p-2 rounded-xl border border-emerald-100/50">
+                            <p id="lblEmergencyStatus" class="text-[10px] font-bold text-emerald-800 leading-tight">Membaca data pengeluaran...</p>
+                        </div>
+                    </div>
+
+                    <div class="pl-2 flex flex-col justify-between">
+                        <div>
+                            <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center space-x-1">
+                                <i class="fa-solid fa-scale-balanced text-amber-500"></i>
+                                <span>Rasio Alokasi Aset</span>
+                            </h4>
+                            <span class="text-[11px] text-slate-500 block mt-1 font-medium">Likuid vs Investasi</span>
+                        </div>
+                        <div class="space-y-2 mt-4">
+                            <div class="w-full bg-amber-500 h-2 rounded-full overflow-hidden flex">
+                                <div id="ratioLiquidBar" class="bg-blue-500 h-full" style="width: 50%"></div>
+                                <div id="ratioGrowthBar" class="bg-purple-500 h-full" style="width: 50%"></div>
+                            </div>
+                            <div class="flex justify-between text-[9px] font-bold uppercase tracking-wider">
+                                <span class="text-blue-600" id="lblRatioLiquid">Cash: 0%</span>
+                                <span class="text-purple-600" id="lblRatioGrowth">Inv: 0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LOWER GRID (ACCOUNTS, IHSG, CHARTS) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- SIDEBAR ACCOUNTS WITH SLIM SCROLL ACTIVE -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-6">
+                        <div class="flex items-center justify-between mb-5 border-b border-slate-100 pb-3">
+                            <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2">
+                                <i class="fa-solid fa-wallet text-indigo-600 text-xs"></i>
+                                <span>Alokasi Saldo Akun</span>
+                            </h3>
+                            <span class="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-md uppercase tracking-wide">Live Asset</span>
+                        </div>
+                        <!-- SCROLL CONTAINER ACTIVE FOR ACCOUNT OPTIMIZATION -->
+                        <div class="space-y-2.5 max-h-[340px] overflow-y-auto pr-1.5 custom-scroll" id="accountListContainer">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-2xl border border-slate-800 shadow-xl p-6 relative overflow-hidden">
+                        <div class="absolute -right-6 -bottom-6 text-slate-800/40 text-7xl font-bold pointer-events-none">IDX</div>
+                        <div class="flex items-center justify-between mb-4 relative z-10">
+                            <h3 class="font-bold text-sm text-amber-400 flex items-center space-x-2">
+                                <i class="fa-solid fa-chart-line-up"></i>
+                                <span>Koneksi Market Indeks (IHSG)</span>
+                            </h3>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4 relative z-10">
+                            Mengantisipasi proteksi CORS API, nilai instrumen <b>Saham</b> terhubung dinamis menggunakan pelipatgandaan indeks pasar berjalan.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 bg-white/5 p-3 rounded-xl border border-white/5 mb-4 relative z-10">
+                            <div>
+                                <label class="block text-[9px] text-slate-500 uppercase font-bold tracking-wider">IHSG Base</label>
+                                <span class="text-xs font-bold text-slate-300" id="lblBaseIHSG">7.200</span>
+                            </div>
+                            <div>
+                                <label class="block text-[9px] text-slate-500 uppercase font-bold tracking-wider">Performa Market</label>
+                                <span class="text-xs font-bold text-emerald-400" id="lblIHSGPerformance">0.00%</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2 relative z-10">
+                            <input type="number" id="inputIHSG" value="7200" step="10" oninput="updateIHSGMultiplier()" class="w-full bg-white/10 border border-white/10 rounded-xl px-3 py-2 text-white text-sm font-bold focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/30">
+                            <button onclick="resetIHSG()" class="bg-white/10 hover:bg-white/20 text-slate-300 px-3 rounded-xl text-xs transition border border-white/5 shadow-sm" title="Reset">
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CHARTS SIDE -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-6 flex flex-col">
+                        <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2 mb-4 border-b border-slate-100 pb-3">
+                            <i class="fa-solid fa-chart-line text-indigo-600 text-xs"></i>
+                            <span>Tren Pertumbuhan Net Worth Bulanan (Tahun Berjalan)</span>
+                        </h3>
+                        <div class="w-full relative h-[180px]">
+                            <canvas id="chartNetWorthTrend"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-6 flex flex-col">
+                        <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2 mb-4 border-b border-slate-100 pb-3">
+                            <i class="fa-solid fa-pie-chart text-indigo-600 text-xs"></i>
+                            <span>Proporsi Anggaran Sektor Keuangan</span>
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow items-center">
+                            <div class="flex flex-col items-center border border-slate-50 p-3 rounded-xl bg-slate-50/40">
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Porsi Pemasukan</span>
+                                <div class="w-full max-w-[170px] aspect-square flex items-center justify-center">
+                                    <canvas id="chartIncome"></canvas>
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-center border border-slate-50 p-3 rounded-xl bg-slate-50/40">
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Porsi Pengeluaran</span>
+                                <div class="w-full max-w-[170px] aspect-square flex items-center justify-center">
+                                    <canvas id="chartExpense"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: INPUT TRANSACTION -->
+        <div id="content-input" class="tab-content space-y-6">
+            <div class="max-w-xl mx-auto">
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                    <div class="border-b border-slate-100 pb-4 mb-5">
+                        <h3 class="text-sm font-bold text-slate-900 flex items-center space-x-2">
+                            <i class="fa-solid fa-file-invoice-dollar text-indigo-600 text-xs"></i>
+                            <span>Formulir Jurnal Buku Ledger Mutasi</span>
+                        </h3>
+                    </div>
+                    
+                    <form id="transactionForm" onsubmit="saveTransaction(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Jenis Arus Kas</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <label class="flex items-center justify-center space-x-2 py-2 px-4 border rounded-xl cursor-pointer transition text-xs font-bold border-emerald-500 bg-emerald-50/50 text-emerald-700" id="labelTypeIncome">
+                                    <input type="radio" name="txType" value="income" checked onchange="toggleTxType('income')" class="sr-only">
+                                    <i class="fa-solid fa-arrow-trend-up"></i> <span>Pemasukan</span>
+                                </label>
+                                <label class="flex items-center justify-center space-x-2 py-2 px-4 border border-slate-200 rounded-xl cursor-pointer transition text-xs font-bold text-slate-600 hover:bg-slate-50" id="labelTypeExpense">
+                                    <input type="radio" name="txType" value="expense" onchange="toggleTxType('expense')" class="sr-only">
+                                    <i class="fa-solid fa-arrow-trend-down"></i> <span>Pengeluaran</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="txAmount" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Nominal Transaksi</label>
+                            <div class="relative rounded-xl shadow-inner">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="text-slate-400 text-xs font-bold">IDR</span>
+                                </div>
+                                <input type="number" id="txAmount" required min="1" class="block w-full pl-12 pr-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-slate-900 font-extrabold text-base focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/5 transition-all" placeholder="0">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="txAccount" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Penyimpanan Akun</label>
+                                <select id="txAccount" required class="block w-full px-3 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:border-indigo-500 focus:bg-white">
+                                    <!-- Filled by JS -->
+                                </select>
+                            </div>
+                            <div>
+                                <label for="txCategory" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Klasifikasi Kategori</label>
+                                <select id="txCategory" required class="block w-full px-3 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:border-indigo-500 focus:bg-white">
+                                    <!-- Filled dynamically -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="txDate" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Tanggal Mutasi</label>
+                            <input type="date" id="txDate" required class="block w-full px-3 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:border-indigo-500 focus:bg-white">
+                        </div>
+
+                        <div>
+                            <label for="txNotes" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Memo / Keterangan</label>
+                            <input type="text" id="txNotes" class="block w-full px-3 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:border-indigo-500 focus:bg-white" placeholder="Contoh: Belanja Bulanan, Investasi Reksadana">
+                        </div>
+
+                        <div class="pt-2">
+                            <button type="submit" class="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-bold py-3 rounded-xl transition-all shadow-md shadow-indigo-100 flex items-center justify-center space-x-2 text-xs uppercase tracking-wider">
+                                <i class="fa-solid fa-floppy-disk text-xs"></i> <span>Kunci Jurnal Finansial</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: LEDGER HISTORY -->
+        <div id="content-history" class="tab-content space-y-6">
+            <div class="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-6">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-4 mb-4 gap-3">
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2">
+                            <i class="fa-solid fa-receipt text-indigo-600 text-xs"></i>
+                            <span>Buku Jurnal Umum Finansial</span>
+                        </h3>
+                    </div>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+                            <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                        </span>
+                        <input type="text" id="txSearch" oninput="renderHistoryTable()" placeholder="Cari memo, akun, atau kategori..." class="pl-9 pr-4 py-2 text-xs border border-slate-200 bg-slate-50 rounded-xl focus:outline-none focus:border-indigo-500 focus:bg-white w-full sm:w-64 font-semibold text-slate-700">
+                    </div>
+                </div>
+
+                <!-- RESPONSIVE TABLE WITH STICKY ACCOUNT COLUMN -->
+                <div class="overflow-x-auto rounded-xl border border-slate-150 relative">
+                    <table class="w-full text-left text-xs border-collapse min-w-[650px]">
+                        <thead>
+                            <tr class="bg-slate-50 border-b border-slate-150 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                                <th class="p-4 sticky left-0 bg-slate-50 z-20 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] min-w-[120px]">Akun</th>
+                                <th class="p-4">Tanggal</th>
+                                <th class="p-4">Kategori</th>
+                                <th class="p-4">Memo</th>
+                                <th class="p-4 text-right">Nominal (Rp)</th>
+                                <th class="p-4 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody" class="divide-y divide-slate-100 text-slate-700 font-medium">
+                            <!-- Injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: BACKUP & DATA CONFIG -->
+        <div id="content-settings" class="tab-content space-y-6">
+            <div class="max-w-3xl mx-auto space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+                        <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2 border-b border-slate-100 pb-3">
+                            <i class="fa-solid fa-shield-halved text-emerald-600 text-xs"></i>
+                            <span>Ekspor & Proteksi Cadangan JSON</span>
+                        </h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            Unduh salinan pembukuan Anda secara berkala untuk disimpan di Google Drive guna memitigasi risiko terhapusnya cache memori komputer.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                            <button onclick="exportDataJSON()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-sm flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-file-arrow-down"></i> <span>Ekspor (.JSON)</span>
+                            </button>
+                            <label class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-sm flex items-center justify-center space-x-2 cursor-pointer text-center">
+                                <i class="fa-solid fa-file-arrow-up"></i> <span>Impor (.JSON)</span>
+                                <input type="file" id="importFile" accept=".json" onchange="importDataJSON(event)" class="hidden">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+                        <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2 border-b border-slate-100 pb-3">
+                            <i class="fa-solid fa-triangle-exclamation text-rose-600 text-xs"></i>
+                            <span>Inisialisasi & Reset Sistem</span>
+                        </h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            Tindakan destruktif di bawah ini akan mengubah status total basis data pembukuan Anda lokal. Harap berhati-hati sebelum mengeklik.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                            <button onclick="resetToSeed()" class="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-sm flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-flask"></i> <span>Muat Data Demo</span>
+                            </button>
+                            <button onclick="clearAllData()" class="flex-1 bg-rose-600 hover:bg-rose-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-sm flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-trash-can"></i> <span>Wipe Out Data</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- PREMIUM FOOTER -->
+    <footer class="bg-white border-t border-slate-200 text-slate-400 text-[11px] py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-1 font-medium">
+            <p class="text-slate-500 font-bold">Copyright @ksalda23 &bull; Catatan Keuangan KSA</p>
+        </div>
+    </footer>
+
+    <!-- JS ECOSYSTEM CORE ENGINE -->
+    <script>
+        const ACCOUNTS_LIST = ["Dompet", "Bank BCA 1", "Bank BCA 2", "Bank Jago", "Dana", "GoPay", "ShopeePay", "Saldo RDN", "Reksadana & Obligasi", "Saham"];
+        const CATEGORIES = {
+            income: ["Gaji", "Dividen", "Keuntungan Investasi", "Lainnya"],
+            expense: ["Makanan & Minuman", "Transportasi", "Gaya Lifestyle", "Tagihan & Utilitas", "Investasi (Bibit/RDN)", "Lainnya"]
+        };
+
+        const SEED_DATA = {
+            baseIHSG: 7200,
+            currentIHSG: 7200,
+            transactions: [
+                { id: "s1", type: "income", amount: 7000000, account: "Bank BCA 1", category: "Gaji", date: "2026-01-25", notes: "Gaji Bulanan Utama" },
+                { id: "s2", type: "expense", amount: 150000, account: "Dompet", category: "Makanan & Minuman", date: "2026-01-26", notes: "Makan Mie Gacoan & Seblak" },
+                { id: "s3", type: "expense", amount: 120000, account: "Bank Jago", category: "Transportasi", date: "2026-01-27", notes: "Bensin Berkala Supra GTR" },
+                { id: "s4", type: "expense", amount: 2000000, account: "Bank BCA 1", category: "Investasi (Bibit/RDN)", date: "2026-01-28", notes: "Alokasi Reksadana Bibit" },
+                { id: "s5", type: "income", amount: 1200000, account: "Saldo RDN", category: "Dividen", date: "2026-02-15", notes: "Dividen Emiten Saham" }
+            ],
+            startingBalances: {
+                "Dompet": 500000, "Bank BCA 1": 8500000, "Bank BCA 2": 3000000, "Bank Jago": 4500000, "Dana": 350000, "GoPay": 200000, "ShopeePay": 100000, "Saldo RDN": 1500000, "Reksadana & Obligasi": 12000000, "Saham": 15000000
+            }
+        };
+
+        let state = { baseIHSG: 7200, currentIHSG: 7200, transactions: [], startingBalances: {} };
+        let activeYear = 2026;
+        let activeMonth = -1;
+        let incomeChartInstance = null;
+        let expenseChartInstance = null;
+        let trendChartInstance = null;
+
+        const MONTHS_NAMES = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initYearDropdown();
+            initModalMonthGrid();
+            loadState();
+            initFormDropdowns();
+            setCurrentDateInForm();
+            refreshApp();
+            initScrollDetection();
+        });
+
+        function initScrollDetection() {
+            window.addEventListener('scroll', () => {
+                const btn = document.getElementById('scrollUpBtn');
+                if (window.scrollY > 300) {
+                    btn.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+                } else {
+                    btn.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+                }
+            });
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // FULL SCREEN OVERLAY ENGINE LOGIC (TIMBUL FULL LAYAR)
+        function openMonthModal() {
+            const modal = document.getElementById('monthModal');
+            modal.classList.remove('hidden');
+        }
+
+        function closeMonthModal() {
+            const modal = document.getElementById('monthModal');
+            modal.classList.add('hidden');
+        }
+
+        function initModalMonthGrid() {
+            const container = document.getElementById('modalMonthGrid');
+            MONTHS_NAMES.forEach((mName, index) => {
+                const btn = document.createElement('button');
+                btn.id = `btn-modal-month-${index}`;
+                btn.onclick = () => setMonthFilter(index);
+                btn.className = "w-full py-2.5 px-2 text-xs font-bold rounded-xl text-slate-600 bg-slate-50 border border-slate-200/60 hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-200 transition-all text-center";
+                btn.innerText = mName;
+                container.appendChild(btn);
+            });
+        }
+
+        function setMonthFilter(m) {
+            activeMonth = m;
+            
+            // Sync current dynamic banner labels
+            document.getElementById('lblCurrentMonth').innerText = m === -1 ? "Semua Bulan (Kombinasi)" : `${MONTHS_NAMES[m]}`;
+            
+            // Paint modal inside styling states
+            document.getElementById('btn-modal-month-all').className = m === -1 ? 
+                "col-span-2 sm:col-span-3 py-3 px-4 text-xs font-bold rounded-xl bg-indigo-600 text-white text-center shadow-md shadow-indigo-100 transition-all" : 
+                "col-span-2 sm:col-span-3 py-3 px-4 text-xs font-bold rounded-xl text-slate-600 bg-slate-50 border border-slate-200/60 hover:bg-indigo-50 hover:text-indigo-700 text-center transition-all";
+            
+            for (let i = 0; i < 12; i++) {
+                const btn = document.getElementById(`btn-modal-month-${i}`);
+                if (btn) {
+                    btn.className = i === m ? 
+                        "w-full py-2.5 px-2 text-xs font-bold rounded-xl bg-indigo-50 text-indigo-700 border-2 border-indigo-200 shadow-sm text-center transition-all" : 
+                        "w-full py-2.5 px-2 text-xs font-bold rounded-xl text-slate-600 bg-slate-50 border border-slate-200/60 hover:bg-slate-100 transition-all text-center";
+                }
+            }
+            closeMonthModal();
+            refreshApp();
+        }
+
+        function toggleMobileMenu() {
+            const container = document.getElementById('mobileDropdownContainer');
+            const icon = document.getElementById('mobileMenuIcon');
+            container.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        function selectMobileTab(tabId) {
+            switchTab(tabId);
+            toggleMobileMenu();
+            
+            const textMap = {
+                'dashboard': '<i class="fa-solid fa-chart-pie mr-2"></i>Dashboard',
+                'input': '<i class="fa-solid fa-circle-plus mr-2"></i>Catat Arus Kas',
+                'history': '<i class="fa-solid fa-receipt mr-2"></i>Jurnal Transaksi',
+                'settings': '<i class="fa-solid fa-database mr-2"></i>Backup & Jurnal Data'
+            };
+            document.getElementById('mobileMenuCurrentText').innerHTML = textMap[tabId];
+        }
+
+        function initYearDropdown() {
+            const select = document.getElementById('globalYear');
+            select.innerHTML = '';
+            for (let year = 2026; year <= 2036; year++) {
+                const opt = document.createElement('option');
+                opt.value = year; opt.innerText = `Tahun ${year}`;
+                select.appendChild(opt);
+            }
+            activeYear = 2026; select.value = activeYear;
+        }
+
+        function initFormDropdowns() {
+            const accountSelect = document.getElementById('txAccount');
+            accountSelect.innerHTML = '';
+            ACCOUNTS_LIST.forEach(acc => {
+                const opt = document.createElement('option');
+                opt.value = acc; opt.innerText = acc;
+                accountSelect.appendChild(opt);
+            });
+            toggleTxType('income');
+        }
+
+        function setCurrentDateInForm() {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            document.getElementById('txDate').value = `${yyyy}-${mm}-${dd}`;
+        }
+
+        function loadState() {
+            const localData = localStorage.getItem('fintrack_10y_state');
+            if (localData) {
+                try {
+                    state = JSON.parse(localData);
+                    if (!state.startingBalances) state.startingBalances = { ...SEED_DATA.startingBalances };
+                } catch (e) { state = { ...SEED_DATA }; }
+            } else {
+                state = JSON.parse(JSON.stringify(SEED_DATA));
+            }
+            document.getElementById('inputIHSG').value = state.currentIHSG || 7200;
+        }
+
+        function saveState() {
+            localStorage.setItem('fintrack_10y_state', JSON.stringify(state));
+        }
+
+        function refreshApp() {
+            calculateKPIs();
+            renderAccountList();
+            renderHistoryTable();
+            renderCharts();
+        }
+
+        function handleFilterChange() {
+            activeYear = parseInt(document.getElementById('globalYear').value);
+            refreshApp();
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(`content-${tabId}`).classList.add('active');
+            
+            // Dynamic node checks to display the premium trigger box container
+            const monthFilter = document.getElementById('monthFilterWrapper');
+            if (monthFilter) {
+                if (tabId === 'dashboard' || tabId === 'history') {
+                    monthFilter.classList.remove('hidden');
+                } else {
+                    monthFilter.classList.add('hidden');
+                }
+            }
+
+            const tabs = ['dashboard', 'input', 'history', 'settings'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                if (btn) {
+                    if (t === tabId) {
+                        btn.className = "py-2 px-4 text-xs font-bold rounded-lg bg-indigo-50 text-indigo-700 flex items-center space-x-2 transition-all duration-200";
+                    } else {
+                        btn.className = "py-2 px-4 text-xs font-bold rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-50 flex items-center space-x-2 transition-all duration-200";
+                    }
+                }
+            });
+        }
+
+        function formatRupiah(num) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(num);
+        }
+
+        function toggleTxType(type) {
+            const lblIncome = document.getElementById('labelTypeIncome');
+            const lblExpense = document.getElementById('labelTypeExpense');
+            const catSelect = document.getElementById('txCategory');
+            
+            catSelect.innerHTML = '';
+            CATEGORIES[type].forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat; opt.innerText = cat;
+                catSelect.appendChild(opt);
+            });
+
+            if (type === 'income') {
+                lblIncome.className = "flex items-center justify-center space-x-2 py-2 px-4 border rounded-xl cursor-pointer transition text-xs font-bold border-emerald-500 bg-emerald-50/50 text-emerald-700";
+                lblExpense.className = "flex items-center justify-center space-x-2 py-2 px-4 border border-slate-200/60 rounded-xl cursor-pointer transition text-xs font-bold text-slate-600 hover:bg-slate-50";
+            } else {
+                lblExpense.className = "flex items-center justify-center space-x-2 py-2 px-4 border rounded-xl cursor-pointer transition text-xs font-bold border-rose-500 bg-rose-50/50 text-rose-700";
+                lblIncome.className = "flex items-center justify-center space-x-2 py-2 px-4 border border-slate-200/60 rounded-xl cursor-pointer transition text-xs font-bold text-slate-600 hover:bg-slate-50";
+            }
+        }
+
+        function getFilteredTransactions() {
+            return state.transactions.filter(t => {
+                const tDate = new Date(t.date);
+                const matchYear = tDate.getFullYear() === activeYear;
+                const matchMonth = activeMonth === -1 ? true : tDate.getMonth() === activeMonth;
+                return matchYear && matchMonth;
+            });
+        }
+
+        function getLiveBalances() {
+            let balances = { ...state.startingBalances };
+            state.transactions.forEach(t => {
+                if (balances[t.account] !== undefined) {
+                    if (t.type === 'income') balances[t.account] += t.amount;
+                    else balances[t.account] -= t.amount;
+                }
+            });
+            if (balances["Saham"] !== undefined && state.baseIHSG > 0) {
+                const multiplier = state.currentIHSG / state.baseIHSG;
+                balances["Saham"] = Math.round(balances["Saham"] * multiplier);
+            }
+            return balances;
+        }
+
+        function calculateKPIs() {
+            const filtered = getFilteredTransactions();
+            let incSum = 0; let expSum = 0;
+
+            filtered.forEach(t => {
+                if (t.type === 'income') incSum += t.amount;
+                else expSum += t.amount;
+            });
+
+            document.getElementById('kpiIncome').innerText = formatRupiah(incSum);
+            document.getElementById('kpiExpense').innerText = formatRupiah(expSum);
+
+            const scopeText = activeMonth === -1 ? `Tahun ${activeYear}` : `${MONTHS_NAMES[activeMonth]} ${activeYear}`;
+            document.getElementById('kpiIncomeSub').innerText = scopeText;
+            document.getElementById('kpiExpenseSub').innerText = scopeText;
+
+            const balances = getLiveBalances();
+            let netWorth = 0;
+            Object.values(balances).forEach(val => netWorth += val);
+            document.getElementById('kpiNetWorth').innerText = formatRupiah(netWorth);
+
+            const targetLand = 35000000;
+            const targetHouse = 100000000;
+            
+            const landPercent = Math.min(100, Math.round((netWorth / targetLand) * 100));
+            const housePercent = Math.min(100, Math.round((netWorth / targetHouse) * 100));
+
+            document.getElementById('goalLandPercent').innerText = `${landPercent}%`;
+            document.getElementById('goalLandBar').style.width = `${landPercent}%`;
+            document.getElementById('goalHousePercent').innerText = `${housePercent}%`;
+            document.getElementById('goalHouseBar').style.width = `${housePercent}%`;
+
+            const emergencyPool = balances["Reksadana & Obligasi"] || 0;
+            document.getElementById('lblEmergencyFund').innerText = formatRupiah(emergencyPool);
+
+            let totalYearlyExpense = 0;
+            state.transactions.forEach(tx => {
+                if(tx.type === 'expense' && new Date(tx.date).getFullYear() === activeYear) {
+                    totalYearlyExpense += tx.amount;
+                }
+            });
+            
+            const activeMonthCount = (activeYear === new Date().getFullYear()) ? (new Date().getMonth() + 1) : 12;
+            const averageMonthlyBurn = totalYearlyExpense > 0 ? (totalYearlyExpense / activeMonthCount) : 1500000;
+
+            const emergencyMonthsCovered = (emergencyPool / averageMonthlyBurn).toFixed(1);
+            const statusEl = document.getElementById('lblEmergencyStatus');
+            
+            if(emergencyMonthsCovered >= 6) {
+                statusEl.innerText = `Aman! Mencukupi ${emergencyMonthsCovered} bulan pengeluaran (Standar ideal: 6 bulan).`;
+                statusEl.className = "text-[10px] font-bold text-emerald-800 leading-tight";
+            } else {
+                statusEl.innerText = `Siaga. Baru mencukupi ${emergencyMonthsCovered} bulan pengeluaran. Rekomendasi tambah isi alokasi.`;
+                statusEl.className = "text-[10px] font-bold text-amber-800 leading-tight";
+            }
+
+            const liquidSum = (balances["Dompet"] || 0) + (balances["Bank BCA 1"] || 0) + (balances["Bank BCA 2"] || 0) + (balances["Bank Jago"] || 0) + (balances["Dana"] || 0) + (balances["GoPay"] || 0) + (balances["ShopeePay"] || 0) + (balances["Saldo RDN"] || 0);
+            const growthSum = (balances["Reksadana & Obligasi"] || 0) + (balances["Saham"] || 0);
+            const macroTotal = liquidSum + growthSum;
+
+            if (macroTotal > 0) {
+                const liquidPercent = Math.round((liquidSum / macroTotal) * 100);
+                const growthPercent = 100 - liquidPercent;
+                document.getElementById('ratioLiquidBar').style.width = `${liquidPercent}%`;
+                document.getElementById('ratioGrowthBar').style.width = `${growthPercent}%`;
+                document.getElementById('lblRatioLiquid').innerText = `Cash/Bank: ${liquidPercent}%`;
+                document.getElementById('lblRatioGrowth').innerText = `Investasi: ${growthPercent}%`;
+            }
+        }
+
+        function renderAccountList() {
+            const container = document.getElementById('accountListContainer');
+            container.innerHTML = '';
+            const balances = getLiveBalances();
+
+            ACCOUNTS_LIST.forEach(acc => {
+                const bal = balances[acc] || 0;
+                let icon = "fa-solid fa-piggy-bank text-indigo-500";
+                if (acc.includes("Dompet")) icon = "fa-solid fa-wallet text-amber-500";
+                if (acc.includes("BCA")) icon = "fa-solid fa-credit-card text-blue-500";
+                if (acc.includes("Jago")) icon = "fa-solid fa-mobile-screen text-orange-500";
+                if (acc.includes("Dana")) icon = "fa-solid fa-money-bill-transfer text-sky-500";
+                if (acc.includes("GoPay")) icon = "fa-solid fa-wallet text-emerald-500";
+                if (acc.includes("ShopeePay")) icon = "fa-solid fa-coins text-orange-600";
+                if (acc.includes("Saham")) icon = "fa-solid fa-chart-line text-purple-500";
+                if (acc.includes("Reksadana")) icon = "fa-solid fa-seedling text-emerald-500";
+                if (acc.includes("RDN")) icon = "fa-solid fa-vault text-teal-500";
+
+                const isNegative = bal < 0;
+
+                const itemHtml = `
+                    <div class="flex items-center justify-between p-3 rounded-xl border border-slate-100 bg-slate-50/30 hover:bg-slate-50 hover:border-slate-200 transition-all">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-xl bg-white border border-slate-200/60 flex items-center justify-center shadow-sm">
+                                <i class="${icon} text-xs"></i>
+                            </div>
+                            <span class="text-xs font-bold text-slate-700">${acc}</span>
+                        </div>
+                        <span class="text-xs font-extrabold ${isNegative ? 'text-rose-600' : 'text-slate-950'}">
+                            ${formatRupiah(bal)}
+                        </span>
+                    </div>
+                `;
+                container.innerHTML += itemHtml;
+            });
+        }
+
+        function updateIHSGMultiplier() {
+            const val = parseFloat(document.getElementById('inputIHSG').value);
+            if (!isNaN(val) && val > 0) {
+                state.currentIHSG = val;
+                const perf = ((state.currentIHSG - state.baseIHSG) / state.baseIHSG) * 100;
+                const perfEl = document.getElementById('lblIHSGPerformance');
+                
+                perfEl.innerText = `${perf >= 0 ? '+' : ''}${perf.toFixed(2)}%`;
+                if (perf >= 0) perfEl.className = "text-xs font-extrabold text-emerald-400";
+                else perfEl.className = "text-xs font-extrabold text-rose-400";
+                
+                saveState(); calculateKPIs(); renderAccountList(); renderCharts();
+            }
+        }
+
+        function resetIHSG() {
+            state.currentIHSG = state.baseIHSG;
+            document.getElementById('inputIHSG').value = state.baseIHSG;
+            updateIHSGMultiplier();
+        }
+
+        function saveTransaction(e) {
+            e.preventDefault();
+            const type = document.querySelector('input[name="txType"]:checked').value;
+            const amount = parseInt(document.getElementById('txAmount').value);
+            const account = document.getElementById('txAccount').value;
+            const category = document.getElementById('txCategory').value;
+            const date = document.getElementById('txDate').value;
+            const notes = document.getElementById('txNotes').value || "-";
+
+            if (!amount || amount <= 0) return;
+
+            state.transactions.push({ id: 'tx_' + Date.now(), type, amount, account, category, date, notes });
+            saveState(); refreshApp(); setCurrentDateInForm();
+            
+            document.getElementById('mobileMenuCurrentText').innerHTML = '<i class="fa-solid fa-chart-pie mr-2"></i>Dashboard';
+            switchTab('dashboard');
+        }
+
+        function deleteTransaction(id) {
+            if (confirm("Hapus transaksi ini dari jurnal?")) {
+                state.transactions = state.transactions.filter(t => t.id !== id);
+                saveState(); refreshApp();
+            }
+        }
+
+        function renderHistoryTable() {
+            const tbody = document.getElementById('historyTableBody'); tbody.innerHTML = '';
+            const filtered = getFilteredTransactions();
+            const searchQ = document.getElementById('txSearch').value.toLowerCase();
+
+            const itemsToShow = filtered.filter(t => {
+                return t.category.toLowerCase().includes(searchQ) || t.account.toLowerCase().includes(searchQ) || t.notes.toLowerCase().includes(searchQ);
+            });
+
+            itemsToShow.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            if (itemsToShow.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-xs text-slate-400 italic">Jurnal kosong.</td></tr>`;
+                return;
+            }
+
+            itemsToShow.forEach(t => {
+                const row = document.createElement('tr');
+                row.className = "hover:bg-slate-50/80 transition text-xs border-b border-slate-100 group";
+                const isInc = t.type === 'income';
+                
+                row.innerHTML = `
+                    <td class="p-4 font-bold text-slate-700 sticky left-0 bg-white group-hover:bg-slate-50/90 z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] transition-colors">${t.account}</td>
+                    <td class="p-4 font-semibold whitespace-nowrap text-slate-500">${t.date}</td>
+                    <td class="p-4"><span class="px-2.5 py-1 rounded-lg text-[10px] font-bold ${isInc ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-slate-100 text-slate-700 border border-slate-200'}">${t.category}</span></td>
+                    <td class="p-4 text-slate-600 max-w-[200px] truncate">${t.notes}</td>
+                    <td class="p-4 text-right font-extrabold ${isInc ? 'text-emerald-600' : 'text-slate-900'}">${isInc ? '+' : '-'}&nbsp;${formatRupiah(t.amount)}</td>
+                    <td class="p-4 text-center">
+                        <button onclick="deleteTransaction('${t.id}')" class="text-rose-500 hover:text-rose-700 p-1 transition"><i class="fa-regular fa-trash-can"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function renderCharts() {
+            const filtered = getFilteredTransactions();
+            
+            let incData = {}; let expData = {};
+            CATEGORIES.income.forEach(c => incData[c] = 0);
+            CATEGORIES.expense.forEach(c => expData[c] = 0);
+
+            filtered.forEach(t => {
+                if (t.type === 'income') { if (incData[t.category] !== undefined) incData[t.category] += t.amount; }
+                else { if (expData[t.category] !== undefined) expData[t.category] += t.amount; }
+            });
+
+            if (incomeChartInstance) incomeChartInstance.destroy();
+            incomeChartInstance = new Chart(document.getElementById('chartIncome').getContext('2d'), {
+                type: 'doughnut',
+                data: { labels: Object.keys(incData), datasets: [{ data: Object.values(incData), backgroundColor: ['#10b981', '#34d399', '#059669', '#6ee7b7'], borderWidth: 2 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 8, font: { size: 9, weight: 'bold' } } } } }
+            });
+
+            if (expenseChartInstance) expenseChartInstance.destroy();
+            expenseChartInstance = new Chart(document.getElementById('chartExpense').getContext('2d'), {
+                type: 'doughnut',
+                data: { labels: Object.keys(expData), datasets: [{ data: Object.values(expData), backgroundColor: ['#ef4444', '#f87171', '#f59e0b', '#3b82f6', '#6366f1', '#94a3b8'], borderWidth: 2 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 8, font: { size: 9, weight: 'bold' } } } } }
+            });
+
+            let monthlyNetWorthArray = [];
+            let monthsLabels = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+            
+            for (let m = 0; m < 12; m++) {
+                let tempBalances = { ...state.startingBalances };
+                
+                state.transactions.forEach(tx => {
+                    const txDate = new Date(tx.date);
+                    if (txDate.getFullYear() < activeYear || (txDate.getFullYear() === activeYear && txDate.getMonth() <= m)) {
+                        if (tempBalances[tx.account] !== undefined) {
+                            if (tx.type === 'income') tempBalances[tx.account] += tx.amount;
+                            else tempBalances[tx.account] -= tx.amount;
+                        }
+                    }
+                });
+
+                if (tempBalances["Saham"] !== undefined && state.baseIHSG > 0) {
+                    const mult = state.currentIHSG / state.baseIHSG;
+                    tempBalances["Saham"] = Math.round(tempBalances["Saham"] * mult);
+                }
+
+                let sumNet = 0;
+                Object.values(tempBalances).forEach(v => sumNet += v);
+                monthlyNetWorthArray.push(sumNet);
+            }
+
+            if (trendChartInstance) trendChartInstance.destroy();
+            trendChartInstance = new Chart(document.getElementById('chartNetWorthTrend').getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: monthsLabels,
+                    datasets: [{
+                        label: 'Pertumbuhan Net Worth',
+                        data: monthlyNetWorthArray,
+                        borderColor: '#4f46e5',
+                        backgroundColor: 'rgba(79, 70, 229, 0.05)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#4f46e5'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { ticks: { font: { size: 9, weight: 'bold' }, callback: value => 'Rp ' + value.toLocaleString('id-ID') } },
+                        x: { ticks: { font: { size: 9, weight: 'bold' } } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        function exportDataJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
+            const dlAnchorElem = document.createElement('a');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", `FinTrackPro_Backup_${activeYear}.json`);
+            dlAnchorElem.click();
+        }
+
+        function importDataJSON(e) {
+            const fileReader = new FileReader();
+            fileReader.onload = function (event) {
+                try {
+                    const parsed = JSON.parse(event.target.result);
+                    if (parsed.transactions && parsed.startingBalances) {
+                        state = parsed; saveState();
+                        document.getElementById('inputIHSG').value = state.currentIHSG || 7200;
+                        updateIHSGMultiplier(); refreshApp();
+                        alert("Database Berhasil Diimpor Sempurna!");
+                        switchTab('dashboard');
+                    } else { alert("Format JSON keliru."); }
+                } catch (err) { alert("Gagal membaca file."); }
+            };
+            fileReader.readAsText(e.target.files[0]);
+        }
+
+        function resetToSeed() {
+            if (confirm("Restore data simulasi awal? Perubahan saat ini akan tertimpa.")) {
+                state = JSON.parse(JSON.stringify(SEED_DATA));
+                saveState(); document.getElementById('inputIHSG').value = state.currentIHSG;
+                updateIHSGMultiplier(); refreshApp();
+            }
+        }
+
+        function clearAllData() {
+            if (confirm("Wipe out seluruh data pembukuan Anda menjadi Rp 0?")) {
+                state = { baseIHSG: 7200, currentIHSG: 7200, transactions: [], startingBalances: { "Dompet": 0, "Bank BCA 1": 0, "Bank BCA 2": 0, "Bank Jago": 0, "Dana": 0, "GoPay": 0, "ShopeePay": 0, "Saldo RDN": 0, "Reksadana & Obligasi": 0, "Saham": 0 } };
+                saveState(); resetIHSG(); refreshApp();
+            }
+        }
+    </script>
+</body>
+</html>
