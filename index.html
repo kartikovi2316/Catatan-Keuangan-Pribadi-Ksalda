@@ -76,7 +76,7 @@
         </div>
     </div>
 
-    <!-- NEW: EDIT TRANSACTION MODAL -->
+    <!-- EDIT TRANSACTION MODAL -->
     <div id="editTxModal" class="hidden fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-[110] flex items-center justify-center p-4 transition-all duration-300 overflow-y-auto">
         <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl border border-slate-200/80 p-6 space-y-4 animate-[fadeIn_0.3s_ease-in-out] my-8">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-2">
@@ -91,10 +91,10 @@
             
             <form id="editTransactionForm" onsubmit="saveEditTransaction(event)" class="space-y-4 text-left">
                 <input type="hidden" id="editTxId">
-                <input type="hidden" id="editTxOriginalType"> <!-- Helper to keep logic simple -->
+                <input type="hidden" id="editTxOriginalType">
                 
                 <div>
-                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Jenis Arus Kas (Terkuci)</label>
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Jenis Arus Kas (Terkunci)</label>
                     <div class="w-full bg-slate-100 text-slate-500 px-4 py-2.5 rounded-xl text-xs font-bold capitalize flex items-center space-x-2 border border-slate-200" id="editTypeDisplay">
                         <i class="fa-solid fa-lock text-[10px]"></i> <span>Pemasukan</span>
                     </div>
@@ -231,9 +231,8 @@
         <!-- TAB: DASHBOARD -->
         <div id="content-dashboard" class="tab-content active space-y-8">
             
-            <!-- MAIN CARDS GRID (NOW 4 COLUMNS) -->
+            <!-- MAIN CARDS GRID -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- 1. Total Pendapatan -->
                 <div class="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-sm relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-[3px] bg-emerald-500"></div>
                     <div class="flex items-center justify-between">
@@ -248,7 +247,6 @@
                     <p class="text-[10px] text-slate-400 mt-4 font-medium" id="kpiIncomeSub">Filter Terpilih</p>
                 </div>
                 
-                <!-- 2. Total Pengeluaran -->
                 <div class="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-sm relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-[3px] bg-rose-500"></div>
                     <div class="flex items-center justify-between">
@@ -263,14 +261,11 @@
                     <p class="text-[10px] text-slate-400 mt-4 font-medium" id="kpiExpenseSub">Filter Terpilih</p>
                 </div>
 
-                <!-- 3. Total Aset Lancar (NEW) -->
                 <div class="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-sm relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-[3px] bg-blue-500"></div>
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center space-x-1">
-                                <span>Aset Lancar (Kas)</span>
-                            </p>
+                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Aset Lancar (Kas)</p>
                             <h3 id="kpiLiquid" class="text-xl font-extrabold text-blue-900 mt-1">Rp 0</h3>
                         </div>
                         <div class="p-2.5 bg-blue-50 text-blue-600 rounded-xl border border-blue-100">
@@ -280,7 +275,6 @@
                     <p class="text-[10px] text-slate-400 mt-4 font-medium leading-tight">Uang siap pakai (BCA, RDN, e-Wallet, dll)</p>
                 </div>
 
-                <!-- 4. Total Aset (Net Worth) -->
                 <div class="bg-slate-900 p-6 rounded-2xl shadow-xl text-white relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-purple-600/0 pointer-events-none"></div>
                     <div class="flex items-center justify-between relative z-10">
@@ -467,7 +461,7 @@
                     
                     <form id="transactionForm" onsubmit="saveTransaction(event)" class="space-y-4">
                         <div>
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Jenis Arus Kas</label>
+                            <label class="block " class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Jenis Arus Kas</label>
                             <div class="grid grid-cols-3 gap-2">
                                 <label class="flex items-center justify-center space-x-2 py-2 px-3 border rounded-xl cursor-pointer transition text-xs font-bold border-emerald-500 bg-emerald-50/50 text-emerald-700" id="labelTypeIncome">
                                     <input type="radio" name="txType" value="income" checked onchange="toggleTxType('income')" class="sr-only">
@@ -545,15 +539,21 @@
                             <span>Buku Jurnal Umum Finansial</span>
                         </h3>
                     </div>
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
-                            <i class="fa-solid fa-magnifying-glass text-xs"></i>
-                        </span>
-                        <input type="text" id="txSearch" oninput="renderHistoryTable()" placeholder="Cari memo, akun, atau kategori..." class="pl-9 pr-4 py-2 text-xs border border-slate-200 bg-slate-50 rounded-xl focus:outline-none focus:border-indigo-500 focus:bg-white w-full sm:w-64 font-semibold text-slate-700">
+                    <!-- NEW: Side-by-side Filter Row Container (Account Dropdown + Keyword Box) -->
+                    <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                        <select id="txAccountFilter" onchange="renderHistoryTable()" class="px-3 py-2 text-xs border border-slate-200 bg-slate-50 rounded-xl focus:outline-none focus:border-indigo-500 focus:bg-white font-semibold text-slate-700 cursor-pointer">
+                            <!-- Filled dynamically by JS -->
+                        </select>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+                                <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                            </span>
+                            <input type="text" id="txSearch" oninput="renderHistoryTable()" placeholder="Cari memo atau kategori..." class="pl-9 pr-4 py-2 text-xs border border-slate-200 bg-slate-50 rounded-xl focus:outline-none focus:border-indigo-500 focus:bg-white w-full sm:w-48 font-semibold text-slate-700">
+                        </div>
                     </div>
                 </div>
 
-                <!-- NEW: SURPLUS / DEFICIT SUMMARY BAR -->
+                <!-- SURPLUS / DEFICIT SUMMARY BAR -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200/60 shadow-inner">
                     <div class="flex flex-col border-b sm:border-b-0 sm:border-r border-slate-200 pb-2 sm:pb-0 sm:pr-4">
                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Pendapatan</span>
@@ -564,7 +564,7 @@
                         <span id="histExpense" class="text-sm font-extrabold text-rose-600 mt-1">Rp 0</span>
                     </div>
                     <div class="flex flex-col pt-2 sm:pt-0 sm:pl-2">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Surplus / Defisit</span>
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Surplus / Defisit Bulan Ini</span>
                         <span id="histSurplus" class="text-sm font-extrabold mt-1">Rp 0</span>
                     </div>
                 </div>
@@ -593,6 +593,7 @@
         <div id="content-settings" class="tab-content space-y-6">
             <div class="max-w-3xl mx-auto space-y-6">
                 
+                <!-- GITHUB REALTIME CLOUD SYNC CONTROL CARD -->
                 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
                     <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2 border-b border-slate-100 pb-3">
                         <i class="fa-brands fa-github text-slate-900 text-sm"></i>
@@ -684,7 +685,6 @@
     <!-- JS ECOSYSTEM CORE ENGINE -->
     <script>
         const ACCOUNTS_LIST = ["Dompet", "Bank BCA 1", "Bank BCA 2", "Bank Jago", "Dana", "GoPay", "ShopeePay", "Saldo RDN", "Reksadana & Obligasi", "Saham"];
-        // Definisikan kategori akun likuid (uang siap pakai kapanpun) sesuai permintaan
         const LIQUID_ACCOUNTS = ["Dompet", "Bank BCA 1", "Bank BCA 2", "Bank Jago", "Dana", "GoPay", "ShopeePay", "Saldo RDN"];
         
         const CATEGORIES = {
@@ -727,39 +727,24 @@
             initScrollDetection();
         });
 
-        // Masking nominal dengan titik
         function formatInputNumber(input) {
             let value = input.value.replace(/\D/g, "");
-            if (value === "") {
-                input.value = "";
-                return;
-            }
+            if (value === "") { input.value = ""; return; }
             input.value = new Intl.NumberFormat('id-ID').format(value);
         }
 
         function initScrollDetection() {
             window.addEventListener('scroll', () => {
                 const btn = document.getElementById('scrollUpBtn');
-                if (window.scrollY > 300) {
-                    btn.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
-                } else {
-                    btn.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
-                }
+                if (window.scrollY > 300) { btn.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none'); } 
+                else { btn.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none'); }
             });
         }
 
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-        // ================= FULLSCREEN MONTH MODAL =================
-        function openMonthModal() {
-            document.getElementById('monthModal').classList.remove('hidden');
-        }
-
-        function closeMonthModal() {
-            document.getElementById('monthModal').classList.add('hidden');
-        }
+        function openMonthModal() { document.getElementById('monthModal').classList.remove('hidden'); }
+        function closeMonthModal() { document.getElementById('monthModal').classList.add('hidden'); }
 
         function initModalMonthGrid() {
             const container = document.getElementById('modalMonthGrid');
@@ -776,7 +761,6 @@
         function setMonthFilter(m) {
             activeMonth = m;
             document.getElementById('lblCurrentMonth').innerText = m === -1 ? "Semua Bulan (Kombinasi)" : `${MONTHS_NAMES[m]}`;
-            
             document.getElementById('btn-modal-month-all').className = m === -1 ? 
                 "col-span-2 sm:col-span-3 py-3 px-4 text-xs font-bold rounded-xl bg-indigo-600 text-white text-center shadow-md shadow-indigo-100 transition-all" : 
                 "col-span-2 sm:col-span-3 py-3 px-4 text-xs font-bold rounded-xl text-slate-600 bg-slate-50 border border-slate-200/60 hover:bg-indigo-50 hover:text-indigo-700 text-center transition-all";
@@ -789,8 +773,7 @@
                         "w-full py-2.5 px-2 text-xs font-bold rounded-xl text-slate-600 bg-slate-50 border border-slate-200/60 hover:bg-slate-100 transition-all text-center";
                 }
             }
-            closeMonthModal();
-            refreshApp();
+            closeMonthModal(); refreshApp();
         }
 
         // ================= EDIT TRANSACTION MODAL =================
@@ -801,7 +784,6 @@
             document.getElementById('editTxId').value = tx.id;
             document.getElementById('editTxOriginalType').value = tx.type;
             
-            // Set display type label
             const typeLabel = document.getElementById('editTypeDisplay');
             if(tx.type === 'income') {
                 typeLabel.innerHTML = `<i class="fa-solid fa-arrow-trend-up"></i> <span>Pemasukan</span>`;
@@ -814,7 +796,6 @@
                 typeLabel.className = "w-full bg-indigo-50 text-indigo-600 px-4 py-2.5 rounded-xl text-xs font-bold capitalize flex items-center space-x-2 border border-indigo-200";
             }
 
-            // Adjust fields visibility based on type
             const divCat = document.getElementById('divEditCategory');
             const divTo = document.getElementById('divEditToAccount');
             const catSel = document.getElementById('editTxCategory');
@@ -824,22 +805,16 @@
             catSel.innerHTML = '';
             
             if (tx.type === 'transfer') {
-                divCat.classList.add('hidden');
-                catSel.removeAttribute('required');
-                divTo.classList.remove('hidden');
-                toSel.setAttribute('required', 'required');
-                lblAcc.innerText = "Akun Asal (Sumber)";
-                toSel.value = tx.toAccount;
+                divCat.classList.add('hidden'); catSel.removeAttribute('required');
+                divTo.classList.remove('hidden'); toSel.setAttribute('required', 'required');
+                lblAcc.innerText = "Akun Asal (Sumber)"; toSel.value = tx.toAccount;
             } else {
-                divCat.classList.remove('hidden');
-                catSel.setAttribute('required', 'required');
-                divTo.classList.add('hidden');
-                toSel.removeAttribute('required');
+                divCat.classList.remove('hidden'); catSel.setAttribute('required', 'required');
+                divTo.classList.add('hidden'); toSel.removeAttribute('required');
                 lblAcc.innerText = "Penyimpanan Akun";
                 
                 CATEGORIES[tx.type].forEach(c => {
-                    const opt = document.createElement('option');
-                    opt.value = c; opt.innerText = c;
+                    const opt = document.createElement('option'); opt.value = c; opt.innerText = c;
                     catSel.appendChild(opt);
                 });
                 catSel.value = tx.category;
@@ -853,18 +828,14 @@
             document.getElementById('editTxModal').classList.remove('hidden');
         }
 
-        function closeEditModal() {
-            document.getElementById('editTxModal').classList.add('hidden');
-        }
+        function closeEditModal() { document.getElementById('editTxModal').classList.add('hidden'); }
 
         function saveEditTransaction(e) {
             e.preventDefault();
             const id = document.getElementById('editTxId').value;
             const originalType = document.getElementById('editTxOriginalType').value;
-            
             const rawAmount = document.getElementById('editTxAmount').value.replace(/\./g, "");
             const amount = parseInt(rawAmount);
-            
             const account = document.getElementById('editTxAccount').value;
             const category = originalType === 'transfer' ? 'Transfer Aset' : document.getElementById('editTxCategory').value;
             const toAccount = originalType === 'transfer' ? document.getElementById('editTxToAccount').value : '';
@@ -873,20 +844,13 @@
 
             if (!amount || amount <= 0) return;
             if (originalType === 'transfer' && account === toAccount) {
-                alert("Kesalahan: Akun Sumber dan Akun Tujuan tidak boleh sama!");
-                return;
+                alert("Kesalahan: Akun Sumber dan Akun Tujuan tidak boleh sama!"); return;
             }
 
-            // Find and update array object directly
             const index = state.transactions.findIndex(t => t.id === id);
             if(index !== -1) {
-                state.transactions[index] = {
-                    ...state.transactions[index], 
-                    amount, account, category, toAccount, date, notes
-                };
-                saveState();
-                refreshApp();
-                closeEditModal();
+                state.transactions[index] = { ...state.transactions[index], amount, account, category, toAccount, date, notes };
+                saveState(); refreshApp(); closeEditModal();
             }
         }
 
@@ -897,8 +861,7 @@
                 repo: document.getElementById('ghRepo').value.trim(),
                 path: document.getElementById('ghPath').value.trim() || 'fintrack_data.json'
             };
-            saveState();
-            showGHStatus("Kredensial GitHub tersimpan di memori browser!", "text-emerald-600");
+            saveState(); showGHStatus("Kredensial GitHub tersimpan di memori browser!", "text-emerald-600");
         }
 
         function showGHStatus(msg, colorClass = "text-slate-500") {
@@ -949,8 +912,7 @@
                     const decodedString = new TextDecoder().decode(Uint8Array.from(atob(rawContent), c => c.charCodeAt(0)));
                     const parsedState = JSON.parse(decodedString);
                     parsedState.github = { token, repo, path };
-                    state = parsedState;
-                    saveState(); refreshApp();
+                    state = parsedState; saveState(); refreshApp();
                     showGHStatus("Sinkronisasi Selesai! Seluruh data lokal diperbarui sesuai cloud.", "text-emerald-600");
                     alert("Sinkronisasi Berhasil! Seluruh data diperbarui dari GitHub.");
                     switchTab('dashboard');
@@ -979,33 +941,37 @@
             const select = document.getElementById('globalYear');
             select.innerHTML = '';
             for (let year = 2026; year <= 2036; year++) {
-                const opt = document.createElement('option');
-                opt.value = year; opt.innerText = `Tahun ${year}`;
+                const opt = document.createElement('option'); opt.value = year; opt.innerText = `Tahun ${year}`;
                 select.appendChild(opt);
             }
             activeYear = 2026; select.value = activeYear;
         }
 
-        // Initialize elements in main input form & the edit modal
+        // NEW: Populate input, edit forms AND history tab filters simultaneously
         function initFormDropdowns() {
             const accountSelect = document.getElementById('txAccount');
             const toAccountSelect = document.getElementById('txToAccount');
             const editAccountSelect = document.getElementById('editTxAccount');
             const editToAccountSelect = document.getElementById('editTxToAccount');
+            const historyAccountFilter = document.getElementById('txAccountFilter');
             
             accountSelect.innerHTML = ''; toAccountSelect.innerHTML = '';
             editAccountSelect.innerHTML = ''; editToAccountSelect.innerHTML = '';
+            historyAccountFilter.innerHTML = '<option value="all">Semua Rekening Akun</option>';
             
             ACCOUNTS_LIST.forEach(acc => {
                 const opt1 = document.createElement('option'); opt1.value = acc; opt1.innerText = acc;
                 accountSelect.appendChild(opt1);
                 const opt2 = document.createElement('option'); opt2.value = acc; opt2.innerText = acc;
                 toAccountSelect.appendChild(opt2);
-                
                 const opt3 = document.createElement('option'); opt3.value = acc; opt3.innerText = acc;
                 editAccountSelect.appendChild(opt3);
                 const opt4 = document.createElement('option'); opt4.value = acc; opt4.innerText = acc;
                 editToAccountSelect.appendChild(opt4);
+                
+                // Add node entry inside ledger component filter
+                const opt5 = document.createElement('option'); opt5.value = acc; opt5.innerText = acc;
+                historyAccountFilter.appendChild(opt5);
             });
             toggleTxType('income');
         }
@@ -1027,9 +993,7 @@
                     if (!state.github) state.github = { token: '', repo: '', path: 'fintrack_data.json' };
                     if (state.baseIHSG === 7200) { state.baseIHSG = 5873.37; state.currentIHSG = 5873.37; }
                 } catch (e) { state = { ...SEED_DATA }; }
-            } else {
-                state = JSON.parse(JSON.stringify(SEED_DATA));
-            }
+            } else { state = JSON.parse(JSON.stringify(SEED_DATA)); }
             
             if(state.github) {
                 document.getElementById('ghToken').value = state.github.token || '';
@@ -1041,21 +1005,11 @@
             document.getElementById('inputIHSG').value = state.currentIHSG || 5873.37;
         }
 
-        function saveState() {
-            localStorage.setItem('fintrack_10y_state', JSON.stringify(state));
-        }
+        function saveState() { localStorage.setItem('fintrack_10y_state', JSON.stringify(state)); }
 
-        function refreshApp() {
-            calculateKPIs();
-            renderAccountList();
-            renderHistoryTable();
-            renderCharts();
-        }
+        function refreshApp() { calculateKPIs(); renderAccountList(); renderHistoryTable(); renderCharts(); }
 
-        function handleFilterChange() {
-            activeYear = parseInt(document.getElementById('globalYear').value);
-            refreshApp();
-        }
+        function handleFilterChange() { activeYear = parseInt(document.getElementById('globalYear').value); refreshApp(); }
 
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -1063,22 +1017,16 @@
             
             const monthFilter = document.getElementById('monthFilterWrapper');
             if (monthFilter) {
-                if (tabId === 'dashboard' || tabId === 'history') {
-                    monthFilter.classList.remove('hidden');
-                } else {
-                    monthFilter.classList.add('hidden');
-                }
+                if (tabId === 'dashboard' || tabId === 'history') { monthFilter.classList.remove('hidden'); } 
+                else { monthFilter.classList.add('hidden'); }
             }
 
             const tabs = ['dashboard', 'input', 'history', 'settings'];
             tabs.forEach(t => {
                 const btn = document.getElementById(`tab-${t}`);
                 if (btn) {
-                    if (t === tabId) {
-                        btn.className = "py-2 px-4 text-xs font-bold rounded-lg bg-indigo-50 text-indigo-700 flex items-center space-x-2 transition-all duration-200";
-                    } else {
-                        btn.className = "py-2 px-4 text-xs font-bold rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-50 flex items-center space-x-2 transition-all duration-200";
-                    }
+                    if (t === tabId) { btn.className = "py-2 px-4 text-xs font-bold rounded-lg bg-indigo-50 text-indigo-700 flex items-center space-x-2 transition-all duration-200"; } 
+                    else { btn.className = "py-2 px-4 text-xs font-bold rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-50 flex items-center space-x-2 transition-all duration-200"; }
                 }
             });
         }
@@ -1102,30 +1050,22 @@
 
             if (type === 'transfer') {
                 lblTransfer.className = "flex items-center justify-center space-x-2 py-2 px-3 border rounded-xl cursor-pointer transition text-xs font-bold border-indigo-500 bg-indigo-50/50 text-indigo-700";
-                divCategory.classList.add('hidden');
-                catSelect.removeAttribute('required');
-                divToAccount.classList.remove('hidden');
-                document.getElementById('txToAccount').setAttribute('required', 'required');
+                divCategory.classList.add('hidden'); catSelect.removeAttribute('required');
+                divToAccount.classList.remove('hidden'); document.getElementById('txToAccount').setAttribute('required', 'required');
                 lblTxAccount.innerText = "Akun Asal (Sumber)";
             } else {
-                divCategory.classList.remove('hidden');
-                catSelect.setAttribute('required', 'required');
-                divToAccount.classList.add('hidden');
-                document.getElementById('txToAccount').removeAttribute('required');
+                divCategory.classList.remove('hidden'); catSelect.setAttribute('required', 'required');
+                divToAccount.classList.add('hidden'); document.getElementById('txToAccount').removeAttribute('required');
                 lblTxAccount.innerText = "Penyimpanan Akun";
 
                 catSelect.innerHTML = '';
                 CATEGORIES[type].forEach(cat => {
-                    const opt = document.createElement('option');
-                    opt.value = cat; opt.innerText = cat;
+                    const opt = document.createElement('option'); opt.value = cat; opt.innerText = cat;
                     catSelect.appendChild(opt);
                 });
 
-                if (type === 'income') {
-                    lblIncome.className = "flex items-center justify-center space-x-2 py-2 px-3 border rounded-xl cursor-pointer transition text-xs font-bold border-emerald-500 bg-emerald-50/50 text-emerald-700";
-                } else {
-                    lblExpense.className = "flex items-center justify-center space-x-2 py-2 px-3 border rounded-xl cursor-pointer transition text-xs font-bold border-rose-500 bg-rose-50/50 text-rose-700";
-                }
+                if (type === 'income') { lblIncome.className = "flex items-center justify-center space-x-2 py-2 px-3 border rounded-xl cursor-pointer transition text-xs font-bold border-emerald-500 bg-emerald-50/50 text-emerald-700"; } 
+                else { lblExpense.className = "flex items-center justify-center space-x-2 py-2 px-3 border rounded-xl cursor-pointer transition text-xs font-bold border-rose-500 bg-rose-50/50 text-rose-700"; }
             }
         }
 
@@ -1146,9 +1086,7 @@
                     else if (t.type === 'expense') balances[t.account] -= t.amount;
                     else if (t.type === 'transfer') {
                         balances[t.account] -= t.amount;
-                        if (t.toAccount && balances[t.toAccount] !== undefined) {
-                            balances[t.toAccount] += t.amount;
-                        }
+                        if (t.toAccount && balances[t.toAccount] !== undefined) { balances[t.toAccount] += t.amount; }
                     }
                 }
             });
@@ -1176,23 +1114,17 @@
             document.getElementById('kpiExpenseSub').innerText = scopeText;
 
             const balances = getLiveBalances();
-            let totalNetWorth = 0;
-            let liquidAssets = 0;
+            let totalNetWorth = 0; let liquidAssets = 0;
 
             Object.keys(balances).forEach(acc => {
-                const val = balances[acc];
-                totalNetWorth += val;
-                if(LIQUID_ACCOUNTS.includes(acc)) {
-                    liquidAssets += val;
-                }
+                const val = balances[acc]; totalNetWorth += val;
+                if(LIQUID_ACCOUNTS.includes(acc)) { liquidAssets += val; }
             });
             
-            // Injecting calculated new KPI blocks
             document.getElementById('kpiLiquid').innerText = formatRupiah(liquidAssets);
             document.getElementById('kpiNetWorth').innerText = formatRupiah(totalNetWorth);
 
-            const targetLand = 35000000;
-            const targetHouse = 100000000;
+            const targetLand = 35000000; const targetHouse = 100000000;
             const landPercent = Math.min(100, Math.round((totalNetWorth / targetLand) * 100));
             const housePercent = Math.min(100, Math.round((totalNetWorth / targetHouse) * 100));
 
@@ -1206,14 +1138,11 @@
 
             let totalYearlyExpense = 0;
             state.transactions.forEach(tx => {
-                if(tx.type === 'expense' && new Date(tx.date).getFullYear() === activeYear) {
-                    totalYearlyExpense += tx.amount;
-                }
+                if(tx.type === 'expense' && new Date(tx.date).getFullYear() === activeYear) { totalYearlyExpense += tx.amount; }
             });
             
             const activeMonthCount = (activeYear === new Date().getFullYear()) ? (new Date().getMonth() + 1) : 12;
             const averageMonthlyBurn = totalYearlyExpense > 0 ? (totalYearlyExpense / activeMonthCount) : 1500000;
-
             const emergencyMonthsCovered = (emergencyPool / averageMonthlyBurn).toFixed(1);
             const statusEl = document.getElementById('lblEmergencyStatus');
             
@@ -1221,7 +1150,7 @@
                 statusEl.innerText = `Aman! Mencukupi ${emergencyMonthsCovered} bulan pengeluaran (Standar ideal: 6 bulan).`;
                 statusEl.className = "text-[10px] font-bold text-emerald-800 leading-tight";
             } else {
-                statusEl.innerText = `Siaga. Baru mencukupi ${emergencyMonthsCovered} bulan pengeluaran. Rekomendasi tambah isi alokasi.`;
+                statusEl.innerText = `Siaga. Baru mencukupi ${emergencyMonthsCovered} bulan pengeluaran. Rekomendasi tambah alokasi.`;
                 statusEl.className = "text-[10px] font-bold text-amber-800 leading-tight";
             }
 
@@ -1236,7 +1165,7 @@
 
                 document.getElementById('ratioLiquidBar').style.width = `${liquidPercent}%`;
                 document.getElementById('ratioInvBar').style.width = `${invPercent}%`;
-                document.getElementById('ratioSahamBar').style.width = `${sahamPercent}%`;
+                document.getElementById('ratioSahamBar').style.width = `${saccum}%`;
 
                 document.getElementById('lblRatioLiquid').innerText = `Lancar: ${liquidPercent}%`;
                 document.getElementById('lblRatioInv').innerText = `Investasi: ${invPercent}%`;
@@ -1263,7 +1192,6 @@
                 if (acc.includes("RDN")) icon = "fa-solid fa-vault text-teal-500";
 
                 const isNegative = bal < 0;
-
                 const itemHtml = `
                     <div class="flex items-center justify-between p-3 rounded-xl border border-slate-100 bg-slate-50/30 hover:bg-slate-50 hover:border-slate-200 transition-all">
                         <div class="flex items-center space-x-3">
@@ -1307,7 +1235,6 @@
             const type = document.querySelector('input[name="txType"]:checked').value;
             const rawAmount = document.getElementById('txAmount').value.replace(/\./g, "");
             const amount = parseInt(rawAmount);
-            
             const account = document.getElementById('txAccount').value;
             const category = type === 'transfer' ? 'Transfer Aset' : document.getElementById('txCategory').value;
             const toAccount = type === 'transfer' ? document.getElementById('txToAccount').value : '';
@@ -1316,8 +1243,7 @@
 
             if (!amount || amount <= 0) return;
             if (type === 'transfer' && account === toAccount) {
-                alert("Kesalahan Fatal: Akun Sumber dan Akun Tujuan tidak boleh sama!");
-                return;
+                alert("Kesalahan Fatal: Akun Sumber dan Akun Tujuan tidak boleh sama!"); return;
             }
 
             state.transactions.push({ id: 'tx_' + Date.now(), type, amount, account, category, toAccount, date, notes });
@@ -1334,19 +1260,29 @@
             }
         }
 
+        // REWORKED: Renders flexible ledger logs integrated with multidimensional account isolation filters
         function renderHistoryTable() {
             const tbody = document.getElementById('historyTableBody'); tbody.innerHTML = '';
             const filtered = getFilteredTransactions();
             const searchQ = document.getElementById('txSearch').value.toLowerCase();
+            const accountFilter = document.getElementById('txAccountFilter').value;
 
+            // NEW: Added double conditional parameter check for absolute tracking separation
             const itemsToShow = filtered.filter(t => {
-                return t.category.toLowerCase().includes(searchQ) || t.account.toLowerCase().includes(searchQ) || t.notes.toLowerCase().includes(searchQ) || (t.toAccount && t.toAccount.toLowerCase().includes(searchQ));
+                const matchesSearch = t.category.toLowerCase().includes(searchQ) || t.notes.toLowerCase().includes(searchQ);
+                const matchesAccount = accountFilter === 'all' || t.account === accountFilter || t.toAccount === accountFilter;
+                return matchesSearch && matchesAccount;
             });
 
-            // Calculate active block Income/Expense/Surplus summary
-            let histIncTotal = 0;
-            let histExpTotal = 0;
+            // NEW FIX: pengurutan data terbaru mutlak (Berdasarkan tanggal terbaru, jika tanggal sama diurutkan berdasarkan ID entri terbaru)
+            itemsToShow.sort((a, b) => {
+                const dateDiff = new Date(b.date) - new Date(a.date);
+                if (dateDiff !== 0) return dateDiff;
+                return b.id.localeCompare(a.id); // Jam input terbaru berada di puncak baris
+            });
 
+            // Calculate active block Income/Expense/Surplus summary dynamically based on filtered subset
+            let histIncTotal = 0; let histExpTotal = 0;
             itemsToShow.forEach(tx => {
                 if (tx.type === 'income') histIncTotal += tx.amount;
                 if (tx.type === 'expense') histExpTotal += tx.amount;
@@ -1358,18 +1294,13 @@
             const surplusAmount = histIncTotal - histExpTotal;
             const surpEl = document.getElementById('histSurplus');
             if(surplusAmount >= 0) {
-                surpEl.innerText = `+ ${formatRupiah(surplusAmount)}`;
-                surpEl.className = "text-sm font-extrabold mt-1 text-emerald-600";
+                surpEl.innerText = `+ ${formatRupiah(surplusAmount)}`; surpEl.className = "text-sm font-extrabold mt-1 text-emerald-600";
             } else {
-                surpEl.innerText = `- ${formatRupiah(Math.abs(surplusAmount))}`;
-                surpEl.className = "text-sm font-extrabold mt-1 text-rose-600";
+                surpEl.innerText = `- ${formatRupiah(Math.abs(surplusAmount))}`; surpEl.className = "text-sm font-extrabold mt-1 text-rose-600";
             }
 
-            itemsToShow.sort((a, b) => new Date(b.date) - new Date(a.date));
-
             if (itemsToShow.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-xs text-slate-400 italic">Jurnal kosong.</td></tr>`;
-                return;
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-xs text-slate-400 italic">Jurnal kosong.</td></tr>`; return;
             }
 
             itemsToShow.forEach(t => {
@@ -1383,15 +1314,12 @@
                 if (isInc) badgeClass = 'bg-emerald-50 text-emerald-700 border border-emerald-100';
                 if (isTrans) badgeClass = 'bg-indigo-50 text-indigo-700 border border-indigo-100';
 
-                let amtSign = '-';
-                let amtClass = 'text-slate-900';
+                let amtSign = '-'; let amtClass = 'text-slate-900';
                 if (isInc) { amtSign = '+'; amtClass = 'text-emerald-600'; }
                 if (isTrans) { amtSign = '⇆'; amtClass = 'text-indigo-600'; }
 
                 let displayMemo = t.notes;
-                if (isTrans) {
-                    displayMemo = `<span class="font-bold text-indigo-600">➔ Kirim ke ${t.toAccount}</span> | ${t.notes}`;
-                }
+                if (isTrans) { displayMemo = `<span class="font-bold text-indigo-600">➔ Kirim ke ${t.toAccount}</span> | ${t.notes}`; }
                 
                 row.innerHTML = `
                     <td class="p-4 font-bold text-slate-700 sticky left-0 bg-white group-hover:bg-slate-50/90 z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] transition-colors">${t.account}</td>
@@ -1401,7 +1329,6 @@
                     <td class="p-4 text-right font-extrabold ${amtClass}">${amtSign}&nbsp;${formatRupiah(t.amount)}</td>
                     <td class="p-4 text-center">
                         <div class="flex items-center justify-center space-x-2">
-                            <!-- EDIT BUTTON HOOKED -->
                             <button onclick="openEditModal('${t.id}')" class="text-amber-500 hover:text-amber-600 p-1 transition"><i class="fa-solid fa-pen-to-square"></i></button>
                             <button onclick="deleteTransaction('${t.id}')" class="text-rose-400 hover:text-rose-600 p-1 transition"><i class="fa-solid fa-trash-can"></i></button>
                         </div>
@@ -1413,7 +1340,6 @@
 
         function renderCharts() {
             const filtered = getFilteredTransactions();
-            
             let incData = {}; let expData = {};
             CATEGORIES.income.forEach(c => incData[c] = 0);
             CATEGORIES.expense.forEach(c => expData[c] = 0);
@@ -1451,9 +1377,7 @@
                             else if (tx.type === 'expense') tempBalances[tx.account] -= tx.amount;
                             else if (tx.type === 'transfer') {
                                 tempBalances[tx.account] -= tx.amount;
-                                if (tx.toAccount && tempBalances[tx.toAccount] !== undefined) {
-                                    tempBalances[tx.toAccount] += tx.amount;
-                                }
+                                if (tx.toAccount && tempBalances[tx.toAccount] !== undefined) { tempBalances[tx.toAccount] += tx.amount; }
                             }
                         }
                     }
@@ -1475,20 +1399,13 @@
                 data: {
                     labels: monthsLabels,
                     datasets: [{
-                        label: 'Pertumbuhan Net Worth',
-                        data: monthlyNetWorthArray,
-                        borderColor: '#4f46e5',
-                        backgroundColor: 'rgba(79, 70, 229, 0.05)',
-                        borderWidth: 3,
-                        fill: true,
-                        tension: 0.3,
-                        pointRadius: 4,
-                        pointBackgroundColor: '#4f46e5'
+                        label: 'Pertumbuhan Net Worth', data: monthlyNetWorthArray,
+                        borderColor: '#4f46e5', backgroundColor: 'rgba(79, 70, 229, 0.05)',
+                        borderWidth: 3, fill: true, tension: 0.3, pointRadius: 4, pointBackgroundColor: '#4f46e5'
                     }]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
+                    responsive: true, maintainAspectRatio: false,
                     scales: {
                         y: { ticks: { font: { size: 9, weight: 'bold' }, callback: value => 'Rp ' + value.toLocaleString('id-ID') } },
                         x: { ticks: { font: { size: 9, weight: 'bold' } } }
@@ -1501,8 +1418,7 @@
         function exportDataJSON() {
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
             const dlAnchorElem = document.createElement('a');
-            dlAnchorElem.setAttribute("href", dataStr);
-            dlAnchorElem.setAttribute("download", `FinTrackPro_Backup_${activeYear}.json`);
+            dlAnchorElem.setAttribute("href", dataStr); dlAnchorElem.setAttribute("download", `FinTrackPro_Backup_${activeYear}.json`);
             dlAnchorElem.click();
         }
 
@@ -1515,8 +1431,7 @@
                         state = parsed; saveState();
                         document.getElementById('inputIHSG').value = state.currentIHSG || 5873.37;
                         updateIHSGMultiplier(); refreshApp();
-                        alert("Database Berhasil Diimpor Sempurna!");
-                        switchTab('dashboard');
+                        alert("Database Berhasil Diimpor Sempurna!"); switchTab('dashboard');
                     } else { alert("Format JSON keliru."); }
                 } catch (err) { alert("Gagal membaca file."); }
             };
@@ -1525,12 +1440,10 @@
 
         function resetToSeed() {
             if (confirm("Restore data simulasi awal? Perubahan saat ini akan tertimpa.")) {
-                state = JSON.parse(JSON.stringify(SEED_DATA));
-                saveState(); 
+                state = JSON.parse(JSON.stringify(SEED_DATA)); saveState(); 
                 document.getElementById('inputIHSG').value = state.currentIHSG;
                 document.getElementById('lblBaseIHSG').innerText = state.baseIHSG.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                updateIHSGMultiplier(); 
-                refreshApp();
+                updateIHSGMultiplier(); refreshApp();
             }
         }
 
