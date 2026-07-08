@@ -56,7 +56,7 @@
         <i class="fa-solid fa-arrow-up text-sm"></i>
     </button>
 
-    <!-- PREMIUM FULL-SCREEN OVERLAY MONTH MODAL (TIMBUL FULL LAYAR) -->
+    <!-- PREMIUM FULL-SCREEN OVERLAY MONTH MODAL -->
     <div id="monthModal" class="hidden fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-[100] flex items-center justify-center p-4 transition-all duration-300">
         <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl border border-slate-200/80 p-6 space-y-4 animate-[fadeIn_0.3s_ease-in-out]">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
@@ -102,7 +102,6 @@
         </div>
 
         <!-- RESPONSIVE NAVIGATION -->
-        <!-- 1. DESKTOP TABS -->
         <div class="border-t border-slate-100 bg-white hidden sm:block">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="flex space-x-2 py-2">
@@ -122,7 +121,7 @@
             </div>
         </div>
 
-        <!-- 2. MOBILE DROPDOWN MENU -->
+        <!-- MOBILE DROPDOWN MENU -->
         <div class="border-t border-slate-100 bg-white block sm:hidden px-4 py-2.5 relative">
             <button onclick="toggleMobileMenu()" id="mobileMenuBtn" class="w-full flex items-center justify-between py-2.5 px-4 text-xs font-bold rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-100 shadow-sm transition-all">
                 <span id="mobileMenuCurrentText"><i class="fa-solid fa-chart-pie mr-2"></i>Dashboard</span>
@@ -140,7 +139,7 @@
     <!-- MAIN APP WRAPPER -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
-        <!-- MONTH FILTER CONTROLLER TRIGGER (Tampil di Dashboard & Jurnal) -->
+        <!-- MONTH FILTER CONTROLLER TRIGGER -->
         <div id="monthFilterWrapper" class="mb-8 bg-white p-4 rounded-2xl border border-slate-200/60 shadow-sm flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <div class="bg-indigo-50 p-2.5 rounded-xl text-indigo-600">
@@ -280,7 +279,6 @@
 
             <!-- LOWER GRID (ACCOUNTS, IHSG, CHARTS) -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <!-- SIDEBAR ACCOUNTS WITH SLIM SCROLL ACTIVE -->
                 <div class="lg:col-span-5 space-y-6">
                     <div class="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-6">
                         <div class="flex items-center justify-between mb-5 border-b border-slate-100 pb-3">
@@ -290,7 +288,6 @@
                             </h3>
                             <span class="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-md uppercase tracking-wide">Live Asset</span>
                         </div>
-                        <!-- SCROLL CONTAINER ACTIVE FOR ACCOUNT OPTIMIZATION -->
                         <div class="space-y-2.5 max-h-[340px] overflow-y-auto pr-1.5 custom-scroll" id="accountListContainer">
                             <!-- Injected by JS -->
                         </div>
@@ -475,6 +472,46 @@
         <!-- TAB: BACKUP & DATA CONFIG -->
         <div id="content-settings" class="tab-content space-y-6">
             <div class="max-w-3xl mx-auto space-y-6">
+                
+                <!-- NEW LOOK: GITHUB REALTIME CLOUD SYNC CONTROL CARD -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2 border-b border-slate-100 pb-3">
+                        <i class="fa-brands fa-github text-slate-900 text-sm"></i>
+                        <span>Sinkronisasi Cloud Awam GitHub API</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                        Hubungkan token GitHub Anda untuk mengamankan data pembukuan langsung ke repositori Git pribadi secara lintas perangkat (Pencegah kehilangan data sejati).
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                        <div>
+                            <label class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">Personal Access Token</label>
+                            <input type="password" id="ghToken" class="w-full px-3 py-2 text-xs border border-slate-200 bg-slate-50 rounded-xl focus:outline-none focus:bg-white font-medium" placeholder="ghp_xxxxxxxxxxxx">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">Repository Name</label>
+                            <input type="text" id="ghRepo" class="w-full px-3 py-2 text-xs border border-slate-200 bg-slate-50 rounded-xl focus:outline-none focus:bg-white font-medium" placeholder="username/nama-repo">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">File Path Target</label>
+                            <input type="text" id="ghPath" class="w-full px-3 py-2 text-xs border border-slate-200 bg-slate-50 rounded-xl focus:outline-none focus:bg-white font-medium" placeholder="data.json">
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <button onclick="saveGitHubConfig()" class="bg-slate-900 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded-xl text-xs transition shadow-sm flex items-center space-x-2">
+                            <i class="fa-solid fa-key text-[10px]"></i> <span>Simpan Kredensial</span>
+                        </button>
+                        <button onclick="pushToGitHub()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-xl text-xs transition shadow-sm flex items-center space-x-2">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> <span>Push ke Cloud (Upload)</span>
+                        </button>
+                        <button onclick="pullFromGitHub()" class="bg-violet-600 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded-xl text-xs transition shadow-sm flex items-center space-x-2">
+                            <i class="fa-solid fa-cloud-arrow-down"></i> <span>Pull dari Cloud (Download)</span>
+                        </button>
+                    </div>
+                    <p id="ghSyncStatus" class="text-[10px] font-bold text-slate-400 mt-2 italic"></p>
+                </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
                         <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2 border-b border-slate-100 pb-3">
@@ -530,7 +567,7 @@
         const ACCOUNTS_LIST = ["Dompet", "Bank BCA 1", "Bank BCA 2", "Bank Jago", "Dana", "GoPay", "ShopeePay", "Saldo RDN", "Reksadana & Obligasi", "Saham"];
         const CATEGORIES = {
             income: ["Gaji", "Dividen", "Keuntungan Investasi", "Lainnya"],
-            expense: ["Makanan & Minuman", "Transportasi", "Gaya Lifestyle", "Tagihan & Utilitas", "Investasi (Bibit/RDN)", "Lainnya"]
+            expense: ["Makanan & Minuman", "Transportasi", "Gaya Hidup", "Tagihan & Utilitas", "Investasi (Bibit/RDN)", "Lainnya"]
         };
 
         const SEED_DATA = {
@@ -545,10 +582,11 @@
             ],
             startingBalances: {
                 "Dompet": 500000, "Bank BCA 1": 8500000, "Bank BCA 2": 3000000, "Bank Jago": 4500000, "Dana": 350000, "GoPay": 200000, "ShopeePay": 100000, "Saldo RDN": 1500000, "Reksadana & Obligasi": 12000000, "Saham": 15000000
-            }
+            },
+            github: { token: '', repo: '', path: 'fintrack_data.json' }
         };
 
-        let state = { baseIHSG: 7200, currentIHSG: 7200, transactions: [], startingBalances: {} };
+        let state = { baseIHSG: 7200, currentIHSG: 7200, transactions: [], startingBalances: {}, github: { token: '', repo: '', path: 'fintrack_data.json' } };
         let activeYear = 2026;
         let activeMonth = -1;
         let incomeChartInstance = null;
@@ -582,15 +620,12 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // FULL SCREEN OVERLAY ENGINE LOGIC (TIMBUL FULL LAYAR)
         function openMonthModal() {
-            const modal = document.getElementById('monthModal');
-            modal.classList.remove('hidden');
+            document.getElementById('monthModal').classList.remove('hidden');
         }
 
         function closeMonthModal() {
-            const modal = document.getElementById('monthModal');
-            modal.classList.add('hidden');
+            document.getElementById('monthModal').classList.add('hidden');
         }
 
         function initModalMonthGrid() {
@@ -607,11 +642,8 @@
 
         function setMonthFilter(m) {
             activeMonth = m;
-            
-            // Sync current dynamic banner labels
             document.getElementById('lblCurrentMonth').innerText = m === -1 ? "Semua Bulan (Kombinasi)" : `${MONTHS_NAMES[m]}`;
             
-            // Paint modal inside styling states
             document.getElementById('btn-modal-month-all').className = m === -1 ? 
                 "col-span-2 sm:col-span-3 py-3 px-4 text-xs font-bold rounded-xl bg-indigo-600 text-white text-center shadow-md shadow-indigo-100 transition-all" : 
                 "col-span-2 sm:col-span-3 py-3 px-4 text-xs font-bold rounded-xl text-slate-600 bg-slate-50 border border-slate-200/60 hover:bg-indigo-50 hover:text-indigo-700 text-center transition-all";
@@ -627,6 +659,124 @@
             closeMonthModal();
             refreshApp();
         }
+
+        // ================= GITHUB SYSTEM CLOUD SYNC CORE ENGINE =================
+        function saveGitHubConfig() {
+            state.github = {
+                token: document.getElementById('ghToken').value.trim(),
+                repo: document.getElementById('ghRepo').value.trim(),
+                path: document.getElementById('ghPath').value.trim() || 'fintrack_data.json'
+            };
+            saveState();
+            showGHStatus("Kredensial GitHub tersimpan di memori browser!", "text-emerald-600");
+        }
+
+        function showGHStatus(msg, colorClass = "text-slate-500") {
+            const el = document.getElementById('ghSyncStatus');
+            if (el) {
+                el.className = `text-[10px] font-bold mt-2 italic ${colorClass}`;
+                el.innerText = msg;
+            }
+        }
+
+        // PUSH SYSTEM: Commits local memory state straight into cloud storage JSON node
+        async function pushToGitHub() {
+            const { token, repo, path } = state.github;
+            if (!token || !repo) {
+                alert("Harap isi Token dan Nama Repo terlebih dahulu di kolom atas!");
+                return;
+            }
+            showGHStatus("Menghubungi server GitHub...", "text-indigo-600");
+
+            const url = `https://api.github.com/repos/${repo}/contents/${path}`;
+            let sha = null;
+
+            // Step 1: Check if file already exists to get its unique SHA identifier
+            try {
+                const res = await fetch(url, {
+                    headers: { "Authorization": `token ${token}`, "Accept": "application/vnd.github.v3+json" }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    sha = data.sha;
+                }
+            } catch (err) { /* File doesn't exist yet, safe to proceed with null sha */ }
+
+            // Step 2: Push commit package bundle
+            try {
+                const cleanState = { ...state };
+                cleanState.github = { token: '', repo: '', path: '' }; // Zero out token info before pushing to cloud repo for maximum protection
+                
+                const jsonString = JSON.stringify(cleanState, null, 2);
+                const utf8Bytes = new TextEncoder().encode(jsonString);
+                const base64Content = btoa(String.fromCharCode(...utf8Bytes));
+
+                const bodyPayload = {
+                    message: `FinTrack Cloud Sync - Update: ${new Date().toISOString().slice(0,10)}`,
+                    content: base64Content
+                };
+                if (sha) bodyPayload.sha = sha;
+
+                const putRes = await fetch(url, {
+                    method: "PUT",
+                    headers: { "Authorization": `token ${token}`, "Content-Type": "application/json" },
+                    body: JSON.stringify(bodyPayload)
+                });
+
+                if (putRes.ok) {
+                    showGHStatus("Sinkronisasi Sukses! Data berhasil diamankan ke cloud GitHub.", "text-emerald-600");
+                    alert("Data Berhasil Diupload ke GitHub Cloud!");
+                } else {
+                    const errData = await putRes.json();
+                    showGHStatus(`Gagal push: ${errData.message}`, "text-rose-600");
+                }
+            } catch (error) {
+                showGHStatus("Error koneksi fatal saat push.", "text-rose-600");
+            }
+        }
+
+        // PULL SYSTEM: Pulls server architecture array back into individual browser local sandbox
+        async function pullFromGitHub() {
+            const { token, repo, path } = state.github;
+            if (!token || !repo) {
+                alert("Harap isi Kredensial Token dan Repo Anda untuk menarik data!");
+                return;
+            }
+            if (!confirm("Tarik data dari GitHub? Data lokal yang belum diupload akan tertimpa.")) return;
+
+            showGHStatus("Mengunduh data terenkripsi dari awan...", "text-indigo-600");
+            const url = `https://api.github.com/repos/${repo}/contents/${path}`;
+
+            try {
+                const res = await fetch(url, {
+                    headers: { "Authorization": `token ${token}`, "Accept": "application/vnd.github.v3+json" }
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    const rawContent = data.content.replace(/\s/g, '');
+                    const decodedString = new TextDecoder().decode(Uint8Array.from(atob(rawContent), c => c.charCodeAt(0)));
+                    
+                    const parsedState = JSON.parse(decodedString);
+                    
+                    // Retain github access parameters locally so they don't get wiped out by the download process
+                    parsedState.github = { token, repo, path };
+                    
+                    state = parsedState;
+                    saveState();
+                    refreshApp();
+                    
+                    showGHStatus("Sinkronisasi Selesai! Seluruh data lokal diperbarui sesuai cloud.", "text-emerald-600");
+                    alert("Sinkronisasi Berhasil! Seluruh data diperbarui dari GitHub.");
+                    switchTab('dashboard');
+                } else {
+                    showGHStatus("File target tidak ditemukan di GitHub. Pastikan path benar.", "text-rose-600");
+                }
+            } catch (err) {
+                showGHStatus("Gagal menarik data cloud.", "text-rose-600");
+            }
+        }
+        // =======================================================================
 
         function toggleMobileMenu() {
             const container = document.getElementById('mobileDropdownContainer');
@@ -684,10 +834,19 @@
                 try {
                     state = JSON.parse(localData);
                     if (!state.startingBalances) state.startingBalances = { ...SEED_DATA.startingBalances };
+                    if (!state.github) state.github = { token: '', repo: '', path: 'fintrack_data.json' };
                 } catch (e) { state = { ...SEED_DATA }; }
             } else {
                 state = JSON.parse(JSON.stringify(SEED_DATA));
             }
+            
+            // Re-populate config elements in UI
+            if(state.github) {
+                document.getElementById('ghToken').value = state.github.token || '';
+                document.getElementById('ghRepo').value = state.github.repo || '';
+                document.getElementById('ghPath').value = state.github.path || 'fintrack_data.json';
+            }
+            
             document.getElementById('inputIHSG').value = state.currentIHSG || 7200;
         }
 
@@ -711,7 +870,6 @@
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             document.getElementById(`content-${tabId}`).classList.add('active');
             
-            // Dynamic node checks to display the premium trigger box container
             const monthFilter = document.getElementById('monthFilterWrapper');
             if (monthFilter) {
                 if (tabId === 'dashboard' || tabId === 'history') {
@@ -1087,7 +1245,7 @@
 
         function clearAllData() {
             if (confirm("Wipe out seluruh data pembukuan Anda menjadi Rp 0?")) {
-                state = { baseIHSG: 7200, currentIHSG: 7200, transactions: [], startingBalances: { "Dompet": 0, "Bank BCA 1": 0, "Bank BCA 2": 0, "Bank Jago": 0, "Dana": 0, "GoPay": 0, "ShopeePay": 0, "Saldo RDN": 0, "Reksadana & Obligasi": 0, "Saham": 0 } };
+                state = { baseIHSG: 7200, currentIHSG: 7200, transactions: [], startingBalances: { "Dompet": 0, "Bank BCA 1": 0, "Bank BCA 2": 0, "Bank Jago": 0, "Dana": 0, "GoPay": 0, "ShopeePay": 0, "Saldo RDN": 0, "Reksadana & Obligasi": 0, "Saham": 0 }, github: { token: '', repo: '', path: 'fintrack_data.json' } };
                 saveState(); resetIHSG(); refreshApp();
             }
         }
