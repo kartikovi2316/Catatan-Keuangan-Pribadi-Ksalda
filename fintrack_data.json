@@ -3,13 +3,44 @@
   "currentIHSG": 7200,
   "transactions": [
     {
-      "id": "tx_1783497275479",
+      "id": "tx_1783504402911",
       "type": "income",
-      "amount": 500000,
-      "account": "Dompet",
-      "category": "Gaji",
+      "amount": 588000,
+      "account": "Saldo RDN",
+      "category": "Lainnya",
+      "toAccount": "",
       "date": "2026-07-08",
-      "notes": "Gaji Bulanan"
+      "notes": "Pengembalian Dana Penawaran Umum"
+    },
+    {
+      "id": "tx_1783504444412",
+      "type": "income",
+      "amount": 2050583,
+      "account": "Reksadana & Obligasi",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-08",
+      "notes": "Obligasi"
+    },
+    {
+      "id": "tx_1783504466828",
+      "type": "income",
+      "amount": 3061655,
+      "account": "Reksadana & Obligasi",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-08",
+      "notes": "Reksadana"
+    },
+    {
+      "id": "tx_1783504489116",
+      "type": "income",
+      "amount": 2357800,
+      "account": "Saham",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-08",
+      "notes": "Investasi Saham"
     }
   ],
   "startingBalances": {
@@ -17,6 +48,9 @@
     "Bank BCA 1": 0,
     "Bank BCA 2": 0,
     "Bank Jago": 0,
+    "Dana": 0,
+    "GoPay": 0,
+    "ShopeePay": 0,
     "Saldo RDN": 0,
     "Reksadana & Obligasi": 0,
     "Saham": 0
