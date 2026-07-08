@@ -102,7 +102,6 @@
         </div>
 
         <!-- RESPONSIVE NAVIGATION -->
-        <!-- 1. DESKTOP TABS -->
         <div class="border-t border-slate-100 bg-white hidden sm:block">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="flex space-x-2 py-2">
@@ -122,7 +121,7 @@
             </div>
         </div>
 
-        <!-- 2. MOBILE DROPDOWN MENU -->
+        <!-- MOBILE DROPDOWN MENU -->
         <div class="border-t border-slate-100 bg-white block sm:hidden px-4 py-2.5 relative">
             <button onclick="toggleMobileMenu()" id="mobileMenuBtn" class="w-full flex items-center justify-between py-2.5 px-4 text-xs font-bold rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-100 shadow-sm transition-all">
                 <span id="mobileMenuCurrentText"><i class="fa-solid fa-chart-pie mr-2"></i>Dashboard</span>
@@ -193,14 +192,15 @@
                     <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-purple-600/0 pointer-events-none"></div>
                     <div class="flex items-center justify-between relative z-10">
                         <div>
-                            <p class="text-[11px] font-bold text-indigo-300 uppercase tracking-wider">Sisa Aset Lancar (Net Worth)</p>
+                            <!-- FIX: Re-branded title from Liquid Asset to global Net Worth framework -->
+                            <p class="text-[11px] font-bold text-indigo-300 uppercase tracking-wider">Total Kekayaan Bersih (Net Worth)</p>
                             <h3 id="kpiNetWorth" class="text-2xl font-extrabold text-white mt-1">Rp 0</h3>
                         </div>
                         <div class="p-3 bg-indigo-500/20 text-indigo-400 rounded-xl border border-indigo-500/20">
                             <i class="fa-solid fa-vault text-lg"></i>
                         </div>
                     </div>
-                    <p class="text-[11px] text-indigo-300/70 mt-4 font-medium">Akumulasi Real-Time Keseluruhan</p>
+                    <p class="text-[11px] text-indigo-300/70 mt-4 font-medium">Akumulasi Real-Time Seluruh Sektor Aset</p>
                 </div>
             </div>
 
@@ -260,18 +260,21 @@
                         <div>
                             <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center space-x-1">
                                 <i class="fa-solid fa-scale-balanced text-amber-500"></i>
-                                <span>Rasio Alokasi Aset</span>
+                                <span>Rasio Alokasi Sektor Aset</span>
                             </h4>
-                            <span class="text-[11px] text-slate-500 block mt-1 font-medium">Likuid vs Investasi</span>
+                            <span class="text-[11px] text-slate-500 block mt-1 font-medium">Lancar vs Investasi vs Saham</span>
                         </div>
                         <div class="space-y-2 mt-4">
-                            <div class="w-full bg-amber-500 h-2 rounded-full overflow-hidden flex">
-                                <div id="ratioLiquidBar" class="bg-blue-500 h-full" style="width: 50%"></div>
-                                <div id="ratioGrowthBar" class="bg-purple-500 h-full" style="width: 50%"></div>
+                            <!-- FIX: Expanded allocation bar layout into a 3-way distribution to isolate stocks -->
+                            <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden flex">
+                                <div id="ratioLiquidBar" class="bg-blue-500 h-full" style="width: 33.3%"></div>
+                                <div id="ratioInvBar" class="bg-purple-500 h-full" style="width: 33.3%"></div>
+                                <div id="ratioSahamBar" class="bg-amber-500 h-full" style="width: 33.3%"></div>
                             </div>
-                            <div class="flex justify-between text-[9px] font-bold uppercase tracking-wider">
-                                <span class="text-blue-600" id="lblRatioLiquid">Cash: 0%</span>
-                                <span class="text-purple-600" id="lblRatioGrowth">Inv: 0%</span>
+                            <div class="flex justify-between text-[9px] font-bold uppercase tracking-wider flex-wrap gap-1">
+                                <span class="text-blue-600" id="lblRatioLiquid">Lancar: 0%</span>
+                                <span class="text-purple-600" id="lblRatioInv">Inv: 0%</span>
+                                <span class="text-amber-600" id="lblRatioSaham">Saham: 0%</span>
                             </div>
                         </div>
                     </div>
@@ -308,7 +311,8 @@
                         <div class="grid grid-cols-2 gap-4 bg-white/5 p-3 rounded-xl border border-white/5 mb-4 relative z-10">
                             <div>
                                 <label class="block text-[9px] text-slate-500 uppercase font-bold tracking-wider">IHSG Base</label>
-                                <span class="text-xs font-bold text-slate-300" id="lblBaseIHSG">7.200</span>
+                                <!-- FIX: Adjusted base presentation label to align with decimal updates -->
+                                <span class="text-xs font-bold text-slate-300" id="lblBaseIHSG">5.873,37</span>
                             </div>
                             <div>
                                 <label class="block text-[9px] text-slate-500 uppercase font-bold tracking-wider">Performa Market</label>
@@ -316,7 +320,8 @@
                             </div>
                         </div>
                         <div class="flex space-x-2 relative z-10">
-                            <input type="number" id="inputIHSG" value="7200" step="10" oninput="updateIHSGMultiplier()" class="w-full bg-white/10 border border-white/10 rounded-xl px-3 py-2 text-white text-sm font-bold focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/30">
+                            <!-- FIX: Converted initial value to 5873.37 with a step multiplier of 0.01 for decimal precision -->
+                            <input type="number" id="inputIHSG" value="5873.37" step="0.01" oninput="updateIHSGMultiplier()" class="w-full bg-white/10 border border-white/10 rounded-xl px-3 py-2 text-white text-sm font-bold focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/30">
                             <button onclick="resetIHSG()" class="bg-white/10 hover:bg-white/20 text-slate-300 px-3 rounded-xl text-xs transition border border-white/5 shadow-sm" title="Reset">
                                 <i class="fa-solid fa-rotate-left"></i>
                             </button>
@@ -374,7 +379,6 @@
                     <form id="transactionForm" onsubmit="saveTransaction(event)" class="space-y-4">
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Jenis Arus Kas</label>
-                            <!-- FIX: Expanded grid-cols-3 to elegantly fit the new Transfer option -->
                             <div class="grid grid-cols-3 gap-2">
                                 <label class="flex items-center justify-center space-x-2 py-2 px-3 border rounded-xl cursor-pointer transition text-xs font-bold border-emerald-500 bg-emerald-50/50 text-emerald-700" id="labelTypeIncome">
                                     <input type="radio" name="txType" value="income" checked onchange="toggleTxType('income')" class="sr-only">
@@ -397,7 +401,8 @@
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <span class="text-slate-400 text-xs font-bold">IDR</span>
                                 </div>
-                                <input type="number" id="txAmount" required min="1" class="block w-full pl-12 pr-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-slate-900 font-extrabold text-base focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/5 transition-all" placeholder="0">
+                                <!-- FIX: Transformed input type to 'text' with real-time numeric dot-formatting via an oninput listener (as referenced in image_0fd0de.png layout) -->
+                                <input type="text" id="txAmount" required oninput="formatInputNumber(this)" class="block w-full pl-12 pr-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-slate-900 font-extrabold text-base focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/5 transition-all" placeholder="0">
                             </div>
                         </div>
 
@@ -408,7 +413,6 @@
                                     <!-- Filled by JS -->
                                 </select>
                             </div>
-                            <!-- REWORKED: Conditional wrapper nodes for Category vs Destination Accounts -->
                             <div id="divCategory">
                                 <label for="txCategory" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Klasifikasi Kategori</label>
                                 <select id="txCategory" class="block w-full px-3 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:border-indigo-500 focus:bg-white">
@@ -461,7 +465,6 @@
                     </div>
                 </div>
 
-                <!-- RESPONSIVE TABLE WITH STICKY ACCOUNT COLUMN -->
                 <div class="overflow-x-auto rounded-xl border border-slate-150 relative">
                     <table class="w-full text-left text-xs border-collapse min-w-[650px]">
                         <thead>
@@ -583,9 +586,10 @@
             expense: ["Makanan & Minuman", "Transportasi", "Gaya Hidup", "Tagihan & Utilitas", "Investasi (Bibit/RDN)", "Lainnya"]
         };
 
+        // FIX: Realigned normal/base values to 5873.37 across framework blueprints
         const SEED_DATA = {
-            baseIHSG: 7200,
-            currentIHSG: 7200,
+            baseIHSG: 5873.37,
+            currentIHSG: 5873.37,
             transactions: [
                 { id: "s1", type: "income", amount: 7000000, account: "Bank BCA 1", category: "Gaji", date: "2026-01-25", notes: "Gaji Bulanan Utama" },
                 { id: "s2", type: "expense", amount: 150000, account: "Dompet", category: "Makanan & Minuman", date: "2026-01-26", notes: "Makan Mie Gacoan & Seblak" },
@@ -599,7 +603,7 @@
             github: { token: '', repo: '', path: 'fintrack_data.json' }
         };
 
-        let state = { baseIHSG: 7200, currentIHSG: 7200, transactions: [], startingBalances: {}, github: { token: '', repo: '', path: 'fintrack_data.json' } };
+        let state = { baseIHSG: 5873.37, currentIHSG: 5873.37, transactions: [], startingBalances: {}, github: { token: '', repo: '', path: 'fintrack_data.json' } };
         let activeYear = 2026;
         let activeMonth = -1;
         let incomeChartInstance = null;
@@ -617,6 +621,16 @@
             refreshApp();
             initScrollDetection();
         });
+
+        // FIX: Implemented real-time dynamic masking logic for thousand separators
+        function formatInputNumber(input) {
+            let value = input.value.replace(/\D/g, "");
+            if (value === "") {
+                input.value = "";
+                return;
+            }
+            input.value = new Intl.NumberFormat('id-ID').format(value);
+        }
 
         function initScrollDetection() {
             window.addEventListener('scroll', () => {
@@ -814,7 +828,6 @@
             activeYear = 2026; select.value = activeYear;
         }
 
-        // REWORKED: Populates source and destination options across form dropdown nodes
         function initFormDropdowns() {
             const accountSelect = document.getElementById('txAccount');
             const toAccountSelect = document.getElementById('txToAccount');
@@ -848,6 +861,8 @@
                     state = JSON.parse(localData);
                     if (!state.startingBalances) state.startingBalances = { ...SEED_DATA.startingBalances };
                     if (!state.github) state.github = { token: '', repo: '', path: 'fintrack_data.json' };
+                    // Apply dynamic adjustment if seed reset defaults to old values
+                    if (state.baseIHSG === 7200) { state.baseIHSG = 5873.37; state.currentIHSG = 5873.37; }
                 } catch (e) { state = { ...SEED_DATA }; }
             } else {
                 state = JSON.parse(JSON.stringify(SEED_DATA));
@@ -859,7 +874,8 @@
                 document.getElementById('ghPath').value = state.github.path || 'fintrack_data.json';
             }
             
-            document.getElementById('inputIHSG').value = state.currentIHSG || 7200;
+            document.getElementById('lblBaseIHSG').innerText = state.baseIHSG.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('inputIHSG').value = state.currentIHSG || 5873.37;
         }
 
         function saveState() {
@@ -908,7 +924,6 @@
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(num);
         }
 
-        // REWORKED: Controls view switches for Transfer configuration forms
         function toggleTxType(type) {
             const lblIncome = document.getElementById('labelTypeIncome');
             const lblExpense = document.getElementById('labelTypeExpense');
@@ -918,7 +933,6 @@
             const catSelect = document.getElementById('txCategory');
             const lblTxAccount = document.getElementById('lblTxAccount');
 
-            // Reset dynamic class names
             lblIncome.className = "flex items-center justify-center space-x-2 py-2 px-3 border border-slate-200 rounded-xl cursor-pointer transition text-xs font-bold text-slate-600 hover:bg-slate-50";
             lblExpense.className = "flex items-center justify-center space-x-2 py-2 px-3 border border-slate-200 rounded-xl cursor-pointer transition text-xs font-bold text-slate-600 hover:bg-slate-50";
             lblTransfer.className = "flex items-center justify-center space-x-2 py-2 px-3 border border-slate-200 rounded-xl cursor-pointer transition text-xs font-bold text-slate-600 hover:bg-slate-50";
@@ -961,7 +975,6 @@
             });
         }
 
-        // REWORKED: Mathematical equation for calculation variables including absolute transfer mutators
         function getLiveBalances() {
             let balances = { ...state.startingBalances };
             state.transactions.forEach(t => {
@@ -969,9 +982,9 @@
                     if (t.type === 'income') balances[t.account] += t.amount;
                     else if (t.type === 'expense') balances[t.account] -= t.amount;
                     else if (t.type === 'transfer') {
-                        balances[t.account] -= t.amount; // Deduct source account
+                        balances[t.account] -= t.amount;
                         if (t.toAccount && balances[t.toAccount] !== undefined) {
-                            balances[t.toAccount] += t.amount; // Inject target account
+                            balances[t.toAccount] += t.amount;
                         }
                     }
                 }
@@ -989,7 +1002,7 @@
 
             filtered.forEach(t => {
                 if (t.type === 'income') incSum += t.amount;
-                else if (t.type === 'expense') expSum += t.amount; // Ignore transfers on macro KPI limits
+                else if (t.type === 'expense') expSum += t.amount;
             });
 
             document.getElementById('kpiIncome').innerText = formatRupiah(incSum);
@@ -1039,17 +1052,24 @@
                 statusEl.className = "text-[10px] font-bold text-amber-800 leading-tight";
             }
 
+            // FIX: Extracted stocks into an independent macro ratio container segment
             const liquidSum = (balances["Dompet"] || 0) + (balances["Bank BCA 1"] || 0) + (balances["Bank BCA 2"] || 0) + (balances["Bank Jago"] || 0) + (balances["Dana"] || 0) + (balances["GoPay"] || 0) + (balances["ShopeePay"] || 0) + (balances["Saldo RDN"] || 0);
-            const growthSum = (balances["Reksadana & Obligasi"] || 0) + (balances["Saham"] || 0);
-            const macroTotal = liquidSum + growthSum;
+            const invSum = (balances["Reksadana & Obligasi"] || 0);
+            const sahamSum = (balances["Saham"] || 0);
+            const macroTotal = liquidSum + invSum + sahamSum;
 
             if (macroTotal > 0) {
                 const liquidPercent = Math.round((liquidSum / macroTotal) * 100);
-                const growthPercent = 100 - liquidPercent;
+                const invPercent = Math.round((invSum / macroTotal) * 100);
+                const sahamPercent = Math.max(0, 100 - liquidPercent - invPercent);
+
                 document.getElementById('ratioLiquidBar').style.width = `${liquidPercent}%`;
-                document.getElementById('ratioGrowthBar').style.width = `${growthPercent}%`;
-                document.getElementById('lblRatioLiquid').innerText = `Cash/Bank: ${liquidPercent}%`;
-                document.getElementById('lblRatioGrowth').innerText = `Investasi: ${growthPercent}%`;
+                document.getElementById('ratioInvBar').style.width = `${invPercent}%`;
+                document.getElementById('ratioSahamBar').style.width = `${sahamPercent}%`;
+
+                document.getElementById('lblRatioLiquid').innerText = `Lancar: ${liquidPercent}%`;
+                document.getElementById('lblRatioInv').innerText = `Investasi: ${invPercent}%`;
+                document.getElementById('lblRatioSaham').innerText = `Saham: ${sahamPercent}%`;
             }
         }
 
@@ -1111,11 +1131,14 @@
             updateIHSGMultiplier();
         }
 
-        // REWORKED: Processes multi-account atomic transfers package execution
         function saveTransaction(e) {
             e.preventDefault();
             const type = document.querySelector('input[name="txType"]:checked').value;
-            const amount = parseInt(document.getElementById('txAmount').value);
+            
+            // FIX: Clean mask dots from string package before parsing numbers
+            const rawAmount = document.getElementById('txAmount').value.replace(/\./g, "");
+            const amount = parseInt(rawAmount);
+            
             const account = document.getElementById('txAccount').value;
             const category = type === 'transfer' ? 'Transfer Aset' : document.getElementById('txCategory').value;
             const toAccount = type === 'transfer' ? document.getElementById('txToAccount').value : '';
@@ -1124,17 +1147,20 @@
 
             if (!amount || amount <= 0) return;
             
-            // Loop blocking validation checks
             if (type === 'transfer' && account === toAccount) {
                 alert("Kesalahan Fatal: Akun Sumber dan Akun Tujuan tidak boleh sama!");
                 return;
             }
 
             state.transactions.push({ id: 'tx_' + Date.now(), type, amount, account, category, toAccount, date, notes });
-            saveState(); refreshApp(); setCurrentDateInForm();
+            saveState(); 
+            refreshApp(); 
             
-            document.getElementById('mobileMenuCurrentText').innerHTML = '<i class="fa-solid fa-chart-pie mr-2"></i>Dashboard';
-            switchTab('dashboard');
+            // FIX: Added clear feedback prompts and form-wide reset commands on safe execution
+            alert("🎉 Transaksi Berhasil Dicatat ke Dalam Jurnal Finansial!");
+            e.target.reset(); 
+            toggleTxType('income'); 
+            setCurrentDateInForm();
         }
 
         function deleteTransaction(id) {
@@ -1144,7 +1170,6 @@
             }
         }
 
-        // REWORKED: Renders flexible ledger log grids containing transfer parameters
         function renderHistoryTable() {
             const tbody = document.getElementById('historyTableBody'); tbody.innerHTML = '';
             const filtered = getFilteredTransactions();
@@ -1166,7 +1191,6 @@
                 row.className = "hover:bg-slate-50/80 transition text-xs border-b border-slate-100 group";
                 
                 const isInc = t.type === 'income';
-                const isExp = t.type === 'expense';
                 const isTrans = t.type === 'transfer';
                 
                 let badgeClass = 'bg-slate-100 text-slate-700 border border-slate-200';
@@ -1299,7 +1323,7 @@
                     const parsed = JSON.parse(event.target.result);
                     if (parsed.transactions && parsed.startingBalances) {
                         state = parsed; saveState();
-                        document.getElementById('inputIHSG').value = state.currentIHSG || 7200;
+                        document.getElementById('inputIHSG').value = state.currentIHSG || 5873.37;
                         updateIHSGMultiplier(); refreshApp();
                         alert("Database Berhasil Diimpor Sempurna!");
                         switchTab('dashboard');
@@ -1312,14 +1336,17 @@
         function resetToSeed() {
             if (confirm("Restore data simulasi awal? Perubahan saat ini akan tertimpa.")) {
                 state = JSON.parse(JSON.stringify(SEED_DATA));
-                saveState(); document.getElementById('inputIHSG').value = state.currentIHSG;
-                updateIHSGMultiplier(); refreshApp();
+                saveState(); 
+                document.getElementById('inputIHSG').value = state.currentIHSG;
+                document.getElementById('lblBaseIHSG').innerText = state.baseIHSG.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                updateIHSGMultiplier(); 
+                refreshApp();
             }
         }
 
         function clearAllData() {
             if (confirm("Wipe out seluruh data pembukuan Anda menjadi Rp 0?")) {
-                state = { baseIHSG: 7200, currentIHSG: 7200, transactions: [], startingBalances: { "Dompet": 0, "Bank BCA 1": 0, "Bank BCA 2": 0, "Bank Jago": 0, "Dana": 0, "GoPay": 0, "ShopeePay": 0, "Saldo RDN": 0, "Reksadana & Obligasi": 0, "Saham": 0 }, github: { token: '', repo: '', path: 'fintrack_data.json' } };
+                state = { baseIHSG: 5873.37, currentIHSG: 5873.37, transactions: [], startingBalances: { "Dompet": 0, "Bank BCA 1": 0, "Bank BCA 2": 0, "Bank Jago": 0, "Dana": 0, "GoPay": 0, "ShopeePay": 0, "Saldo RDN": 0, "Reksadana & Obligasi": 0, "Saham": 0 }, github: { token: '', repo: '', path: 'fintrack_data.json' } };
                 saveState(); resetIHSG(); refreshApp();
             }
         }
