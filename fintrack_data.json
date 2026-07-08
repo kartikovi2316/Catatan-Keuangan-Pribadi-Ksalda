@@ -1,6 +1,6 @@
 {
-  "baseIHSG": 7200,
-  "currentIHSG": 7200,
+  "baseIHSG": 5873.37,
+  "currentIHSG": 5873.37,
   "transactions": [
     {
       "id": "tx_1783504402911",
@@ -41,6 +41,56 @@
       "toAccount": "",
       "date": "2026-07-08",
       "notes": "Investasi Saham"
+    },
+    {
+      "id": "tx_1783508765501",
+      "type": "income",
+      "amount": 122000,
+      "account": "Dompet",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-08",
+      "notes": "Cash"
+    },
+    {
+      "id": "tx_1783508803793",
+      "type": "income",
+      "amount": 60076,
+      "account": "Bank BCA 2",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-08",
+      "notes": "Sisa saldo"
+    },
+    {
+      "id": "tx_1783508884200",
+      "type": "income",
+      "amount": 1737013,
+      "account": "Bank BCA 1",
+      "category": "Gaji",
+      "toAccount": "",
+      "date": "2026-07-08",
+      "notes": "Sisa saldo"
+    },
+    {
+      "id": "tx_1783508916678",
+      "type": "income",
+      "amount": 539,
+      "account": "Bank Jago",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-08",
+      "notes": "Sisa saldo"
+    },
+    {
+      "id": "tx_1783508994989",
+      "type": "income",
+      "amount": 9450,
+      "account": "ShopeePay",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-08",
+      "notes": "Sisa saldo"
     }
   ],
   "startingBalances": {
