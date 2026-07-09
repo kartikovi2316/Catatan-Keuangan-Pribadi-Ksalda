@@ -131,15 +131,6 @@
       "toAccount": "",
       "date": "2026-07-09",
       "notes": "Saham PRDL"
-    },
-    {
-      "id": "tx_1783572987017",
-      "date": "2026-07-09",
-      "account": "Saham",
-      "amount": 51367,
-      "type": "income",
-      "category": "Keuntungan Investasi",
-      "notes": "Kenaikan Portfolio Saham (+2.29%)"
     }
   ],
   "startingBalances": {
