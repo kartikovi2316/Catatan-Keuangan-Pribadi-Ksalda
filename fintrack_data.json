@@ -141,6 +141,15 @@
       "toAccount": "",
       "date": "2026-07-09",
       "notes": "Bayar Langganan GPT"
+    },
+    {
+      "id": "tx_1783587499743",
+      "date": "2026-07-09",
+      "account": "Saham",
+      "amount": 1122,
+      "type": "income",
+      "category": "Keuntungan Investasi",
+      "notes": "Kenaikan Portfolio Saham (+0.05%)"
     }
   ],
   "startingBalances": {
