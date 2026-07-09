@@ -192,7 +192,10 @@
             <div class="max-w-7xl mx-auto px-4">
                 <div class="flex space-x-2 py-2">
                     <button onclick="switchTab('dashboard')" id="tab-dashboard" class="py-2 px-4 text-xs font-bold rounded-lg bg-indigo-50 text-indigo-700 flex items-center space-x-2 transition-all duration-200">
-                        <i class="fa-solid fa-chart-pie"></i><span>Dashboard</span>
+                        <i class="fa-solid fa-chart-pie"></i><span>Dashboard Kas</span>
+                    </button>
+                    <button onclick="switchTab('investment')" id="tab-investment" class="py-2 px-4 text-xs font-bold rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-50 flex items-center space-x-2 transition-all duration-200">
+                        <i class="fa-solid fa-arrow-trend-up"></i><span>Investasi</span>
                     </button>
                     <button onclick="switchTab('input')" id="tab-input" class="py-2 px-4 text-xs font-bold rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-50 flex items-center space-x-2 transition-all duration-200">
                         <i class="fa-solid fa-circle-plus"></i><span>Catat Arus Kas</span>
@@ -210,11 +213,12 @@
         <!-- MOBILE DROPDOWN MENU -->
         <div class="border-t border-slate-100 bg-white block sm:hidden px-4 py-2.5 relative">
             <button onclick="toggleMobileMenu()" id="mobileMenuBtn" class="w-full flex items-center justify-between py-2.5 px-4 text-xs font-bold rounded-xl bg-indigo-50 text-indigo-700 border border-indigo-100 shadow-sm transition-all">
-                <span id="mobileMenuCurrentText"><i class="fa-solid fa-chart-pie mr-2"></i>Dashboard</span>
+                <span id="mobileMenuCurrentText"><i class="fa-solid fa-chart-pie mr-2"></i>Dashboard Kas</span>
                 <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200" id="mobileMenuIcon"></i>
             </button>
             <div id="mobileDropdownContainer" class="hidden absolute left-4 right-4 mt-1.5 bg-white border border-slate-200 rounded-xl shadow-xl z-50 overflow-hidden divide-y divide-slate-100">
-                <button onclick="selectMobileTab('dashboard')" class="w-full text-left py-3 px-4 text-xs font-bold text-slate-700 hover:bg-slate-50 flex items-center space-x-3"><i class="fa-solid fa-chart-pie text-slate-400 w-4"></i><span>Dashboard</span></button>
+                <button onclick="selectMobileTab('dashboard')" class="w-full text-left py-3 px-4 text-xs font-bold text-slate-700 hover:bg-slate-50 flex items-center space-x-3"><i class="fa-solid fa-chart-pie text-slate-400 w-4"></i><span>Dashboard Kas</span></button>
+                <button onclick="selectMobileTab('investment')" class="w-full text-left py-3 px-4 text-xs font-bold text-slate-700 hover:bg-slate-50 flex items-center space-x-3"><i class="fa-solid fa-arrow-trend-up text-slate-400 w-4"></i><span>Investasi</span></button>
                 <button onclick="selectMobileTab('input')" class="w-full text-left py-3 px-4 text-xs font-bold text-slate-700 hover:bg-slate-50 flex items-center space-x-3"><i class="fa-solid fa-circle-plus text-slate-400 w-4"></i><span>Catat Arus Kas</span></button>
                 <button onclick="selectMobileTab('history')" class="w-full text-left py-3 px-4 text-xs font-bold text-slate-700 hover:bg-slate-50 flex items-center space-x-3"><i class="fa-solid fa-receipt text-slate-400 w-4"></i><span>Jurnal Transaksi</span></button>
                 <button onclick="selectMobileTab('settings')" class="w-full text-left py-3 px-4 text-xs font-bold text-slate-700 hover:bg-slate-50 flex items-center space-x-3"><i class="fa-solid fa-database text-slate-400 w-4"></i><span>Backup & Jurnal Data</span></button>
@@ -292,7 +296,7 @@
                     <div class="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-purple-600/0 pointer-events-none"></div>
                     <div class="flex items-center justify-between relative z-10">
                         <div>
-                            <p class="text-[11px] font-bold text-indigo-300 uppercase tracking-wider">Total Aset (Semua)</p>
+                            <p class="text-[11px] font-bold text-indigo-300 uppercase tracking-wider">Total Aset Bersih</p>
                             <h3 id="kpiNetWorth" class="text-xl font-extrabold text-white mt-1">Rp 0</h3>
                         </div>
                         <div class="p-2.5 bg-indigo-500/20 text-indigo-400 rounded-xl border border-indigo-500/20">
@@ -300,6 +304,35 @@
                         </div>
                     </div>
                     <p class="text-[10px] text-indigo-300/70 mt-4 font-medium">Akumulasi Real-Time Seluruh Akun & Investasi</p>
+                </div>
+            </div>
+
+            <!-- HUTANG & PIUTANG TRACKER IN DASHBOARD -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="p-3 bg-purple-50 text-purple-700 rounded-xl">
+                            <i class="fa-solid fa-handshake-angle text-lg"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Piutang (Hak Anda)</p>
+                            <h4 id="dashTotalPiutang" class="text-base font-extrabold text-purple-700 mt-0.5">Rp 0</h4>
+                        </div>
+                    </div>
+                    <div class="text-right text-[10px] text-slate-400 font-medium">Uang di orang lain</div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/70 shadow-sm flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="p-3 bg-amber-50 text-amber-700 rounded-xl">
+                            <i class="fa-solid fa-hand-holding-dollar text-lg"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Hutang (Kewajiban)</p>
+                            <h4 id="dashTotalHutang" class="text-base font-extrabold text-amber-700 mt-0.5">Rp 0</h4>
+                        </div>
+                    </div>
+                    <div class="text-right text-[10px] text-slate-400 font-medium">Tanggungan pembayaran</div>
                 </div>
             </div>
 
@@ -323,6 +356,7 @@
                             <span>Target: Rp 35.000.000</span>
                         </div>
                     </div>
+
                     <div class="space-y-1.5 pt-2">
                         <div class="flex justify-between text-xs font-bold">
                             <span class="text-slate-700">Target 2: Bangun Rumah</span>
@@ -376,47 +410,19 @@
                 </div>
             </div>
 
-            <!-- LOWER GRID (ACCOUNTS, EXPERT CONTROL, CHARTS) -->
+            <!-- LOWER GRID (ACCOUNTS, CHARTS) -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 <div class="lg:col-span-5 space-y-6">
                     <div class="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-6">
                         <div class="flex items-center justify-between mb-5 border-b border-slate-100 pb-3">
                             <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2">
                                 <i class="fa-solid fa-wallet text-indigo-600 text-xs"></i>
-                                <span>Alokasi Saldo Akun</span>
+                                <span>Alokasi Saldo Akun Lancar</span>
                             </h3>
                             <span class="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-md uppercase tracking-wide">Live Asset</span>
                         </div>
                         <div class="space-y-2.5 max-h-[340px] overflow-y-auto pr-1.5 custom-scroll" id="accountListContainer">
                         </div>
-                    </div>
-
-                    <!-- REWORKED CARD: INPUT SUBMIT FORM GENERATING IMMUTABLE JURNAL LEDGER ENTRIES -->
-                    <div class="bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-2xl border border-slate-800 shadow-xl p-6 relative overflow-hidden">
-                        <div class="absolute -right-6 -bottom-6 text-slate-800/40 text-7xl font-bold pointer-events-none">%</div>
-                        <div class="flex items-center justify-between mb-4 relative z-10">
-                            <h3 class="font-bold text-sm text-amber-400 flex items-center space-x-2">
-                                <i class="fa-solid fa-square-poll-vertical"></i>
-                                <span>Kunci Performa Saham Harian</span>
-                            </h3>
-                        </div>
-                        <p class="text-xs text-slate-400 leading-relaxed mb-4 relative z-10">
-                            Masukkan persentase perubahan harian portfolio Anda. Sistem akan mengonversinya ke rupiah dan langsung mencatatnya ke dalam <b>Jurnal Umum Finansial</b>.
-                        </p>
-                        <!-- NEW: Added Live Asset Base Value Tracker inside card component for clarity -->
-                        <div class="grid grid-cols-1 bg-white/5 p-3 rounded-xl border border-white/5 mb-4 relative z-10">
-                            <div>
-                                <label class="block text-[9px] text-slate-500 uppercase font-bold tracking-wider">Aset Dasar Saham Saat Ini</label>
-                                <span class="text-xs font-bold text-slate-200" id="lblLiveSahamBalance">Rp 0</span>
-                            </div>
-                        </div>
-                        <!-- NEW: Form element binding with onsubmit to record transactions natively -->
-                        <form onsubmit="submitStockReturn(event)" class="flex space-x-2 relative z-10">
-                            <input type="number" id="inputStockReturn" value="0" step="0.01" class="w-full bg-white/10 border border-white/10 rounded-xl px-3 py-2 text-white text-sm font-bold focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/30" placeholder="Contoh: 2.5 atau -1.2" required>
-                            <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold px-4 rounded-xl text-xs transition shadow-sm whitespace-nowrap">
-                                Kunci Jurnal
-                            </button>
-                        </form>
                     </div>
                 </div>
 
@@ -435,21 +441,91 @@
                     <div class="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-6 flex flex-col">
                         <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2 mb-4 border-b border-slate-100 pb-3">
                             <i class="fa-solid fa-pie-chart text-indigo-600 text-xs"></i>
-                            <span>Proporsi Anggaran Sektor Keuangan</span>
+                            <span>Proporsi Anggaran Sektor Keuangan Arus Kas</span>
                         </h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow items-center">
                             <div class="flex flex-col items-center border border-slate-50 p-3 rounded-xl bg-slate-50/40">
                                 <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Porsi Pemasukan</span>
-                                <div class="w-full max-w-[170px] aspect-square flex items-center justify-center">
+                                <div id="chartIncomeWrapper" class="w-full max-w-[170px] aspect-square flex items-center justify-center">
                                     <canvas id="chartIncome"></canvas>
                                 </div>
                             </div>
                             <div class="flex flex-col items-center border border-slate-50 p-3 rounded-xl bg-slate-50/40">
                                 <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Porsi Pengeluaran</span>
-                                <div class="w-full max-w-[170px] aspect-square flex items-center justify-center">
+                                <div id="chartExpenseWrapper" class="w-full max-w-[170px] aspect-square flex items-center justify-center">
                                     <canvas id="chartExpense"></canvas>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: INVESTMENT CONTROL & DASHBOARD (ISOLATED FROM LIQUID ASSETS) -->
+        <div id="content-investment" class="tab-content space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-gradient-to-br from-purple-900 to-indigo-950 text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
+                    <p class="text-[11px] font-bold text-purple-200 uppercase tracking-wider">Total Portfolio Saham</p>
+                    <h3 id="lblLiveSahamBalance" class="text-2xl font-extrabold mt-1">Rp 0</h3>
+                    <p class="text-[10px] text-purple-300 mt-4 font-medium">Nilai Terkunci Akun Saham</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total ReksaDana & Obligasi</p>
+                    <h3 id="lblLiveInvBalance" class="text-2xl font-extrabold mt-1 text-slate-900">Rp 0</h3>
+                    <p class="text-[10px] text-slate-400 mt-4 font-medium">Dana Pengaman Jangka Panjang</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Pertumbuhan Investasi</p>
+                    <h3 id="lblTotalInvProfitLoss" class="text-2xl font-extrabold mt-1">Rp 0</h3>
+                    <p class="text-[10px] text-slate-400 mt-4 font-medium" id="lblProfitLossSub">Hasil akumulasi performa harian</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-5">
+                    <div class="bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-2xl border border-slate-800 shadow-xl p-6 relative overflow-hidden">
+                        <div class="absolute -right-6 -bottom-6 text-slate-800/40 text-7xl font-bold pointer-events-none">%</div>
+                        <h3 class="font-bold text-sm text-amber-400 flex items-center space-x-2 mb-2">
+                            <i class="fa-solid fa-square-poll-vertical"></i>
+                            <span>Kunci Performa Saham Harian</span>
+                        </h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                            Masukkan persentase perubahan naik/turun portfolio saham hari ini. Sistem akan mengonversinya secara otomatis dan menguncinya di sub-jurnal investasi terpisah.
+                        </p>
+                        <form onsubmit="submitStockReturn(event)" class="space-y-4 relative z-10">
+                            <div>
+                                <label for="inputStockReturn" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Persentase Perubahan (%)</label>
+                                <input type="number" id="inputStockReturn" value="0" step="0.01" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-white text-base font-extrabold focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/30" placeholder="Contoh: 2.5 atau -1.2" required>
+                            </div>
+                            <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold py-3 rounded-xl text-xs uppercase tracking-wider transition shadow-md shadow-amber-500/10">
+                                Kunci Jurnal Investasi
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7">
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+                        <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2 mb-4 border-b border-slate-100 pb-3">
+                            <i class="fa-solid fa-clock-rotate-left text-purple-600 text-xs"></i>
+                            <span>Histori Naik/Turun Saham Terisolasi</span>
+                        </h3>
+                        <div class="overflow-x-auto rounded-xl border border-slate-100">
+                            <table class="w-full text-left text-xs border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-50 border-b border-slate-200 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                                        <th class="p-3">Tanggal</th>
+                                        <th class="p-3">Perubahan Keterangan</th>
+                                        <th class="p-3 text-right">Nominal Keuntungan/Kerugian</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="investmentTableBody" class="divide-y divide-slate-100 text-slate-700 font-medium">
+                                    <tr>
+                                        <td colspan="3" class="p-4 text-center text-slate-400 italic text-xs">Belum ada rekaman penyesuaian harian saham.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -469,29 +545,14 @@
                     
                     <form id="transactionForm" onsubmit="saveTransaction(event)" class="space-y-4">
                         <div>
-                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Jenis Arus Kas</label>
-                            <div class="grid grid-cols-2 sm:grid-cols-5 gap-1.5">
-                                <label class="flex items-center justify-center space-x-1.5 py-2 px-1.5 border rounded-xl cursor-pointer transition text-[11px] font-bold border-emerald-500 bg-emerald-50/50 text-emerald-700" id="labelTypeIncome">
-                                    <input type="radio" name="txType" value="income" checked onchange="toggleTxType('income')" class="sr-only">
-                                    <i class="fa-solid fa-arrow-trend-up"></i> <span>Masuk</span>
-                                </label>
-                                <label class="flex items-center justify-center space-x-1.5 py-2 px-1.5 border border-slate-200 rounded-xl cursor-pointer transition text-[11px] font-bold text-slate-600 hover:bg-slate-50" id="labelTypeExpense">
-                                    <input type="radio" name="txType" value="expense" onchange="toggleTxType('expense')" class="sr-only">
-                                    <i class="fa-solid fa-arrow-trend-down"></i> <span>Keluar</span>
-                                </label>
-                                <label class="flex items-center justify-center space-x-1.5 py-2 px-1.5 border border-slate-200 rounded-xl cursor-pointer transition text-[11px] font-bold text-slate-600 hover:bg-slate-50" id="labelTypeTransfer">
-                                    <input type="radio" name="txType" value="transfer" onchange="toggleTxType('transfer')" class="sr-only">
-                                    <i class="fa-solid fa-arrows-rotate"></i> <span>Transfer</span>
-                                </label>
-                                <label class="flex items-center justify-center space-x-1.5 py-2 px-1.5 border border-slate-200 rounded-xl cursor-pointer transition text-[11px] font-bold text-slate-600 hover:bg-slate-50" id="labelTypeHutang">
-                                    <input type="radio" name="txType" value="hutang" onchange="toggleTxType('hutang')" class="sr-only">
-                                    <i class="fa-solid fa-hand-holding-dollar"></i> <span>Hutang</span>
-                                </label>
-                                <label class="flex items-center justify-center space-x-1.5 py-2 px-1.5 border border-slate-200 rounded-xl cursor-pointer transition text-[11px] font-bold text-slate-600 hover:bg-slate-50" id="labelTypePiutang">
-                                    <input type="radio" name="txType" value="piutang" onchange="toggleTxType('piutang')" class="sr-only">
-                                    <i class="fa-solid fa-handshake-angle"></i> <span>Piutang</span>
-                                </label>
-                            </div>
+                            <label for="txType" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Jenis Arus Kas / Mutasi keuangan</label>
+                            <select id="txType" onchange="toggleTxType(this.value)" class="block w-full px-3 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-500/10">
+                                <option value="income">Pemasukan (Uang Masuk)</option>
+                                <option value="expense">Pengeluaran (Uang Keluar)</option>
+                                <option value="transfer">Transfer Dana (Antar Rekening)</option>
+                                <option value="hutang">Hutang (Pinjaman Baru / Cicilan Bayar)</option>
+                                <option value="piutang">Piutang (Beri Pinjaman / Terima Pelunasan)</option>
+                            </select>
                         </div>
 
                         <div>
@@ -567,19 +628,27 @@
                     </div>
                 </div>
 
-                <!-- SURPLUS / DEFICIT SUMMARY BAR -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200/60 shadow-inner">
-                    <div class="flex flex-col border-b sm:border-b-0 sm:border-r border-slate-200 pb-2 sm:pb-0 sm:pr-4">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Kas Masuk (Inflow)</span>
-                        <span id="histIncome" class="text-sm font-extrabold text-emerald-600 mt-1">Rp 0</span>
+                <!-- SURPLUS / DEFICIT SUMMARY BAR + TOTAL HUTANG & PIUTANG -->
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200/60 shadow-inner">
+                    <div class="flex flex-col border-r border-slate-200 pr-2">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Total Inflow</span>
+                        <span id="histIncome" class="text-xs font-extrabold text-emerald-600 mt-1">Rp 0</span>
                     </div>
-                    <div class="flex flex-col border-b sm:border-b-0 sm:border-r border-slate-200 py-2 sm:py-0 sm:pr-4 sm:pl-2">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Kas Keluar (Outflow)</span>
-                        <span id="histExpense" class="text-sm font-extrabold text-rose-600 mt-1">Rp 0</span>
+                    <div class="flex flex-col border-r border-slate-200 py-0 pr-4 pl-2">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Total Outflow</span>
+                        <span id="histExpense" class="text-xs font-extrabold text-rose-600 mt-1">Rp 0</span>
                     </div>
-                    <div class="flex flex-col pt-2 sm:pt-0 sm:pl-2">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Net Surplus / Defisit</span>
-                        <span id="histSurplus" class="text-sm font-extrabold mt-1">Rp 0</span>
+                    <div class="flex flex-col border-r border-slate-200 py-0 pl-2">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Net Surplus</span>
+                        <span id="histSurplus" class="text-xs font-extrabold mt-1">Rp 0</span>
+                    </div>
+                    <div class="flex flex-col border-r border-slate-200 py-0 pl-2">
+                        <span class="text-[9px] font-bold text-purple-400 uppercase tracking-wider">Total Piutang</span>
+                        <span id="histTotalPiutang" class="text-xs font-extrabold text-purple-700 mt-1">Rp 0</span>
+                    </div>
+                    <div class="flex flex-col py-0 pl-2">
+                        <span class="text-[9px] font-bold text-amber-400 uppercase tracking-wider">Total Hutang</span>
+                        <span id="histTotalHutang" class="text-xs font-extrabold text-amber-700 mt-1">Rp 0</span>
                     </div>
                 </div>
 
@@ -694,25 +763,29 @@
     <script>
         const ACCOUNTS_LIST = ["Dompet", "Bank BCA 1", "Bank BCA 2", "Bank Jago", "Dana", "GoPay", "ShopeePay", "Saldo RDN", "Reksadana & Obligasi", "Saham"];
         const LIQUID_ACCOUNTS = ["Dompet", "Bank BCA 1", "Bank BCA 2", "Bank Jago", "Dana", "GoPay", "ShopeePay", "Saldo RDN"];
+        const INVESTMENT_ASSETS = ["Reksadana & Obligasi", "Saham"];
         
         const CATEGORIES = {
-            income: ["Gaji", "Dividen", "Keuntungan Investasi", "Lainnya"],
-            // FIX: Added 'Kerugian Investasi' into master asset allocation category fields
-            expense: ["Makanan & Minuman", "Transportasi", "Gaya Lifestyle", "Tagihan & Utilitas", "Investasi (Bibit/RDN)", "Kerugian Investasi", "Lainnya"],
+            income: ["Gaji", "Dividen", "Lainnya"],
+            expense: ["Makanan & Minuman", "Transportasi", "Gaya Lifestyle", "Tagihan & Utilitas", "Lainnya"],
             hutang: ["Terima Pinjaman Baru", "Bayar Cicilan Hutang"],
             piutang: ["Beri Pinjaman Ke Orang", "Terima Pelunasan Piutang"]
         };
 
         const SEED_DATA = {
             transactions: [
-                { id: "s1", type: "income", amount: 7000000, account: "Bank BCA 1", category: "Gaji", date: "2026-01-25", notes: "Gaji Bulanan Utama" },
-                { id: "s2", type: "expense", amount: 150000, account: "Dompet", category: "Makanan & Minuman", date: "2026-01-26", notes: "Makan Mie Gacoan & Seblak" },
-                { id: "s3", type: "expense", amount: 120000, account: "Bank Jago", category: "Transportasi", date: "2026-01-27", notes: "Bensin Berkala Supra GTR" },
-                { id: "s4", type: "expense", amount: 2000000, account: "Bank BCA 1", category: "Investasi (Bibit/RDN)", date: "2026-01-28", notes: "Alokasi Reksadana Bibit" },
-                { id: "s5", type: "income", amount: 1200000, account: "Saldo RDN", category: "Dividen", date: "2026-02-15", notes: "Dividen Emiten Saham" }
+                { id: "tx_1783504402911", type: "income", amount: 588000, account: "Saldo RDN", category: "Lainnya", toAccount: "", date: "2026-07-08", notes: "Pengembalian Dana Penawaran Umum" },
+                { id: "tx_1783504444412", type: "income", amount: 2050583, account: "Reksadana & Obligasi", category: "Lainnya", toAccount: "", date: "2026-07-08", notes: "Obligasi" },
+                { id: "tx_1783504466828", type: "income", amount: 3061655, account: "Reksadana & Obligasi", category: "Lainnya", toAccount: "", date: "2026-07-08", notes: "Reksadana" },
+                { id: "tx_1783504489116", type: "income", amount: 2357800, account: "Saham", category: "Lainnya", toAccount: "", date: "2026-07-08", notes: "Investasi Saham" },
+                { id: "tx_1783508765501", type: "income", amount: 122000, account: "Dompet", category: "Lainnya", toAccount: "", date: "2026-07-08", notes: "Cash" },
+                { id: "tx_1783508803793", type: "income", amount: 60076, account: "Bank BCA 2", category: "Lainnya", toAccount: "", date: "2026-07-08", notes: "Sisa saldo" },
+                { id: "tx_1783508884200", type: "income", amount: 1737013, account: "Bank BCA 1", category: "Lainnya", toAccount: "", date: "2026-07-08", notes: "Sisa saldo" },
+                { id: "tx_1783508916678", type: "income", amount: 539, account: "Bank Jago", category: "Lainnya", toAccount: "", date: "2026-07-08", notes: "Sisa saldo" },
+                { id: "tx_1783508994989", type: "income", amount: 9450, account: "ShopeePay", category: "Lainnya", toAccount: "", date: "2026-07-08", notes: "Sisa saldo" }
             ],
             startingBalances: {
-                "Dompet": 500000, "Bank BCA 1": 8500000, "Bank BCA 2": 3000000, "Bank Jago": 4500000, "Dana": 350000, "GoPay": 200000, "ShopeePay": 100000, "Saldo RDN": 1500000, "Reksadana & Obligasi": 12000000, "Saham": 15000000
+                "Dompet": 0, "Bank BCA 1": 0, "Bank BCA 2": 0, "Bank Jago": 0, "Dana": 0, "GoPay": 0, "ShopeePay": 0, "Saldo RDN": 0, "Reksadana & Obligasi": 0, "Saham": 0
             },
             github: { token: '', repo: '', path: 'fintrack_data.json' }
         };
@@ -819,7 +892,6 @@
             closeAccountModal(); renderHistoryTable();
         }
 
-        // ================= EDIT TRANSACTION MODAL =================
         function openEditModal(id) {
             const tx = state.transactions.find(t => t.id === id);
             if (!tx) return;
@@ -842,7 +914,7 @@
                 typeLabel.className = "w-full bg-amber-50 text-amber-600 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center space-x-2 border border-amber-200";
             } else if(tx.type === 'piutang') {
                 typeLabel.innerHTML = `<i class="fa-solid fa-handshake-angle"></i> <span>Piutang</span>`;
-                typeLabel.className = "w-full bg-purple-50 text-purple-600 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center space-x-2 border border-purple-100";
+                typeLabel.className = "w-full bg-purple-50 text-purple-700 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center space-x-2 border border-purple-100";
             }
 
             const divCat = document.getElementById('divEditCategory');
@@ -903,7 +975,6 @@
             }
         }
 
-        // ================= GITHUB CLOUD BACKUP SYSTEM =================
         function saveGitHubConfig() {
             state.github = {
                 token: document.getElementById('ghToken').value.trim(),
@@ -947,6 +1018,7 @@
         }
 
         async function pullFromGitHub() {
+            // TERBENTUK SEMPURNA: Menambahkan tutup kurawal (}) yang kurang di berkas image_661cbd.png Anda
             const { token, repo, path } = state.github;
             if (!token || !repo) { alert("Harap isi Kredensial Token dan Repo Anda untuk menarik data!"); return; }
             if (!confirm("Tarik data dari GitHub? Data lokal yang belum diupload akan tertimpa.")) return;
@@ -976,7 +1048,8 @@
         function selectMobileTab(tabId) {
             switchTab(tabId); toggleMobileMenu();
             const textMap = {
-                'dashboard': '<i class="fa-solid fa-chart-pie mr-2"></i>Dashboard',
+                'dashboard': '<i class="fa-solid fa-chart-pie mr-2"></i>Dashboard Kas',
+                'investment': '<i class="fa-solid fa-arrow-trend-up mr-2"></i>Investasi',
                 'input': '<i class="fa-solid fa-circle-plus mr-2"></i>Catat Arus Kas',
                 'history': '<i class="fa-solid fa-receipt mr-2"></i>Jurnal Transaksi',
                 'settings': '<i class="fa-solid fa-database mr-2"></i>Backup & Jurnal Data'
@@ -1022,8 +1095,6 @@
             document.getElementById('txDate').value = `${yyyy}-${mm}-${dd}`;
         }
 
-        document.getElementById('lblLiveSahamBalance').innerText = formatRupiah(SEED_DATA.startingBalances["Saham"]);
-
         function loadState() {
             const localData = localStorage.getItem('fintrack_10y_state');
             if (localData) {
@@ -1043,7 +1114,7 @@
 
         function saveState() { localStorage.setItem('fintrack_10y_state', JSON.stringify(state)); }
 
-        function refreshApp() { calculateKPIs(); renderAccountList(); renderHistoryTable(); renderCharts(); }
+        function refreshApp() { calculateKPIs(); renderAccountList(); renderHistoryTable(); renderInvestmentTable(); renderCharts(); }
 
         function handleFilterChange() { activeYear = parseInt(document.getElementById('globalYear').value); refreshApp(); }
 
@@ -1053,11 +1124,11 @@
             
             const monthFilter = document.getElementById('monthFilterWrapper');
             if (monthFilter) {
-                if (tabId === 'dashboard' || tabId === 'history') { monthFilter.classList.remove('hidden'); } 
+                if (tabId === 'dashboard' || tabId === 'history' || tabId === 'investment') { monthFilter.classList.remove('hidden'); } 
                 else { monthFilter.classList.add('hidden'); }
             }
 
-            const tabs = ['dashboard', 'input', 'history', 'settings'];
+            const tabs = ['dashboard', 'investment', 'input', 'history', 'settings'];
             tabs.forEach(t => {
                 const btn = document.getElementById(`tab-${t}`);
                 if (btn) {
@@ -1072,23 +1143,12 @@
         }
 
         function toggleTxType(type) {
-            const lblIncome = document.getElementById('labelTypeIncome');
-            const lblExpense = document.getElementById('labelTypeExpense');
-            const lblTransfer = document.getElementById('labelTypeTransfer');
-            const lblHutang = document.getElementById('labelTypeHutang');
-            const lblPiutang = document.getElementById('labelTypePiutang');
-            
             const divCategory = document.getElementById('divCategory');
             const divToAccount = document.getElementById('divToAccount');
             const catSelect = document.getElementById('txCategory');
             const lblTxAccount = document.getElementById('lblTxAccount');
 
-            const standardClasses = "flex items-center justify-center space-x-1.5 py-2 px-1.5 border border-slate-200 rounded-xl cursor-pointer transition text-[11px] font-bold text-slate-600 hover:bg-slate-50";
-            lblIncome.className = standardClasses; lblExpense.className = standardClasses;
-            lblTransfer.className = standardClasses; lblHutang.className = standardClasses; lblPiutang.className = standardClasses;
-
             if (type === 'transfer') {
-                lblTransfer.className = "flex items-center justify-center space-x-1.5 py-2 px-1.5 border rounded-xl cursor-pointer transition text-[11px] font-bold border-indigo-500 bg-indigo-50/50 text-indigo-700";
                 divCategory.classList.add('hidden'); catSelect.removeAttribute('required');
                 divToAccount.classList.remove('hidden'); document.getElementById('txToAccount').setAttribute('required', 'required');
                 lblTxAccount.innerText = "Akun Asal (Sumber)";
@@ -1102,11 +1162,6 @@
                     const opt = document.createElement('option'); opt.value = cat; opt.innerText = cat;
                     catSelect.appendChild(opt);
                 });
-
-                if (type === 'income') { lblIncome.className = "flex items-center justify-center space-x-1.5 py-2 px-1.5 border rounded-xl cursor-pointer transition text-[11px] font-bold border-emerald-500 bg-emerald-50/50 text-emerald-700"; } 
-                else if (type === 'expense') { lblExpense.className = "flex items-center justify-center space-x-1.5 py-2 px-1.5 border rounded-xl cursor-pointer transition text-[11px] font-bold border-rose-500 bg-rose-50/50 text-rose-700"; }
-                else if (type === 'hutang') { lblHutang.className = "flex items-center justify-center space-x-1.5 py-2 px-1.5 border rounded-xl cursor-pointer transition text-[11px] font-bold border-amber-500 bg-amber-50/50 text-amber-700"; }
-                else if (type === 'piutang') { lblPiutang.className = "flex items-center justify-center space-x-1.5 py-2 px-1.5 border rounded-xl cursor-pointer transition text-[11px] font-bold border-purple-500 bg-purple-50/50 text-purple-700"; }
             }
         }
 
@@ -1115,11 +1170,21 @@
                 const tDate = new Date(t.date);
                 const matchYear = tDate.getFullYear() === activeYear;
                 const matchMonth = activeMonth === -1 ? true : tDate.getMonth() === activeMonth;
-                return matchYear && matchMonth;
+                const isIsolatedStockReturn = (t.account === "Saham" && (t.category === "Keuntungan Investasi" || t.category === "Kerugian Investasi"));
+                return matchYear && matchMonth && !isIsolatedStockReturn;
             });
         }
 
-        // REWORKED BALANCES ENGINE: Immutable entries parse natively without dynamic historical distortion
+        function getInvestmentTransactions() {
+            return state.transactions.filter(t => {
+                const tDate = new Date(t.date);
+                const matchYear = tDate.getFullYear() === activeYear;
+                const matchMonth = activeMonth === -1 ? true : tDate.getMonth() === activeMonth;
+                const isIsolatedStockReturn = (t.account === "Saham" && (t.category === "Keuntungan Investasi" || t.category === "Kerugian Investasi"));
+                return matchYear && matchMonth && isIsolatedStockReturn;
+            });
+        }
+
         function getLiveBalances() {
             let balances = { ...state.startingBalances };
             state.transactions.forEach(t => {
@@ -1143,6 +1208,22 @@
             return balances;
         }
 
+        function getOutstandingLiabilities() {
+            let totalHutang = 0;
+            let totalPiutang = 0;
+            
+            state.transactions.forEach(t => {
+                if(t.type === 'hutang') {
+                    if(t.category === "Terima Pinjaman Baru") totalHutang += t.amount;
+                    else if(t.category === "Bayar Cicilan Hutang") totalHutang -= t.amount;
+                } else if(t.type === 'piutang') {
+                    if(t.category === "Beri Pinjaman Ke Orang") totalPiutang += t.amount;
+                    else if(t.category === "Terima Pelunasan Piutang") totalPiutang -= t.amount;
+                }
+            });
+            return { totalHutang, totalPiutang };
+        }
+
         function calculateKPIs() {
             const filtered = getFilteredTransactions();
             let incSum = 0; let expSum = 0;
@@ -1150,12 +1231,10 @@
             filtered.forEach(t => {
                 if (t.type === 'income') incSum += t.amount;
                 else if (t.type === 'expense') expSum += t.amount;
-                else if (t.type === 'hutang') {
-                    if (t.category === "Terima Pinjaman Baru") incSum += t.amount; else expSum += t.amount;
-                }
-                else if (t.type === 'piutang') {
-                    if (t.category === "Terima Pelunasan Piutang") incSum += t.amount; else expSum += t.amount;
-                }
+                else if (t.type === 'hutang' && t.category === "Terima Pinjaman Baru") incSum += t.amount;
+                else if (t.type === 'hutang' && t.category === "Bayar Cicilan Hutang") expSum += t.amount;
+                else if (t.type === 'piutang' && t.category === "Terima Pelunasan Piutang") incSum += t.amount;
+                else if (t.type === 'piutang' && t.category === "Beri Pinjaman Ke Orang") expSum += t.amount;
             });
 
             document.getElementById('kpiIncome').innerText = formatRupiah(incSum);
@@ -1176,15 +1255,33 @@
             document.getElementById('kpiLiquid').innerText = formatRupiah(liquidAssets);
             document.getElementById('kpiNetWorth').innerText = formatRupiah(totalNetWorth);
             
-            // NEW UI UPDATE: Dynamic preview value injector for current stock state
             document.getElementById('lblLiveSahamBalance').innerText = formatRupiah(balances["Saham"] || 0);
+            document.getElementById('lblLiveInvBalance').innerText = formatRupiah(balances["Reksadana & Obligasi"] || 0);
+            
+            let totalProfitLossSum = 0;
+            state.transactions.forEach(t => {
+                if(t.account === "Saham" && t.category === "Keuntungan Investasi") totalProfitLossSum += t.amount;
+                if(t.account === "Saham" && t.category === "Kerugian Investasi") totalProfitLossSum -= t.amount;
+            });
+            const plEl = document.getElementById('lblTotalInvProfitLoss');
+            plEl.innerText = (totalProfitLossSum >= 0 ? '+ ' : '- ') + formatRupiah(Math.abs(totalProfitLossSum));
+            plEl.className = `text-2xl font-extrabold mt-1 ${totalProfitLossSum >= 0 ? 'text-emerald-600' : 'text-rose-600'}`;
 
-            const targetLand = 35000000; const targetHouse = 100000000;
+            const liabilities = getOutstandingLiabilities();
+            document.getElementById('dashTotalHutang').innerText = formatRupiah(liabilities.totalHutang);
+            document.getElementById('dashTotalPiutang').innerText = formatRupiah(liabilities.totalPiutang);
+            document.getElementById('histTotalHutang').innerText = formatRupiah(liabilities.totalHutang);
+            document.getElementById('histTotalPiutang').innerText = formatRupiah(liabilities.totalPiutang);
+
+            const targetLand = 35000000; 
+            const targetHouseBuild = 100000000;
+            
             const landPercent = Math.min(100, Math.round((totalNetWorth / targetLand) * 100));
-            const housePercent = Math.min(100, Math.round((totalNetWorth / targetHouse) * 100));
+            const housePercent = Math.min(100, Math.round((totalNetWorth / targetHouseBuild) * 100));
 
             document.getElementById('goalLandPercent').innerText = `${landPercent}%`;
             document.getElementById('goalLandBar').style.width = `${landPercent}%`;
+            
             document.getElementById('goalHousePercent').innerText = `${housePercent}%`;
             document.getElementById('goalHouseBar').style.width = `${housePercent}%`;
 
@@ -1194,8 +1291,6 @@
             let totalYearlyExpense = 0;
             state.transactions.forEach(tx => {
                 if(tx.type === 'expense' && new Date(tx.date).getFullYear() === activeYear) { totalYearlyExpense += tx.amount; }
-                else if(tx.type === 'hutang' && tx.category === "Bayar Cicilan Hutang" && new Date(tx.date).getFullYear() === activeYear) { totalYearlyExpense += tx.amount; }
-                else if(tx.type === 'piutang' && tx.category === "Beri Pinjaman Ke Orang" && new Date(tx.date).getFullYear() === activeYear) { totalYearlyExpense += tx.amount; }
             });
             
             const activeMonthCount = (activeYear === new Date().getFullYear()) ? (new Date().getMonth() + 1) : 12;
@@ -1204,10 +1299,10 @@
             const statusEl = document.getElementById('lblEmergencyStatus');
             
             if(emergencyMonthsCovered >= 6) {
-                statusEl.innerText = `Aman! Mencukupi ${emergencyMonthsCovered} bulan pengeluaran (Standar ideal: 6 bulan).`;
+                statusEl.innerText = `Aman! Mencukupi ${emergencyMonthsCovered} bulan pengeluaran.`;
                 statusEl.className = "text-[10px] font-bold text-emerald-800 leading-tight";
             } else {
-                statusEl.innerText = `Siaga. Baru mencukupi ${emergencyMonthsCovered} bulan pengeluaran. Rekomendasi tambah alokasi.`;
+                statusEl.innerText = `Siaga. Baru mencukupi ${emergencyMonthsCovered} bulan pengeluaran.`;
                 statusEl.className = "text-[10px] font-bold text-amber-800 leading-tight";
             }
 
@@ -1224,70 +1319,50 @@
                 document.getElementById('ratioSahamBar').style.width = `${sahamPercent}%`;
 
                 document.getElementById('lblRatioLiquid').innerText = `Lancar: ${liquidPercent}%`;
-                document.getElementById('lblRatioInv').innerText = `Investasi: ${invPercent}%`;
+                document.getElementById('lblRatioInv').innerText = `Inv: ${invPercent}%`;
                 document.getElementById('lblRatioSaham').innerText = `Saham: ${sahamPercent}%`;
             }
         }
 
-        // NEW LOGIC CODE FUNCTION: Processes direct calculation converter and locks ledger row entries
         function submitStockReturn(e) {
             e.preventDefault();
             const val = parseFloat(document.getElementById('inputStockReturn').value);
             
             if (isNaN(val) || val === 0) {
-                alert("Kesalahan: Harap masukkan nilai persentase perubahan portfolio yang valid (bukan angka 0).");
+                alert("Masukkan angka persentase perubahan portfolio yang valid!");
                 return;
             }
 
-            // 1. Ambil saldo Saham terkini sebelum penyesuaian baru
             const balances = getLiveBalances();
             const currentSaham = balances["Saham"] || 0;
 
             if (currentSaham <= 0) {
-                alert("Gagal Memproses: Saldo akun Saham Anda saat ini adalah Rp 0. Silakan isi saldo modal Saham terlebih dahulu via menu Catat Arus Kas/Transfer.");
+                alert("Gagal Memproses: Saldo akun Saham saat ini Rp 0. Isi modal via menu Catat Arus Kas terlebih dahulu.");
                 return;
             }
 
-            // 2. Konversi Persentase Harian ke IDR Riil
             const amountChange = Math.round(currentSaham * (val / 100));
             if (amountChange === 0) {
-                alert("Nominal perubahan terlalu kecil setelah pembulatan matematika. Transaksi dibatalkan.");
-                return;
+                alert("Nominal perubahan terlalu kecil."); return;
             }
 
-            // 3. Tentukan Tanggal Hari Ini
             const today = new Date();
-            const yyyy = today.getFullYear();
-            const mm = String(today.getMonth() + 1).padStart(2, '0');
-            const dd = String(today.getDate()).padStart(2, '0');
-            const formattedDate = `${yyyy}-${mm}-${dd}`;
+            const formattedDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
-            // 4. Susun Payload Baris Jurnal Baru
             let transactionRow = {
                 id: 'tx_' + Date.now(),
                 date: formattedDate,
                 account: "Saham",
-                amount: Math.abs(amountChange)
+                amount: Math.abs(amountChange),
+                type: amountChange > 0 ? "income" : "expense",
+                category: amountChange > 0 ? "Keuntungan Investasi" : "Kerugian Investasi",
+                notes: `${amountChange > 0 ? 'Kenaikan' : 'Penurunan'} Portfolio Saham (${val >= 0 ? '+' : ''}${val.toFixed(2)}%)`
             };
 
-            if (amountChange > 0) {
-                transactionRow.type = "income";
-                transactionRow.category = "Keuntungan Investasi";
-                transactionRow.notes = `Kenaikan Portfolio Saham Harian (+${val.toFixed(2)}%)`;
-            } else {
-                transactionRow.type = "expense";
-                transactionRow.category = "Kerugian Investasi";
-                transactionRow.notes = `Penurunan Portfolio Saham Harian (${val.toFixed(2)}%)`;
-            }
-
-            // 5. Commit ke Basis Data dan Refresh
             state.transactions.push(transactionRow);
-            saveState();
-            refreshApp();
+            saveState(); refreshApp();
 
-            // 6. NEW ALERT TRIGGER: Web modal indicator to verify entry completion
-            alert(`📈 Sukses Menjurnal!\n\nPerubahan harian portfolio Saham sebesar ${val >= 0 ? '+' : ''}${val.toFixed(2)}% telah berhasil dikonversi senilai ${formatRupiah(Math.abs(amountChange))} dan dikunci ke dalam Jurnal Transaksi.`);
-            
+            alert(`📈 Sukses Menjurnal Perubahan Saham Senilai ${formatRupiah(Math.abs(amountChange))}`);
             document.getElementById('inputStockReturn').value = '0';
         }
 
@@ -1328,7 +1403,7 @@
 
         function saveTransaction(e) {
             e.preventDefault();
-            const type = document.querySelector('input[name="txType"]:checked').value;
+            const type = document.getElementById('txType').value;
             const rawAmount = document.getElementById('txAmount').value.replace(/\./g, "");
             const amount = parseInt(rawAmount);
             const account = document.getElementById('txAccount').value;
@@ -1346,7 +1421,7 @@
             saveState(); refreshApp(); 
             
             alert("🎉 Transaksi Berhasil Dicatat ke Dalam Jurnal Finansial!");
-            e.target.reset(); toggleTxType('income'); setCurrentDateInForm();
+            e.target.reset(); document.getElementById('txType').value = 'income'; toggleTxType('income'); setCurrentDateInForm();
         }
 
         function deleteTransaction(id) {
@@ -1368,22 +1443,16 @@
                 return matchesSearch && matchesAccount;
             });
 
-            itemsToShow.sort((a, b) => {
-                const dateDiff = new Date(b.date) - new Date(a.date);
-                if (dateDiff !== 0) return dateDiff;
-                return b.id.localeCompare(a.id);
-            });
+            itemsToShow.sort((a, b) => new Date(b.date) - new Date(a.date));
 
             let histIncTotal = 0; let histExpTotal = 0;
-            itemsToShow.forEach(tx => {
-                if (tx.type === 'income') histIncTotal += tx.amount;
-                else if (tx.type === 'expense') histExpTotal += tx.amount;
-                else if (tx.type === 'hutang') {
-                    if (tx.category === "Terima Pinjaman Baru") histIncTotal += tx.amount; else histExpTotal += tx.amount;
-                }
-                else if (tx.type === 'piutang') {
-                    if (tx.category === "Terima Pelunasan Piutang") histIncTotal += tx.amount; else histExpTotal += tx.amount;
-                }
+            itemsToShow.forEach(t => {
+                if (t.type === 'income') histIncTotal += t.amount;
+                else if (t.type === 'expense') histExpTotal += t.amount;
+                else if (t.type === 'hutang' && t.category === "Terima Pinjaman Baru") histIncTotal += t.amount;
+                else if (t.type === 'hutang' && t.category === "Bayar Cicilan Hutang") histExpTotal += t.amount;
+                else if (t.type === 'piutang' && t.category === "Terima Pelunasan Piutang") histIncTotal += t.amount;
+                else if (t.type === 'piutang' && t.category === "Beri Pinjaman Ke Orang") histExpTotal += t.amount;
             });
 
             document.getElementById('histIncome').innerText = formatRupiah(histIncTotal);
@@ -1391,44 +1460,38 @@
             
             const surplusAmount = histIncTotal - histExpTotal;
             const surpEl = document.getElementById('histSurplus');
-            if(surplusAmount >= 0) {
-                surpEl.innerText = `+ ${formatRupiah(surplusAmount)}`; surpEl.className = "text-sm font-extrabold mt-1 text-emerald-600";
-            } else {
-                surpEl.innerText = `- ${formatRupiah(Math.abs(surplusAmount))}`; surpEl.className = "text-sm font-extrabold mt-1 text-rose-600";
-            }
+            surpEl.innerText = (surplusAmount >= 0 ? '+ ' : '- ') + formatRupiah(Math.abs(surplusAmount));
+            surpEl.className = `text-xs font-extrabold mt-1 ${surplusAmount >= 0 ? 'text-emerald-600' : 'text-rose-600'}`;
 
             if (itemsToShow.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-xs text-slate-400 italic">Jurnal kosong.</td></tr>`; return;
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-xs text-slate-400 italic">Jurnal arus kas operasional kosong.</td></tr>`; return;
             }
 
             itemsToShow.forEach(t => {
                 const row = document.createElement('tr');
                 row.className = "hover:bg-slate-50/80 transition text-xs border-b border-slate-100 group";
                 
-                const isInc = t.type === 'income'; const isTrans = t.type === 'transfer';
-                const isHutang = t.type === 'hutang'; const isPiutang = t.type === 'piutang';
-                
                 let badgeClass = 'bg-slate-100 text-slate-700 border border-slate-200';
-                if (isInc) badgeClass = 'bg-emerald-50 text-emerald-700 border border-emerald-100';
-                if (isTrans) badgeClass = 'bg-indigo-50 text-indigo-700 border border-indigo-100';
-                if (isHutang) badgeClass = 'bg-amber-50 text-amber-700 border border-amber-100';
-                if (isPiutang) badgeClass = 'bg-purple-50 text-purple-700 border border-purple-100';
+                if (t.type === 'income') badgeClass = 'bg-emerald-50 text-emerald-700 border border-emerald-100';
+                if (t.type === 'expense') badgeClass = 'bg-rose-50 text-rose-700 border border-rose-100';
+                if (t.type === 'transfer') badgeClass = 'bg-indigo-50 text-indigo-700 border border-indigo-100';
+                if (t.type === 'hutang') badgeClass = 'bg-amber-50 text-amber-700 border border-amber-100';
+                if (t.type === 'piutang') badgeClass = 'bg-purple-50 text-purple-700 border border-purple-100';
 
                 let amtSign = '-'; let amtClass = 'text-slate-900';
-                
-                if (isInc) { amtSign = '+'; amtClass = 'text-emerald-600'; }
-                else if (isTrans) { amtSign = '⇆'; amtClass = 'text-indigo-600'; }
-                else if (isHutang) {
+                if (t.type === 'income') { amtSign = '+'; amtClass = 'text-emerald-600'; }
+                else if (t.type === 'transfer') { amtSign = '⇆'; amtClass = 'text-indigo-600'; }
+                else if (t.type === 'hutang') {
                     if (t.category === "Terima Pinjaman Baru") { amtSign = '+'; amtClass = 'text-emerald-600'; }
                     else { amtSign = '-'; amtClass = 'text-rose-600'; }
                 }
-                else if (isPiutang) {
+                else if (t.type === 'piutang') {
                     if (t.category === "Terima Pelunasan Piutang") { amtSign = '+'; amtClass = 'text-emerald-600'; }
                     else { amtSign = '-'; amtClass = 'text-rose-600'; }
                 }
 
                 let displayMemo = t.notes;
-                if (isTrans) { displayMemo = `<span class="font-bold text-indigo-600">➔ Kirim ke ${t.toAccount}</span> | ${t.notes}`; }
+                if (t.type === 'transfer') { displayMemo = `<span class="font-bold text-indigo-600">➔ Kirim ke ${t.toAccount}</span> | ${t.notes}`; }
                 
                 row.innerHTML = `
                     <td class="p-4 font-bold text-slate-700 sticky left-0 bg-white group-hover:bg-slate-50/90 z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] transition-colors">${t.account}</td>
@@ -1447,33 +1510,87 @@
             });
         }
 
+        function renderInvestmentTable() {
+            const tbody = document.getElementById('investmentTableBody');
+            const items = getInvestmentTransactions();
+            tbody.innerHTML = '';
+
+            if(items.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400 italic text-xs">Belum ada rekaman penyesuaian saham harian.</td></tr>`;
+                return;
+            }
+
+            items.sort((a,b) => new Date(b.date) - new Date(a.date));
+            items.forEach(t => {
+                const isGain = t.category === "Keuntungan Investasi";
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50/80 transition text-xs border-b border-slate-100";
+                tr.innerHTML = `
+                    <td class="p-3 text-slate-500 whitespace-nowrap font-semibold">${t.date}</td>
+                    <td class="p-3 text-slate-600 font-medium">${t.notes}</td>
+                    <td class="p-3 text-right font-bold ${isGain ? 'text-emerald-600' : 'text-rose-600'}">
+                        ${isGain ? '+' : '-'}&nbsp;${formatRupiah(t.amount)}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
         function renderCharts() {
             const filtered = getFilteredTransactions();
             let incData = {}; let expData = {};
+            
             CATEGORIES.income.forEach(c => incData[c] = 0);
             CATEGORIES.expense.forEach(c => expData[c] = 0);
 
             filtered.forEach(t => {
-                if (t.type === 'income') { if (incData[t.category] !== undefined) incData[t.category] += t.amount; }
-                else if (t.type === 'expense') { if (expData[t.category] !== undefined) expData[t.category] += t.amount; }
+                if (t.type === 'income' && incData[t.category] !== undefined) incData[t.category] += t.amount;
+                if (t.type === 'expense' && expData[t.category] !== undefined) expData[t.category] += t.amount;
             });
 
-            if (incomeChartInstance) incomeChartInstance.destroy();
-            incomeChartInstance = new Chart(document.getElementById('chartIncome').getContext('2d'), {
-                type: 'doughnut',
-                data: { labels: Object.keys(incData), datasets: [{ data: Object.values(incData), backgroundColor: ['#10b981', '#34d399', '#059669', '#6ee7b7'], borderWidth: 2 }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 8, font: { size: 9, weight: 'bold' } } } } }
-            });
+            const totalInc = Object.values(incData).reduce((a, b) => a + b, 0);
+            const incWrapper = document.getElementById('chartIncomeWrapper');
+            if (totalInc === 0) {
+                incWrapper.innerHTML = `<div class="text-slate-400 text-[11px] italic text-center py-8">Belum ada arus kas masuk</div>`;
+            } else {
+                incWrapper.innerHTML = `<canvas id="chartIncome"></canvas>`;
+                if (incomeChartInstance) incomeChartInstance.destroy();
+                incomeChartInstance = new Chart(document.getElementById('chartIncome').getContext('2d'), {
+                    type: 'doughnut',
+                    data: { 
+                        labels: Object.keys(incData), 
+                        datasets: [{ 
+                            data: Object.values(incData), 
+                            backgroundColor: ['#059669', '#10b981', '#34d399', '#6ee7b7', '#a7f3d0'], 
+                            borderWidth: 2 
+                        }] 
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 8, font: { size: 9, weight: 'bold' } } } } }
+                });
+            }
 
-            if (expenseChartInstance) expenseChartInstance.destroy();
-            expenseChartInstance = new Chart(document.getElementById('chartExpense').getContext('2d'), {
-                type: 'doughnut',
-                data: { labels: Object.keys(expData), datasets: [{ data: Object.values(expData), backgroundColor: ['#ef4444', '#f87171', '#f59e0b', '#3b82f6', '#6366f1', '#94a3b8'], borderWidth: 2 }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 8, font: { size: 9, weight: 'bold' } } } } }
-            });
+            const totalExp = Object.values(expData).reduce((a, b) => a + b, 0);
+            const expWrapper = document.getElementById('chartExpenseWrapper');
+            if (totalExp === 0) {
+                expWrapper.innerHTML = `<div class="text-slate-400 text-[11px] italic text-center py-8">Belum ada arus kas keluar</div>`;
+            } else {
+                expWrapper.innerHTML = `<canvas id="chartExpense"></canvas>`;
+                if (expenseChartInstance) expenseChartInstance.destroy();
+                expenseChartInstance = new Chart(document.getElementById('chartExpense').getContext('2d'), {
+                    type: 'doughnut',
+                    data: { 
+                        labels: Object.keys(expData), 
+                        datasets: [{ 
+                            data: Object.values(expData), 
+                            backgroundColor: ['#dc2626', '#ef4444', '#f87171', '#fb923c', '#fbbf24', '#cbd5e1'], 
+                            borderWidth: 2 
+                        }] 
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 8, font: { size: 9, weight: 'bold' } } } } }
+                });
+            }
 
             let monthlyNetWorthArray = []; let monthsLabels = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
-            
             for (let m = 0; m < 12; m++) {
                 let tempBalances = { ...state.startingBalances };
                 state.transactions.forEach(tx => {
@@ -1497,7 +1614,6 @@
                         }
                     }
                 });
-
                 let sumNet = 0; Object.values(tempBalances).forEach(v => sumNet += v);
                 monthlyNetWorthArray.push(sumNet);
             }
@@ -1537,7 +1653,7 @@
                 try {
                     const parsed = JSON.parse(event.target.result);
                     if (parsed.transactions && parsed.startingBalances) {
-                        state = parsed; loadState(); refreshApp();
+                        state = parsed; saveState(); refreshApp();
                         alert("Database Berhasil Diimpor Sempurna!"); switchTab('dashboard');
                     } else { alert("Format JSON keliru."); }
                 } catch (err) { alert("Gagal membaca file."); }
@@ -1547,8 +1663,7 @@
 
         function resetToSeed() {
             if (confirm("Restore data simulasi awal? Perubahan saat ini akan tertimpa.")) {
-                state = JSON.parse(JSON.stringify(SEED_DATA)); saveState(); 
-                loadState(); refreshApp();
+                state = JSON.parse(JSON.stringify(SEED_DATA)); saveState(); refreshApp();
             }
         }
 
