@@ -180,6 +180,16 @@
       "toAccount": "Dompet",
       "date": "2026-07-09",
       "notes": "Tarik saldo"
+    },
+    {
+      "id": "tx_1783600664332",
+      "type": "income",
+      "amount": 122000,
+      "account": "Dompet",
+      "category": "Bonus & THR",
+      "toAccount": "",
+      "date": "2026-07-09",
+      "notes": "Bonusan"
     }
   ],
   "startingBalances": {
