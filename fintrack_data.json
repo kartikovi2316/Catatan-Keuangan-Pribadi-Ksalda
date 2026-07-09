@@ -101,6 +101,45 @@
       "toAccount": "Dana",
       "date": "2026-07-09",
       "notes": "Pindah dana"
+    },
+    {
+      "id": "tx_1783572841360",
+      "type": "income",
+      "amount": 126682,
+      "account": "Saldo RDN",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-09",
+      "notes": "Penjualan BACH"
+    },
+    {
+      "id": "tx_1783572934958",
+      "type": "expense",
+      "amount": 126682,
+      "account": "Saham",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-09",
+      "notes": "Penjualan BACH"
+    },
+    {
+      "id": "tx_1783572962885",
+      "type": "income",
+      "amount": 12000,
+      "account": "Saham",
+      "category": "Gaji",
+      "toAccount": "",
+      "date": "2026-07-09",
+      "notes": "Saham PRDL"
+    },
+    {
+      "id": "tx_1783572987017",
+      "date": "2026-07-09",
+      "account": "Saham",
+      "amount": 51367,
+      "type": "income",
+      "category": "Keuntungan Investasi",
+      "notes": "Kenaikan Portfolio Saham (+2.29%)"
     }
   ],
   "startingBalances": {
