@@ -518,11 +518,12 @@
                                         <th class="p-3">Tanggal</th>
                                         <th class="p-3">Perubahan Keterangan</th>
                                         <th class="p-3 text-right">Nominal Keuntungan/Kerugian</th>
+                                        <th class="p-3 text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody id="investmentTableBody" class="divide-y divide-slate-100 text-slate-700 font-medium">
                                     <tr>
-                                        <td colspan="3" class="p-4 text-center text-slate-400 italic text-xs">Belum ada rekaman penyesuaian harian saham.</td>
+                                        <td colspan="4" class="p-4 text-center text-slate-400 italic text-xs">Belum ada rekaman penyesuaian harian saham.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1018,7 +1019,6 @@
         }
 
         async function pullFromGitHub() {
-            // TERBENTUK SEMPURNA: Menambahkan tutup kurawal (}) yang kurang di berkas image_661cbd.png Anda
             const { token, repo, path } = state.github;
             if (!token || !repo) { alert("Harap isi Kredensial Token dan Repo Anda untuk menarik data!"); return; }
             if (!confirm("Tarik data dari GitHub? Data lokal yang belum diupload akan tertimpa.")) return;
@@ -1516,7 +1516,7 @@
             tbody.innerHTML = '';
 
             if(items.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400 italic text-xs">Belum ada rekaman penyesuaian saham harian.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400 italic text-xs">Belum ada rekaman penyesuaian saham harian.</td></tr>`;
                 return;
             }
 
@@ -1530,6 +1530,9 @@
                     <td class="p-3 text-slate-600 font-medium">${t.notes}</td>
                     <td class="p-3 text-right font-bold ${isGain ? 'text-emerald-600' : 'text-rose-600'}">
                         ${isGain ? '+' : '-'}&nbsp;${formatRupiah(t.amount)}
+                    </td>
+                    <td class="p-3 text-center">
+                        <button onclick="deleteTransaction('${t.id}')" class="text-rose-400 hover:text-rose-600 p-1 transition"><i class="fa-solid fa-trash-can"></i></button>
                     </td>
                 `;
                 tbody.appendChild(tr);
