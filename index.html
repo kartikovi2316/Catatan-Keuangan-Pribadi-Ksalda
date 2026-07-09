@@ -34,6 +34,7 @@
         }
         .custom-scroll::-webkit-scrollbar {
             width: 5px;
+            height: 5px;
         }
         .custom-scroll::-webkit-scrollbar-track {
             background: #f1f5f9;
@@ -95,6 +96,44 @@
         </div>
     </div>
 
+    <!-- POPUP MODAL FOR EXPANDING ALL TRANSACTIONS -->
+    <div id="allTxModal" class="hidden fixed inset-0 bg-slate-950/60 backdrop-blur-md z-[120] flex items-center justify-center p-4 transition-all duration-300">
+        <div class="bg-white w-full max-w-6xl h-[85vh] rounded-2xl shadow-2xl border border-slate-200 p-6 flex flex-col justify-between animate-[fadeIn_0.3s_ease-in-out]">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-folder-open text-indigo-600 text-base"></i>
+                    <h3 class="text-base font-bold text-slate-900">Arsip Transaksi Lengkap (<span id="lblPopupCount">0</span> Rekaman)</h3>
+                </div>
+                <button onclick="closeAllTxModal()" class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-700 transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="flex-grow overflow-auto my-4 border border-slate-150 rounded-xl custom-scroll">
+                <table class="w-full text-left text-xs border-collapse min-w-[700px]">
+                    <thead>
+                        <tr class="bg-slate-50 border-b border-slate-150 text-[10px] text-slate-400 font-bold uppercase tracking-wider sticky top-0 z-10 shadow-sm">
+                            <th class="p-4 bg-slate-50 whitespace-nowrap">Akun</th>
+                            <th class="p-4 bg-slate-50 whitespace-nowrap">Tanggal</th>
+                            <th class="p-4 bg-slate-50 whitespace-nowrap">Kategori</th>
+                            <th class="p-4 bg-slate-50 whitespace-nowrap">Memo</th>
+                            <th class="p-4 bg-slate-50 text-right whitespace-nowrap">Nominal (Rp)</th>
+                            <th class="p-4 bg-slate-50 text-center whitespace-nowrap">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="popupTableBody" class="divide-y divide-slate-100 text-slate-700 font-medium">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="flex justify-end border-t border-slate-100 pt-3">
+                <button onclick="closeAllTxModal()" class="bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 px-6 rounded-xl text-xs transition shadow-sm">
+                    Tutup Keluar
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- EDIT TRANSACTION MODAL -->
     <div id="editTxModal" class="hidden fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-[110] flex items-center justify-center p-4 transition-all duration-300 overflow-y-auto">
         <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl border border-slate-200/80 p-6 space-y-4 animate-[fadeIn_0.3s_ease-in-out] my-8">
@@ -114,10 +153,9 @@
                 
                 <div>
                     <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Jenis Arus Kas (Terkunci)</label>
-                    <div class="w-full bg-slate-100 text-slate-500 px-4 py-2.5 rounded-xl text-xs font-bold capitalize flex items-center space-x-2 border border-slate-200" id="editTypeDisplay">
+                    <div class="w-full bg-slate-100 text-slate-500 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center space-x-2 border border-slate-200" id="editTypeDisplay">
                         <i class="fa-solid fa-lock text-[10px]"></i> <span>Pemasukan</span>
                     </div>
-                    <p class="text-[9px] text-slate-400 mt-1 italic">*Tipe transaksi tidak bisa diubah. Hapus dan buat baru jika tipe salah.</p>
                 </div>
 
                 <div>
@@ -133,7 +171,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label for="editTxAccount" id="lblEditTxAccount" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Penyimpanan Akun</label>
-                        <select id="editTxAccount" required class="block w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:border-amber-500 focus:bg-white">
+                        <select id="editTxAccount" required onchange="updateEditCategoryOptions()" class="block w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:border-amber-500 focus:bg-white">
                         </select>
                     </div>
                     <div id="divEditCategory">
@@ -462,7 +500,7 @@
             </div>
         </div>
 
-        <!-- TAB: INVESTMENT CONTROL & DASHBOARD (ISOLATED FROM LIQUID ASSETS) -->
+        <!-- TAB: INVESTMENT CONTROL & DASHBOARD -->
         <div id="content-investment" class="tab-content space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="bg-gradient-to-br from-purple-900 to-indigo-950 text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
@@ -515,10 +553,10 @@
                             <table class="w-full text-left text-xs border-collapse">
                                 <thead>
                                     <tr class="bg-slate-50 border-b border-slate-200 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
-                                        <th class="p-3">Tanggal</th>
-                                        <th class="p-3">Perubahan Keterangan</th>
-                                        <th class="p-3 text-right">Nominal Keuntungan/Kerugian</th>
-                                        <th class="p-3 text-center">Aksi</th>
+                                        <th class="p-3 whitespace-nowrap">Tanggal</th>
+                                        <th class="p-3 whitespace-nowrap">Perubahan Keterangan</th>
+                                        <th class="p-3 text-right whitespace-nowrap">Nominal Keuntungan/Kerugian</th>
+                                        <th class="p-3 text-center whitespace-nowrap">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody id="investmentTableBody" class="divide-y divide-slate-100 text-slate-700 font-medium">
@@ -569,7 +607,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label for="txAccount" id="lblTxAccount" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Penyimpanan Akun</label>
-                                <select id="txAccount" required class="block w-full px-3 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:border-indigo-500 focus:bg-white">
+                                <select id="txAccount" required onchange="updateCategoryOptions()" class="block w-full px-3 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:border-indigo-500 focus:bg-white">
                                 </select>
                             </div>
                             <div id="divCategory">
@@ -607,7 +645,9 @@
         <!-- TAB: LEDGER HISTORY -->
         <div id="content-history" class="tab-content space-y-6">
             <div class="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-6">
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-4 mb-4 gap-3">
+                
+                <!-- FILTER CONTROLS -->
+                <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between border-b border-slate-100 pb-4 mb-4 gap-4">
                     <div>
                         <h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2">
                             <i class="fa-solid fa-receipt text-indigo-600 text-xs"></i>
@@ -615,60 +655,81 @@
                         </h3>
                     </div>
                     
-                    <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-                        <button onclick="openAccountModal()" class="bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 text-xs font-bold py-2 px-4 rounded-xl border border-slate-200/60 transition-all flex items-center space-x-2 shadow-sm">
-                            <span id="lblCurrentAccount">Semua Rekening Akun</span> <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 w-full xl:w-auto">
+                        <button onclick="openAccountModal()" class="bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 text-xs font-bold py-2 px-4 rounded-xl border border-slate-200/60 transition-all flex items-center justify-between shadow-sm">
+                            <span id="lblCurrentAccount" class="truncate mr-1">Semua Akun</span> <i class="fa-solid fa-chevron-down text-[10px]"></i>
                         </button>
+
+                        <select id="histCategoryFilter" onchange="renderHistoryTable()" class="bg-slate-100 text-slate-700 text-xs font-bold py-2 px-3 border border-slate-200/60 rounded-xl focus:outline-none cursor-pointer">
+                            <option value="all">Semua Kategori</option>
+                        </select>
                         
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
                                 <i class="fa-solid fa-magnifying-glass text-xs"></i>
                             </span>
-                            <input type="text" id="txSearch" oninput="renderHistoryTable()" placeholder="Cari memo..." class="pl-9 pr-4 py-2 text-xs border border-slate-200 bg-slate-50 rounded-xl focus:outline-none focus:border-indigo-500 focus:bg-white w-full sm:w-48 font-semibold text-slate-700">
+                            <input type="text" id="txSearch" oninput="renderHistoryTable()" placeholder="Cari memo..." class="pl-9 pr-4 py-2 text-xs border border-slate-200 bg-slate-50 rounded-xl focus:outline-none focus:border-indigo-500 focus:bg-white w-full font-semibold text-slate-700">
                         </div>
                     </div>
                 </div>
 
-                <!-- SURPLUS / DEFICIT SUMMARY BAR + TOTAL HUTANG & PIUTANG -->
+                <!-- SUB TABS SWIPABLE -->
+                <div class="flex space-x-1 p-1 bg-slate-100 border border-slate-200/60 rounded-xl mb-4 max-w-lg overflow-x-auto whitespace-nowrap custom-scroll snap-x">
+                    <button onclick="setHistoryTypeTab('all')" id="btn-hist-type-all" class="flex-1 shrink-0 py-1.5 px-4 text-xs font-bold rounded-lg transition-all bg-white text-indigo-700 shadow-sm snap-clamp">Semua</button>
+                    <button onclick="setHistoryTypeTab('income')" id="btn-hist-type-income" class="flex-1 shrink-0 py-1.5 px-4 text-xs font-bold rounded-lg transition-all text-slate-500 hover:text-slate-800 snap-clamp">Pemasukan</button>
+                    <button onclick="setHistoryTypeTab('expense')" id="btn-hist-type-expense" class="flex-1 shrink-0 py-1.5 px-4 text-xs font-bold rounded-lg transition-all text-slate-500 hover:text-slate-800 snap-clamp">Pengeluaran</button>
+                    <button onclick="setHistoryTypeTab('transfer')" id="btn-hist-type-transfer" class="flex-1 shrink-0 py-1.5 px-4 text-xs font-bold rounded-lg transition-all text-slate-500 hover:text-slate-800 snap-clamp">Transfer Akun</button>
+                </div>
+
+                <!-- KPI SUMMARY GRID -->
                 <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-5 bg-slate-50 p-4 rounded-xl border border-slate-200/60 shadow-inner">
-                    <div class="flex flex-col border-r border-slate-200 pr-2">
+                    <div class="flex flex-col sm:border-r sm:border-slate-200 pr-2">
                         <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Total Inflow</span>
                         <span id="histIncome" class="text-xs font-extrabold text-emerald-600 mt-1">Rp 0</span>
                     </div>
-                    <div class="flex flex-col border-r border-slate-200 py-0 pr-4 pl-2">
+                    <div class="flex flex-col sm:border-r sm:border-slate-200 py-0 pr-4 pl-0 sm:pl-2">
                         <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Total Outflow</span>
                         <span id="histExpense" class="text-xs font-extrabold text-rose-600 mt-1">Rp 0</span>
                     </div>
-                    <div class="flex flex-col border-r border-slate-200 py-0 pl-2">
+                    <div class="flex flex-col sm:border-r sm:border-slate-200 py-0 pl-0 sm:pl-2">
                         <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Net Surplus</span>
                         <span id="histSurplus" class="text-xs font-extrabold mt-1">Rp 0</span>
                     </div>
-                    <div class="flex flex-col border-r border-slate-200 py-0 pl-2">
+                    <div class="flex flex-col sm:border-r sm:border-slate-200 py-0 pl-0 sm:pl-2">
                         <span class="text-[9px] font-bold text-purple-400 uppercase tracking-wider">Total Piutang</span>
                         <span id="histTotalPiutang" class="text-xs font-extrabold text-purple-700 mt-1">Rp 0</span>
                     </div>
-                    <div class="flex flex-col py-0 pl-2">
+                    <div class="flex flex-col py-0 pl-0 sm:pl-2">
                         <span class="text-[9px] font-bold text-amber-400 uppercase tracking-wider">Total Hutang</span>
                         <span id="histTotalHutang" class="text-xs font-extrabold text-amber-700 mt-1">Rp 0</span>
                     </div>
                 </div>
 
-                <div class="overflow-x-auto rounded-xl border border-slate-150 relative">
+                <!-- MAIN WORKSPACE TABLE -->
+                <div class="overflow-x-auto rounded-xl border border-slate-150 relative custom-scroll">
                     <table class="w-full text-left text-xs border-collapse min-w-[650px]">
                         <thead>
                             <tr class="bg-slate-50 border-b border-slate-150 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
-                                <th class="p-4 sticky left-0 bg-slate-50 z-20 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] min-w-[120px]">Akun</th>
-                                <th class="p-4">Tanggal</th>
-                                <th class="p-4">Kategori</th>
-                                <th class="p-4">Memo</th>
-                                <th class="p-4 text-right">Nominal (Rp)</th>
-                                <th class="p-4 text-center">Aksi</th>
+                                <th class="p-4 sticky left-0 bg-slate-50 z-20 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] min-w-[120px] whitespace-nowrap">Akun</th>
+                                <th class="p-4 whitespace-nowrap">Tanggal</th>
+                                <th class="p-4 whitespace-nowrap">Kategori</th>
+                                <th class="p-4 whitespace-nowrap">Memo</th>
+                                <th class="p-4 text-right whitespace-nowrap">Nominal (Rp)</th>
+                                <th class="p-4 text-center whitespace-nowrap">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="historyTableBody" class="divide-y divide-slate-100 text-slate-700 font-medium">
                         </tbody>
                     </table>
                 </div>
+
+                <!-- EXPAND CONTAINER PANEL -->
+                <div id="divExpandHistory" class="hidden text-center pt-4 border-t border-slate-100 mt-4">
+                    <button onclick="openAllTxModal()" class="inline-flex items-center space-x-2 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 font-bold px-5 py-2.5 rounded-xl text-xs transition border border-indigo-200/50 shadow-sm">
+                        <i class="fa-solid fa-eye-low-vision"></i> <span>Buka Seluruh Arsip Historis</span>
+                    </button>
+                </div>
+
             </div>
         </div>
 
@@ -767,8 +828,8 @@
         const INVESTMENT_ASSETS = ["Reksadana & Obligasi", "Saham"];
         
         const CATEGORIES = {
-            income: ["Gaji", "Dividen", "Lainnya"],
-            expense: ["Makanan & Minuman", "Transportasi", "Gaya Lifestyle", "Tagihan & Utilitas", "Lainnya"],
+            income: ["Gaji", "Dividen", "Bonus & THR", "Bisnis & Freelance", "Investasi", "Kenaikan Nilai", "Penyesuaian Nilai", "Lainnya"],
+            expense: ["Makanan & Minuman", "Transportasi", "Belanja & Sembako", "Gaya Lifestyle & Hobby", "Tagihan & Utilitas", "Kesehatan & Medis", "Pendidikan", "Penurunan Nilai", "Penyesuaian Nilai", "Lainnya"],
             hutang: ["Terima Pinjaman Baru", "Bayar Cicilan Hutang"],
             piutang: ["Beri Pinjaman Ke Orang", "Terima Pelunasan Piutang"]
         };
@@ -776,14 +837,12 @@
         const SEED_DATA = {
             transactions: [
                 { id: "tx_1783504402911", type: "income", amount: 588000, account: "Saldo RDN", category: "Lainnya", toAccount: "", date: "2026-07-08", notes: "Pengembalian Dana Penawaran Umum" },
-                { id: "tx_1783504444412", type: "income", amount: 2050583, account: "Reksadana & Obligasi", category: "Lainnya", toAccount: "", date: "2026-07-08", notes: "Obligasi" },
-                { id: "tx_1783504466828", type: "income", amount: 3061655, account: "Reksadana & Obligasi", category: "Lainnya", toAccount: "", date: "2026-07-08", notes: "Reksadana" },
-                { id: "tx_1783504489116", type: "income", amount: 2357800, account: "Saham", category: "Lainnya", toAccount: "", date: "2026-07-08", notes: "Investasi Saham" },
+                { id: "tx_1783504444412", type: "income", amount: 2050583, account: "Reksadana & Obligasi", category: "Kenaikan Nilai", toAccount: "", date: "2026-07-08", notes: "Kenaikan ReksaDana" },
+                { id: "tx_1783504466828", type: "income", amount: 3061655, account: "Reksadana & Obligasi", category: "Kenaikan Nilai", toAccount: "", date: "2026-07-08", notes: "Kenaikan Obligasi" },
+                { id: "tx_1783504489116", type: "income", amount: 2357800, account: "Saham", category: "Penyesuaian Nilai", toAccount: "", date: "2026-07-08", notes: "Penyesuaian Nilai Awal Saham" },
                 { id: "tx_1783508765501", type: "income", amount: 122000, account: "Dompet", category: "Lainnya", toAccount: "", date: "2026-07-08", notes: "Cash" },
                 { id: "tx_1783508803793", type: "income", amount: 60076, account: "Bank BCA 2", category: "Lainnya", toAccount: "", date: "2026-07-08", notes: "Sisa saldo" },
-                { id: "tx_1783508884200", type: "income", amount: 1737013, account: "Bank BCA 1", category: "Lainnya", toAccount: "", date: "2026-07-08", notes: "Sisa saldo" },
-                { id: "tx_1783508916678", type: "income", amount: 539, account: "Bank Jago", category: "Lainnya", toAccount: "", date: "2026-07-08", notes: "Sisa saldo" },
-                { id: "tx_1783508994989", type: "income", amount: 9450, account: "ShopeePay", category: "Lainnya", toAccount: "", date: "2026-07-08", notes: "Sisa saldo" }
+                { id: "tx_1783508884200", type: "income", amount: 1737013, account: "Bank BCA 1", category: "Lainnya", toAccount: "", date: "2026-07-08", notes: "Sisa saldo" }
             ],
             startingBalances: {
                 "Dompet": 0, "Bank BCA 1": 0, "Bank BCA 2": 0, "Bank Jago": 0, "Dana": 0, "GoPay": 0, "ShopeePay": 0, "Saldo RDN": 0, "Reksadana & Obligasi": 0, "Saham": 0
@@ -795,6 +854,7 @@
         let activeYear = 2026;
         let activeMonth = -1;
         let activeAccountFilter = 'all'; 
+        let activeHistoryTypeTab = 'all'; 
         let incomeChartInstance = null; let expenseChartInstance = null; let trendChartInstance = null;
 
         const MONTHS_NAMES = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
@@ -825,12 +885,13 @@
         }
 
         function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-
         function openMonthModal() { document.getElementById('monthModal').classList.remove('hidden'); }
         function closeMonthModal() { document.getElementById('monthModal').classList.add('hidden'); }
-
         function openAccountModal() { document.getElementById('accountModal').classList.remove('hidden'); }
         function closeAccountModal() { document.getElementById('accountModal').classList.add('hidden'); }
+        
+        function openAllTxModal() { document.getElementById('allTxModal').classList.remove('hidden'); renderHistoryTable(true); }
+        function closeAllTxModal() { document.getElementById('allTxModal').classList.add('hidden'); }
 
         function initModalMonthGrid() {
             const container = document.getElementById('modalMonthGrid');
@@ -846,7 +907,7 @@
 
         function setMonthFilter(m) {
             activeMonth = m;
-            document.getElementById('lblCurrentMonth').innerText = m === -1 ? "Semua Bulan (Kombinasi)" : `${MONTHS_NAMES[m]}`;
+            document.getElementById('lblCurrentMonth').innerText = m === -1 ? "Semua Bulan" : `${MONTHS_NAMES[m]}`;
             document.getElementById('btn-modal-month-all').className = m === -1 ? 
                 "col-span-2 sm:col-span-3 py-3 px-4 text-xs font-bold rounded-xl bg-indigo-600 text-white text-center shadow-md shadow-indigo-100 transition-all" : 
                 "col-span-2 sm:col-span-3 py-3 px-4 text-xs font-bold rounded-xl text-slate-600 bg-slate-50 border border-slate-200/60 hover:bg-indigo-50 hover:text-indigo-700 text-center transition-all";
@@ -877,7 +938,7 @@
 
         function setAccountFilter(acc) {
             activeAccountFilter = acc;
-            document.getElementById('lblCurrentAccount').innerText = acc === 'all' ? "Semua Rekening Akun" : acc;
+            document.getElementById('lblCurrentAccount').innerText = acc === 'all' ? "Semua Akun" : acc;
             document.getElementById('btn-modal-account-all').className = acc === 'all' ? 
                 "col-span-2 py-3 px-4 text-xs font-bold rounded-xl bg-indigo-600 text-white text-center shadow-md shadow-indigo-100 transition-all" : 
                 "col-span-2 py-3 px-4 text-xs font-bold rounded-xl text-slate-600 bg-slate-50 border border-slate-200/60 hover:bg-indigo-50 hover:text-indigo-700 text-center transition-all";
@@ -891,6 +952,22 @@
                 }
             });
             closeAccountModal(); renderHistoryTable();
+        }
+
+        function setHistoryTypeTab(type) {
+            activeHistoryTypeTab = type;
+            const tabs = ['all', 'income', 'expense', 'transfer'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`btn-hist-type-${t}`);
+                if(btn) {
+                    if(t === type) {
+                        btn.className = "flex-1 shrink-0 py-1.5 px-4 text-xs font-bold rounded-lg transition-all bg-white text-indigo-700 shadow-sm snap-clamp";
+                    } else {
+                        btn.className = "flex-1 shrink-0 py-1.5 px-4 text-xs font-bold rounded-lg transition-all text-slate-500 hover:text-slate-800 snap-clamp";
+                    }
+                }
+            });
+            renderHistoryTable();
         }
 
         function openEditModal(id) {
@@ -935,15 +1012,12 @@
                 divTo.classList.add('hidden'); toSel.removeAttribute('required');
                 lblAcc.innerText = "Penyimpanan Akun";
                 
-                CATEGORIES[tx.type].forEach(c => {
-                    const opt = document.createElement('option'); opt.value = c; opt.innerText = c;
-                    catSel.appendChild(opt);
-                });
+                document.getElementById('editTxAccount').value = tx.account;
+                updateEditCategoryOptions();
                 catSel.value = tx.category;
             }
 
             document.getElementById('editTxAmount').value = new Intl.NumberFormat('id-ID').format(tx.amount);
-            document.getElementById('editTxAccount').value = tx.account;
             document.getElementById('editTxDate').value = tx.date;
             document.getElementById('editTxNotes').value = tx.notes !== "-" ? tx.notes : "";
 
@@ -1114,7 +1188,34 @@
 
         function saveState() { localStorage.setItem('fintrack_10y_state', JSON.stringify(state)); }
 
-        function refreshApp() { calculateKPIs(); renderAccountList(); renderHistoryTable(); renderInvestmentTable(); renderCharts(); }
+        function updateHistoryCategoryFilterOptions() {
+            const filterDropdown = document.getElementById('histCategoryFilter');
+            if(!filterDropdown) return;
+            const currentSelected = filterDropdown.value;
+            
+            filterDropdown.innerHTML = '<option value="all">Semua Kategori</option>';
+            let gatheredCategories = new Set();
+            state.transactions.forEach(t => { if(t.category) gatheredCategories.add(t.category); });
+            
+            gatheredCategories.forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat; opt.innerText = cat;
+                filterDropdown.appendChild(opt);
+            });
+            
+            if([...gatheredCategories].includes(currentSelected)) {
+                filterDropdown.value = currentSelected;
+            }
+        }
+
+        function refreshApp() { 
+            calculateKPIs(); 
+            renderAccountList(); 
+            updateHistoryCategoryFilterOptions();
+            renderHistoryTable(); 
+            renderInvestmentTable(); 
+            renderCharts(); 
+        }
 
         function handleFilterChange() { activeYear = parseInt(document.getElementById('globalYear').value); refreshApp(); }
 
@@ -1156,12 +1257,77 @@
                 divCategory.classList.remove('hidden'); catSelect.setAttribute('required', 'required');
                 divToAccount.classList.add('hidden'); document.getElementById('txToAccount').removeAttribute('required');
                 lblTxAccount.innerText = "Penyimpanan Akun";
+                updateCategoryOptions();
+            }
+        }
 
-                catSelect.innerHTML = '';
-                CATEGORIES[type].forEach(cat => {
-                    const opt = document.createElement('option'); opt.value = cat; opt.innerText = cat;
-                    catSelect.appendChild(opt);
-                });
+        function updateCategoryOptions() {
+            const type = document.getElementById('txType').value;
+            const account = document.getElementById('txAccount').value;
+            const catSelect = document.getElementById('txCategory');
+            if (!catSelect) return;
+            
+            catSelect.innerHTML = '';
+            let availableCategories = [];
+            
+            if (account === "Saham") {
+                if (type === "income") availableCategories = ["Dividen", "Penyesuaian Nilai"];
+                else if (type === "expense") availableCategories = ["Penurunan Nilai", "Penyesuaian Nilai"];
+            } else if (account === "Reksadana & Obligasi") {
+                if (type === "income") availableCategories = ["Kenaikan Nilai", "Penyesuaian Nilai"];
+                else if (type === "expense") availableCategories = ["Penurunan Nilai", "Penyesuaian Nilai"];
+            } else {
+                availableCategories = CATEGORIES[type] || [];
+            }
+            
+            if (availableCategories.length === 0 && (account === "Saham" || account === "Reksadana & Obligasi")) {
+                const opt = document.createElement('option');
+                opt.value = "Penyesuaian Nilai"; opt.innerText = "Penyesuaian Nilai";
+                catSelect.appendChild(opt);
+                return;
+            }
+
+            availableCategories.forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat; opt.innerText = cat;
+                catSelect.appendChild(opt);
+            });
+        }
+
+        function updateEditCategoryOptions() {
+            const type = document.getElementById('editTxOriginalType').value;
+            const account = document.getElementById('editTxAccount').value;
+            const catSel = document.getElementById('editTxCategory');
+            if (!catSel) return;
+            
+            const currentVal = catSel.value;
+            catSel.innerHTML = '';
+            let availableCategories = [];
+            
+            if (account === "Saham") {
+                if (type === "income") availableCategories = ["Dividen", "Penyesuaian Nilai"];
+                else if (type === "expense") availableCategories = ["Penurunan Nilai", "Penyesuaian Nilai"];
+            } else if (account === "Reksadana & Obligasi") {
+                if (type === "income") availableCategories = ["Kenaikan Nilai", "Penyesuaian Nilai"];
+                else if (type === "expense") availableCategories = ["Penurunan Nilai", "Penyesuaian Nilai"];
+            } else {
+                availableCategories = CATEGORIES[type] || [];
+            }
+            
+            if (availableCategories.length === 0 && (account === "Saham" || account === "Reksadana & Obligasi")) {
+                const opt = document.createElement('option');
+                opt.value = "Penyesuaian Nilai"; opt.innerText = "Penyesuaian Nilai";
+                catSel.appendChild(opt);
+                return;
+            }
+
+            availableCategories.forEach(c => {
+                const opt = document.createElement('option'); opt.value = c; opt.innerText = c;
+                catSel.appendChild(opt);
+            });
+            
+            if (availableCategories.includes(currentVal)) {
+                catSel.value = currentVal;
             }
         }
 
@@ -1201,7 +1367,7 @@
                     }
                     else if (t.type === 'piutang') {
                         if (t.category === "Beri Pinjaman Ke Orang") balances[t.account] -= t.amount;
-                        else if (t.category === "Terima Pelunasan Piutang") balances[t.account] += t.amount;
+                        if (t.category === "Terima Pelunasan Piutang") balances[t.account] += t.amount;
                     }
                 }
             });
@@ -1209,16 +1375,14 @@
         }
 
         function getOutstandingLiabilities() {
-            let totalHutang = 0;
-            let totalPiutang = 0;
-            
+            let totalHutang = 0; let totalPiutang = 0;
             state.transactions.forEach(t => {
                 if(t.type === 'hutang') {
                     if(t.category === "Terima Pinjaman Baru") totalHutang += t.amount;
                     else if(t.category === "Bayar Cicilan Hutang") totalHutang -= t.amount;
                 } else if(t.type === 'piutang') {
                     if(t.category === "Beri Pinjaman Ke Orang") totalPiutang += t.amount;
-                    else if(t.category === "Terima Pelunasan Piutang") totalPiutang -= t.amount;
+                    else if(t.category === "Terima Pelunasan Piutang") totalPiutang += t.amount;
                 }
             });
             return { totalHutang, totalPiutang };
@@ -1273,15 +1437,12 @@
             document.getElementById('histTotalHutang').innerText = formatRupiah(liabilities.totalHutang);
             document.getElementById('histTotalPiutang').innerText = formatRupiah(liabilities.totalPiutang);
 
-            const targetLand = 35000000; 
-            const targetHouseBuild = 100000000;
-            
+            const targetLand = 35000000; const targetHouseBuild = 100000000;
             const landPercent = Math.min(100, Math.round((totalNetWorth / targetLand) * 100));
             const housePercent = Math.min(100, Math.round((totalNetWorth / targetHouseBuild) * 100));
 
             document.getElementById('goalLandPercent').innerText = `${landPercent}%`;
             document.getElementById('goalLandBar').style.width = `${landPercent}%`;
-            
             document.getElementById('goalHousePercent').innerText = `${housePercent}%`;
             document.getElementById('goalHouseBar').style.width = `${housePercent}%`;
 
@@ -1327,41 +1488,25 @@
         function submitStockReturn(e) {
             e.preventDefault();
             const val = parseFloat(document.getElementById('inputStockReturn').value);
-            
-            if (isNaN(val) || val === 0) {
-                alert("Masukkan angka persentase perubahan portfolio yang valid!");
-                return;
-            }
+            if (isNaN(val) || val === 0) { alert("Masukkan angka persentase perubahan portfolio yang valid!"); return; }
 
-            const balances = getLiveBalances();
-            const currentSaham = balances["Saham"] || 0;
-
-            if (currentSaham <= 0) {
-                alert("Gagal Memproses: Saldo akun Saham saat ini Rp 0. Isi modal via menu Catat Arus Kas terlebih dahulu.");
-                return;
-            }
+            const balances = getLiveBalances(); const currentSaham = balances["Saham"] || 0;
+            if (currentSaham <= 0) { alert("Gagal Memproses: Saldo akun Saham saat ini Rp 0. Isi modal via menu Catat Arus Kas terlebih dahulu."); return; }
 
             const amountChange = Math.round(currentSaham * (val / 100));
-            if (amountChange === 0) {
-                alert("Nominal perubahan terlalu kecil."); return;
-            }
+            if (amountChange === 0) { alert("Nominal perubahan terlalu kecil."); return; }
 
             const today = new Date();
             const formattedDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
             let transactionRow = {
-                id: 'tx_' + Date.now(),
-                date: formattedDate,
-                account: "Saham",
-                amount: Math.abs(amountChange),
+                id: 'tx_' + Date.now(), date: formattedDate, account: "Saham", amount: Math.abs(amountChange),
                 type: amountChange > 0 ? "income" : "expense",
                 category: amountChange > 0 ? "Keuntungan Investasi" : "Kerugian Investasi",
                 notes: `${amountChange > 0 ? 'Kenaikan' : 'Penurunan'} Portfolio Saham (${val >= 0 ? '+' : ''}${val.toFixed(2)}%)`
             };
 
-            state.transactions.push(transactionRow);
-            saveState(); refreshApp();
-
+            state.transactions.push(transactionRow); saveState(); refreshApp();
             alert(`📈 Sukses Menjurnal Perubahan Saham Senilai ${formatRupiah(Math.abs(amountChange))}`);
             document.getElementById('inputStockReturn').value = '0';
         }
@@ -1431,43 +1576,72 @@
             }
         }
 
-        function renderHistoryTable() {
-            const tbody = document.getElementById('historyTableBody'); tbody.innerHTML = '';
+        function renderHistoryTable(renderInPopup = false) {
+            const tbody = renderInPopup ? document.getElementById('popupTableBody') : document.getElementById('historyTableBody'); 
+            if(!tbody) return;
+            tbody.innerHTML = '';
+            
             const filtered = getFilteredTransactions();
             const searchQ = document.getElementById('txSearch').value.toLowerCase();
             const accountFilter = activeAccountFilter; 
+            const categoryFilter = document.getElementById('histCategoryFilter').value;
 
-            const itemsToShow = filtered.filter(t => {
+            const itemsFilteredByType = filtered.filter(t => {
+                if (activeHistoryTypeTab === 'all') return true;
+                if (activeHistoryTypeTab === 'income') {
+                    return t.type === 'income' || (t.type === 'hutang' && t.category === "Terima Pinjaman Baru") || (t.type === 'piutang' && t.category === "Terima Pelunasan Piutang");
+                }
+                if (activeHistoryTypeTab === 'expense') {
+                    return t.type === 'expense' || (t.type === 'hutang' && t.category === "Bayar Cicilan Hutang") || (t.type === 'piutang' && t.category === "Beri Pinjaman Ke Orang");
+                }
+                if (activeHistoryTypeTab === 'transfer') return t.type === 'transfer';
+                return true;
+            });
+
+            const itemsToShow = itemsFilteredByType.filter(t => {
                 const matchesSearch = t.category.toLowerCase().includes(searchQ) || t.notes.toLowerCase().includes(searchQ);
                 const matchesAccount = accountFilter === 'all' || t.account === accountFilter || t.toAccount === accountFilter;
-                return matchesSearch && matchesAccount;
+                const matchesCategory = categoryFilter === 'all' || t.category === categoryFilter;
+                return matchesSearch && matchesAccount && matchesCategory;
             });
 
             itemsToShow.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-            let histIncTotal = 0; let histExpTotal = 0;
-            itemsToShow.forEach(t => {
-                if (t.type === 'income') histIncTotal += t.amount;
-                else if (t.type === 'expense') histExpTotal += t.amount;
-                else if (t.type === 'hutang' && t.category === "Terima Pinjaman Baru") histIncTotal += t.amount;
-                else if (t.type === 'hutang' && t.category === "Bayar Cicilan Hutang") histExpTotal += t.amount;
-                else if (t.type === 'piutang' && t.category === "Terima Pelunasan Piutang") histIncTotal += t.amount;
-                else if (t.type === 'piutang' && t.category === "Beri Pinjaman Ke Orang") histExpTotal += t.amount;
-            });
+            if(!renderInPopup) {
+                let histIncTotal = 0; let histExpTotal = 0;
+                itemsToShow.forEach(t => {
+                    if (t.type === 'income') histIncTotal += t.amount;
+                    else if (t.type === 'expense') histExpTotal += t.amount;
+                    else if (t.type === 'hutang' && t.category === "Terima Pinjaman Baru") histIncTotal += t.amount;
+                    else if (t.type === 'hutang' && t.category === "Bayar Cicilan Hutang") histExpTotal += t.amount;
+                    else if (t.type === 'piutang' && t.category === "Terima Pelunasan Piutang") histIncTotal += t.amount;
+                    else if (t.type === 'piutang' && t.category === "Beri Pinjaman Ke Orang") histExpTotal += t.amount;
+                });
 
-            document.getElementById('histIncome').innerText = formatRupiah(histIncTotal);
-            document.getElementById('histExpense').innerText = formatRupiah(histExpTotal);
-            
-            const surplusAmount = histIncTotal - histExpTotal;
-            const surpEl = document.getElementById('histSurplus');
-            surpEl.innerText = (surplusAmount >= 0 ? '+ ' : '- ') + formatRupiah(Math.abs(surplusAmount));
-            surpEl.className = `text-xs font-extrabold mt-1 ${surplusAmount >= 0 ? 'text-emerald-600' : 'text-rose-600'}`;
-
-            if (itemsToShow.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-xs text-slate-400 italic">Jurnal arus kas operasional kosong.</td></tr>`; return;
+                document.getElementById('histIncome').innerText = formatRupiah(histIncTotal);
+                document.getElementById('histExpense').innerText = formatRupiah(histExpTotal);
+                const surplusAmount = histIncTotal - histExpTotal;
+                const surpEl = document.getElementById('histSurplus');
+                surpEl.innerText = (surplusAmount >= 0 ? '+ ' : '- ') + formatRupiah(Math.abs(surplusAmount));
+                surpEl.className = `text-xs font-extrabold mt-1 ${surplusAmount >= 0 ? 'text-emerald-600' : 'text-rose-600'}`;
+            } else {
+                document.getElementById('lblPopupCount').innerText = itemsToShow.length;
             }
 
-            itemsToShow.forEach(t => {
+            const totalMatchingRows = itemsToShow.length;
+            const slicedFinalArray = (!renderInPopup) ? itemsToShow.slice(0, 10) : itemsToShow;
+
+            if(!renderInPopup) {
+                const expandBtnDiv = document.getElementById('divExpandHistory');
+                if(totalMatchingRows > 10) expandBtnDiv.classList.remove('hidden');
+                else expandBtnDiv.classList.add('hidden');
+            }
+
+            if (slicedFinalArray.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-xs text-slate-400 italic">Jurnal kosong / tidak ada hasil filter yang cocok.</td></tr>`; return;
+            }
+
+            slicedFinalArray.forEach(t => {
                 const row = document.createElement('tr');
                 row.className = "hover:bg-slate-50/80 transition text-xs border-b border-slate-100 group";
                 
@@ -1493,13 +1667,14 @@
                 let displayMemo = t.notes;
                 if (t.type === 'transfer') { displayMemo = `<span class="font-bold text-indigo-600">➔ Kirim ke ${t.toAccount}</span> | ${t.notes}`; }
                 
+                // FIXED: Menambahkan kelas 'whitespace-nowrap' pada td kategori dan td nominal uang agar lurus di HP
                 row.innerHTML = `
                     <td class="p-4 font-bold text-slate-700 sticky left-0 bg-white group-hover:bg-slate-50/90 z-10 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)] transition-colors">${t.account}</td>
                     <td class="p-4 font-semibold whitespace-nowrap text-slate-500">${t.date}</td>
-                    <td class="p-4"><span class="px-2.5 py-1 rounded-lg text-[10px] font-bold ${badgeClass}">${t.category}</span></td>
+                    <td class="p-4 whitespace-nowrap"><span class="px-2.5 py-1 rounded-lg text-[10px] font-bold whitespace-nowrap inline-block ${badgeClass}">${t.category}</span></td>
                     <td class="p-4 text-slate-600 max-w-[200px] truncate">${displayMemo}</td>
-                    <td class="p-4 text-right font-extrabold ${amtClass}">${amtSign}&nbsp;${formatRupiah(t.amount)}</td>
-                    <td class="p-4 text-center">
+                    <td class="p-4 text-right font-extrabold whitespace-nowrap ${amtClass}">${amtSign}&nbsp;${formatRupiah(t.amount)}</td>
+                    <td class="p-4 text-center whitespace-nowrap">
                         <div class="flex items-center justify-center space-x-2">
                             <button onclick="openEditModal('${t.id}')" class="text-amber-500 hover:text-amber-600 p-1 transition"><i class="fa-solid fa-pen-to-square"></i></button>
                             <button onclick="deleteTransaction('${t.id}')" class="text-rose-400 hover:text-rose-600 p-1 transition"><i class="fa-solid fa-trash-can"></i></button>
@@ -1528,7 +1703,7 @@
                 tr.innerHTML = `
                     <td class="p-3 text-slate-500 whitespace-nowrap font-semibold">${t.date}</td>
                     <td class="p-3 text-slate-600 font-medium">${t.notes}</td>
-                    <td class="p-3 text-right font-bold ${isGain ? 'text-emerald-600' : 'text-rose-600'}">
+                    <td class="p-3 text-right font-bold whitespace-nowrap ${isGain ? 'text-emerald-600' : 'text-rose-600'}">
                         ${isGain ? '+' : '-'}&nbsp;${formatRupiah(t.amount)}
                     </td>
                     <td class="p-3 text-center">
@@ -1547,8 +1722,14 @@
             CATEGORIES.expense.forEach(c => expData[c] = 0);
 
             filtered.forEach(t => {
-                if (t.type === 'income' && incData[t.category] !== undefined) incData[t.category] += t.amount;
-                if (t.type === 'expense' && expData[t.category] !== undefined) expData[t.category] += t.amount;
+                if (t.type === 'income') {
+                    if (incData[t.category] === undefined) incData[t.category] = 0;
+                    incData[t.category] += t.amount;
+                }
+                if (t.type === 'expense') {
+                    if (expData[t.category] === undefined) expData[t.category] = 0;
+                    expData[t.category] += t.amount;
+                }
             });
 
             const totalInc = Object.values(incData).reduce((a, b) => a + b, 0);
@@ -1564,7 +1745,7 @@
                         labels: Object.keys(incData), 
                         datasets: [{ 
                             data: Object.values(incData), 
-                            backgroundColor: ['#059669', '#10b981', '#34d399', '#6ee7b7', '#a7f3d0'], 
+                            backgroundColor: ['#059669', '#10b981', '#34d399', '#6ee7b7', '#a7f3d0', '#0d9488', '#0284c7'], 
                             borderWidth: 2 
                         }] 
                     },
@@ -1585,7 +1766,7 @@
                         labels: Object.keys(expData), 
                         datasets: [{ 
                             data: Object.values(expData), 
-                            backgroundColor: ['#dc2626', '#ef4444', '#f87171', '#fb923c', '#fbbf24', '#cbd5e1'], 
+                            backgroundColor: ['#dc2626', '#ef4444', '#f87171', '#fb923c', '#fbbf24', '#cbd5e1', '#7c3aed', '#db2777'], 
                             borderWidth: 2 
                         }] 
                     },
@@ -1612,7 +1793,7 @@
                             }
                             else if (tx.type === 'piutang') {
                                 if (tx.category === "Beri Pinjaman Ke Orang") tempBalances[tx.account] -= tx.amount;
-                                else if (tx.category === "Terima Pelunasan Piutang") tempBalances[tx.account] += tx.amount;
+                                if (tx.category === "Terima Pelunasan Piutang") tempBalances[tx.account] += tx.amount;
                             }
                         }
                     }
