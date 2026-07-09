@@ -67,7 +67,7 @@
       "type": "income",
       "amount": 1737013,
       "account": "Bank BCA 1",
-      "category": "Lainnya",
+      "category": "Gaji",
       "toAccount": "",
       "date": "2026-07-08",
       "notes": "Sisa saldo"
@@ -91,6 +91,16 @@
       "toAccount": "",
       "date": "2026-07-08",
       "notes": "Sisa saldo"
+    },
+    {
+      "id": "tx_1783558872000",
+      "type": "transfer",
+      "amount": 85000,
+      "account": "Bank BCA 1",
+      "category": "Transfer Aset",
+      "toAccount": "Dana",
+      "date": "2026-07-09",
+      "notes": "Pindah dana"
     }
   ],
   "startingBalances": {
