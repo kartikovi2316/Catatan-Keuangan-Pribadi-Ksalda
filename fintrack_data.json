@@ -131,6 +131,16 @@
       "toAccount": "",
       "date": "2026-07-09",
       "notes": "Saham PRDL"
+    },
+    {
+      "id": "tx_1783584131794",
+      "type": "expense",
+      "amount": 83250,
+      "account": "Dana",
+      "category": "Tagihan & Utilitas",
+      "toAccount": "",
+      "date": "2026-07-09",
+      "notes": "Bayar Langganan GPT"
     }
   ],
   "startingBalances": {
