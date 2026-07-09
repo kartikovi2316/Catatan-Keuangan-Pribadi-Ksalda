@@ -150,6 +150,36 @@
       "type": "income",
       "category": "Keuntungan Investasi",
       "notes": "Kenaikan Portfolio Saham (+0.05%)"
+    },
+    {
+      "id": "tx_1783594072702",
+      "type": "expense",
+      "amount": 5000,
+      "account": "Dompet",
+      "category": "Transportasi",
+      "toAccount": "",
+      "date": "2026-07-09",
+      "notes": "Tambah angin"
+    },
+    {
+      "id": "tx_1783594092774",
+      "type": "expense",
+      "amount": 12000,
+      "account": "Dompet",
+      "category": "Makanan & Minuman",
+      "toAccount": "",
+      "date": "2026-07-09",
+      "notes": "Kebab"
+    },
+    {
+      "id": "tx_1783594110053",
+      "type": "transfer",
+      "amount": 50000,
+      "account": "Bank BCA 2",
+      "category": "Transfer Aset",
+      "toAccount": "Dompet",
+      "date": "2026-07-09",
+      "notes": "Tarik saldo"
     }
   ],
   "startingBalances": {
