@@ -260,6 +260,36 @@
       "toAccount": "",
       "date": "2026-07-10",
       "notes": "[Investasi] Saham Naik 3.39%"
+    },
+    {
+      "id": "tx_1783682874785",
+      "type": "transfer",
+      "amount": 36000,
+      "account": "Bank BCA 1",
+      "category": "Transfer Dana",
+      "toAccount": "Dana",
+      "date": "2026-07-10",
+      "notes": "Pindah dana"
+    },
+    {
+      "id": "tx_1783682930637",
+      "type": "expense",
+      "amount": 25990,
+      "account": "Dana",
+      "category": "Listrik & Utilitas",
+      "toAccount": "Dompet",
+      "date": "2026-07-10",
+      "notes": "Pulsa Ibuk"
+    },
+    {
+      "id": "tx_1783682973655",
+      "type": "expense",
+      "amount": 11000,
+      "account": "Dana",
+      "category": "Listrik & Utilitas",
+      "toAccount": "Dompet",
+      "date": "2026-07-10",
+      "notes": "Pulsa bapak"
     }
   ],
   "startingBalances": {
