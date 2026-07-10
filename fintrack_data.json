@@ -230,6 +230,16 @@
       "toAccount": "",
       "date": "2026-07-10",
       "notes": "Mas Restu Servis Motor"
+    },
+    {
+      "id": "tx_1783664000498",
+      "type": "expense",
+      "amount": 10000,
+      "account": "Dompet",
+      "category": "Makanan & Minuman",
+      "toAccount": "",
+      "date": "2026-07-10",
+      "notes": "Pempek"
     }
   ],
   "startingBalances": {
