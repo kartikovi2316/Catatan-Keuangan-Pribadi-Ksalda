@@ -180,6 +180,16 @@
       "toAccount": "Dompet",
       "date": "2026-07-09",
       "notes": "Tarik saldo"
+    },
+    {
+      "id": "tx_1783645394810",
+      "type": "income",
+      "amount": 72000,
+      "account": "Dompet",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-09",
+      "notes": "Penggantian biaya BPJS ortu"
     }
   ],
   "startingBalances": {
