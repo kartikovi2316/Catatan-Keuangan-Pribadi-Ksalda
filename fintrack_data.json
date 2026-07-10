@@ -143,15 +143,6 @@
       "notes": "Bayar Langganan GPT"
     },
     {
-      "id": "tx_1783587499743",
-      "date": "2026-07-09",
-      "account": "Saham",
-      "amount": 1122,
-      "type": "income",
-      "category": "Keuntungan Investasi",
-      "notes": "Kenaikan Portfolio Saham (+0.05%)"
-    },
-    {
       "id": "tx_1783594072702",
       "type": "expense",
       "amount": 5000,
@@ -200,6 +191,35 @@
       "toAccount": "",
       "date": "2026-07-10",
       "notes": "Bensin motor Mio Soul GT"
+    },
+    {
+      "id": "tx_1783651973730",
+      "type": "transfer",
+      "amount": 176500,
+      "account": "Saham",
+      "category": "Transfer Aset",
+      "toAccount": "Saldo RDN",
+      "date": "2026-07-10",
+      "notes": "Penjualan saham JELI"
+    },
+    {
+      "id": "tx_1783651991028",
+      "date": "2026-07-10",
+      "account": "Saham",
+      "amount": 36992,
+      "type": "income",
+      "category": "Keuntungan Investasi",
+      "notes": "Kenaikan Portfolio Saham (+1.79%)"
+    },
+    {
+      "id": "tx_1783652040106",
+      "type": "income",
+      "amount": 121990,
+      "account": "Saham",
+      "category": "Penyesuaian Nilai",
+      "toAccount": "",
+      "date": "2026-07-10",
+      "notes": "Penyesuaian nilai saham harian"
     }
   ],
   "startingBalances": {
