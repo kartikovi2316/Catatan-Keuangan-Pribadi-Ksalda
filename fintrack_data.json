@@ -240,6 +240,16 @@
       "toAccount": "",
       "date": "2026-07-10",
       "notes": "Pempek"
+    },
+    {
+      "id": "tx_1783671022275",
+      "type": "income",
+      "amount": 225000,
+      "account": "Bank BCA 1",
+      "category": "Bonus & THR",
+      "toAccount": "",
+      "date": "2026-07-10",
+      "notes": "SHU Nifty"
     }
   ],
   "startingBalances": {
