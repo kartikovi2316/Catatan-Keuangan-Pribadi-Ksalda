@@ -188,8 +188,18 @@
       "account": "Dompet",
       "category": "Lainnya",
       "toAccount": "",
-      "date": "2026-07-09",
+      "date": "2026-07-10",
       "notes": "Penggantian biaya BPJS ortu"
+    },
+    {
+      "id": "tx_1783650057298",
+      "type": "expense",
+      "amount": 30000,
+      "account": "Dompet",
+      "category": "Transportasi",
+      "toAccount": "",
+      "date": "2026-07-10",
+      "notes": "Bensin motor Mio Soul GT"
     }
   ],
   "startingBalances": {
