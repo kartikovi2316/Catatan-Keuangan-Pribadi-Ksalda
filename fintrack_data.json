@@ -220,6 +220,16 @@
       "toAccount": "",
       "date": "2026-07-10",
       "notes": "Penyesuaian nilai saham harian"
+    },
+    {
+      "id": "tx_1783654832982",
+      "type": "piutang",
+      "amount": 309000,
+      "account": "Bank BCA 1",
+      "category": "Beri Pinjaman Ke Orang",
+      "toAccount": "",
+      "date": "2026-07-10",
+      "notes": "Mas Restu Servis Motor"
     }
   ],
   "startingBalances": {
