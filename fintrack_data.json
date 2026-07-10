@@ -250,6 +250,16 @@
       "toAccount": "",
       "date": "2026-07-10",
       "notes": "SHU Nifty"
+    },
+    {
+      "id": "tx_stock_1783674612483",
+      "type": "income",
+      "amount": 75448,
+      "account": "Saham",
+      "category": "Kenaikan Nilai",
+      "toAccount": "",
+      "date": "2026-07-10",
+      "notes": "[Investasi] Saham Naik 3.39%"
     }
   ],
   "startingBalances": {
@@ -268,5 +278,72 @@
     "token": "",
     "repo": "",
     "path": ""
-  }
+  },
+  "recurringTransactions": [
+    {
+      "id": "rec_1783674122996",
+      "type": "income",
+      "amount": 3100000,
+      "account": "Bank BCA 1",
+      "category": "Gaji",
+      "day": 27,
+      "notes": "Gaji Bulanan"
+    },
+    {
+      "id": "rec_1783674146589",
+      "type": "income",
+      "amount": 225000,
+      "account": "Bank BCA 1",
+      "category": "Bonus & THR",
+      "day": 10,
+      "notes": "SHU Nifty"
+    },
+    {
+      "id": "rec_1783674164620",
+      "type": "expense",
+      "amount": 35000,
+      "account": "Bank BCA 1",
+      "category": "BPJS & Kesehatan",
+      "day": 1,
+      "notes": "BPJS Pribadi"
+    },
+    {
+      "id": "rec_1783674187378",
+      "type": "expense",
+      "amount": 70000,
+      "account": "Bank BCA 1",
+      "category": "BPJS & Kesehatan",
+      "day": 1,
+      "notes": "BPJS Bapak dan Ibuk"
+    },
+    {
+      "id": "rec_1783674208922",
+      "type": "expense",
+      "amount": 100000,
+      "account": "Bank BCA 1",
+      "category": "Listrik & Utilitas",
+      "day": 15,
+      "notes": "Wifi IRA"
+    },
+    {
+      "id": "rec_1783674257377",
+      "type": "expense",
+      "amount": 1000000,
+      "account": "Bank BCA 1",
+      "category": "Listrik & Utilitas",
+      "day": 5,
+      "notes": "UKT Bulanan Kuliah"
+    },
+    {
+      "id": "rec_1783674283873",
+      "type": "expense",
+      "amount": 300000,
+      "account": "Dompet",
+      "category": "Keluarga & Orang Tua",
+      "day": 28,
+      "notes": "Kasih Ibu"
+    }
+  ],
+  "recurringPaidLogs": [],
+  "financialMonthStartDay": 27
 }
