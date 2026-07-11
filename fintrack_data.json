@@ -290,6 +290,16 @@
       "toAccount": "Dompet",
       "date": "2026-07-10",
       "notes": "Pulsa bapak"
+    },
+    {
+      "id": "tx_1783735878225",
+      "type": "income",
+      "amount": 25000,
+      "account": "Dompet",
+      "category": "Lainnya",
+      "toAccount": "Dompet",
+      "date": "2026-07-11",
+      "notes": "Penggantian uang pulsa Ibuk"
     }
   ],
   "startingBalances": {
