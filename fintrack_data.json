@@ -300,6 +300,16 @@
       "toAccount": "",
       "date": "2026-07-11",
       "notes": "[Investasi] Saham Naik 1.16%"
+    },
+    {
+      "id": "tx_1783750373796",
+      "type": "expense",
+      "amount": 10000,
+      "account": "Dompet",
+      "category": "Makanan & Minuman",
+      "toAccount": "Dompet",
+      "date": "2026-07-11",
+      "notes": "Pempek"
     }
   ],
   "startingBalances": {
