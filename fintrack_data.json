@@ -310,6 +310,16 @@
       "toAccount": "Dompet",
       "date": "2026-07-11",
       "notes": "Pempek"
+    },
+    {
+      "id": "tx_1783762383458",
+      "type": "expense",
+      "amount": 15000,
+      "account": "Dompet",
+      "category": "Gaya Lifestyle & Hobby",
+      "toAccount": "Dompet",
+      "date": "2026-07-11",
+      "notes": "Potong rambut"
     }
   ],
   "startingBalances": {
