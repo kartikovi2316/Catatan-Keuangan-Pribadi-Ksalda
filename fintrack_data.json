@@ -320,6 +320,16 @@
       "toAccount": "Dompet",
       "date": "2026-07-11",
       "notes": "Potong rambut"
+    },
+    {
+      "id": "tx_1783768173938",
+      "type": "expense",
+      "amount": 50000,
+      "account": "Dompet",
+      "category": "Makanan & Minuman",
+      "toAccount": "Dompet",
+      "date": "2026-07-11",
+      "notes": "Beli sosis dan bakso"
     }
   ],
   "startingBalances": {
