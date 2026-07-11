@@ -252,16 +252,6 @@
       "notes": "SHU Nifty"
     },
     {
-      "id": "tx_stock_1783674612483",
-      "type": "income",
-      "amount": 75448,
-      "account": "Saham",
-      "category": "Kenaikan Nilai",
-      "toAccount": "",
-      "date": "2026-07-10",
-      "notes": "[Investasi] Saham Naik 3.39%"
-    },
-    {
       "id": "tx_1783682874785",
       "type": "transfer",
       "amount": 36000,
@@ -300,6 +290,16 @@
       "toAccount": "Dompet",
       "date": "2026-07-11",
       "notes": "Penggantian uang pulsa Ibuk"
+    },
+    {
+      "id": "tx_stock_1783744535680",
+      "type": "income",
+      "amount": 25817,
+      "account": "Saham",
+      "category": "Kenaikan Nilai",
+      "toAccount": "",
+      "date": "2026-07-11",
+      "notes": "[Investasi] Saham Naik 1.16%"
     }
   ],
   "startingBalances": {
