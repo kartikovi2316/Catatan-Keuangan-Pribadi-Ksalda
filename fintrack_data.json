@@ -400,6 +400,26 @@
       "toAccount": "Dompet",
       "date": "2026-07-13",
       "notes": "Kasih tips kurir"
+    },
+    {
+      "id": "tx_1783912660988",
+      "type": "income",
+      "amount": 356559,
+      "account": "Saldo RDN",
+      "category": "Penyesuaian Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-13",
+      "notes": "Penyesuaian nilai terkini"
+    },
+    {
+      "id": "tx_1783912716638",
+      "type": "expense",
+      "amount": 32597,
+      "account": "Saham",
+      "category": "Penyesuaian Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-13",
+      "notes": "Penyesuaian nilai terkini"
     }
   ],
   "startingBalances": {
