@@ -446,6 +446,18 @@
       "notes": "Penyesuaian nilai saham",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1783954673021",
+      "type": "income",
+      "amount": 300,
+      "account": "GoPay",
+      "category": "Penyesuaian Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-13",
+      "notes": "Uang sisa",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
