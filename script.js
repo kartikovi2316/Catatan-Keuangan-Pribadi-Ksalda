@@ -431,9 +431,22 @@ function calculateKPIs() {
     document.getElementById('goalHousePercent').innerText = `${housePct}%`;
     document.getElementById('goalHouseBar').style.width = `${housePct}%`;
 
-    document.getElementById('lblEmergencyFund').innerText = formatRupiah(liquidAssets);
-    document.getElementById('lblEmergencyStatus').innerText = `Tersedia di Aset Lancar Elektronik & Kas.`;
+    // ==========================================
+    // 🛡️ REVISI: BENTENG DANA DARURAT DARI REKSADANA & OBLIGASI
+    // ==========================================
+    // Mengambil nominal khusus dari akun Reksadana & Obligasi
+    let emergencyFundAmt = balances["Reksadana & Obligasi"] || 0;
+    document.getElementById('lblEmergencyFund').innerText = formatRupiah(emergencyFundAmt);
     
+    // Hitung status ketahanan bulan secara dinamis dari dana cadangan ini
+    if (expSum > 0) {
+        let runwayBulan = (emergencyFundAmt / expSum).toFixed(1);
+        document.getElementById('lblEmergencyStatus').innerText = `Mencukupi ${runwayBulan} bulan pengeluaran (Bersumber dari Reksadana & Obligasi).`;
+    } else {
+        document.getElementById('lblEmergencyStatus').innerText = `Aman, cadangan utuh & belum terdeteksi pengeluaran bulan ini.`;
+    }
+    
+    // KALKULASI RASIO SEKTOR ASET RIIL
     let pctLiquid = totalNetWorth > 0 ? Math.round((liquidAssets / totalNetWorth) * 100) : 0;
     let pctInv = totalNetWorth > 0 ? Math.round(((balances["Reksadana & Obligasi"] || 0) / totalNetWorth) * 100) : 0;
     let pctSaham = totalNetWorth > 0 ? Math.round(((balances["Saham"] || 0) / totalNetWorth) * 100) : 0;
@@ -441,6 +454,7 @@ function calculateKPIs() {
     document.getElementById('ratioLiquidBar').style.width = `${pctLiquid}%`;
     document.getElementById('ratioInvBar').style.width = `${pctInv}%`;
     document.getElementById('ratioSahamBar').style.width = `${pctSaham}%`;
+    
     document.getElementById('lblRatioLiquid').innerText = `Lancar: ${pctLiquid}%`;
     document.getElementById('lblRatioInv').innerText = `Inv: ${pctInv}%`;
     document.getElementById('lblRatioSaham').innerText = `Saham: ${pctSaham}%`;
