@@ -424,14 +424,14 @@
       "bunga": 0
     },
     {
-      "id": "tx_1783935742943",
+      "id": "tx_1783953900538",
       "type": "expense",
       "amount": 3330,
-      "account": "GoPay",
+      "account": "ShopeePay",
       "category": "Internet & Data",
       "toAccount": "Dompet",
       "date": "2026-07-13",
-      "notes": "Beli Domain Website Ini",
+      "notes": "Domain situs ini",
       "tenor": 12,
       "bunga": 0
     }
