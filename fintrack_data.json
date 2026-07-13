@@ -434,6 +434,18 @@
       "notes": "Domain situs ini",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1783954171957",
+      "type": "income",
+      "amount": 43450,
+      "account": "Saham",
+      "category": "Kenaikan Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-13",
+      "notes": "Penyesuaian nilai saham",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
