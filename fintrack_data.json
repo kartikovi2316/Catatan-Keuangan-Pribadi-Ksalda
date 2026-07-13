@@ -390,6 +390,16 @@
       "toAccount": "Dompet",
       "date": "2026-07-13",
       "notes": "Kenaikan nilai investasi"
+    },
+    {
+      "id": "tx_1783912000485",
+      "type": "expense",
+      "amount": 3000,
+      "account": "ShopeePay",
+      "category": "Lainnya",
+      "toAccount": "Dompet",
+      "date": "2026-07-13",
+      "notes": "Kasih tips kurir"
     }
   ],
   "startingBalances": {
