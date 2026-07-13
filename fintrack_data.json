@@ -412,7 +412,7 @@
       "notes": "Penyesuaian nilai terkini"
     },
     {
-      "id": "tx_1783923328612",
+      "id": "tx_1783924041437",
       "type": "hutang",
       "amount": 269604,
       "account": "ShopeePay",
@@ -420,7 +420,8 @@
       "toAccount": "Dompet",
       "date": "2026-07-13",
       "notes": "Paylater Elektronik",
-      "tenor": 1
+      "tenor": 1,
+      "bunga": 0
     }
   ],
   "startingBalances": {
