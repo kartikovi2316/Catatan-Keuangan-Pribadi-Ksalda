@@ -422,6 +422,18 @@
       "notes": "Paylater Elektronik",
       "tenor": 1,
       "bunga": 0
+    },
+    {
+      "id": "tx_1783935742943",
+      "type": "expense",
+      "amount": 3330,
+      "account": "GoPay",
+      "category": "Internet & Data",
+      "toAccount": "Dompet",
+      "date": "2026-07-13",
+      "notes": "Beli Domain Website Ini",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
