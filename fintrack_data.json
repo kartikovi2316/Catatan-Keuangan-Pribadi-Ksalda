@@ -370,6 +370,26 @@
       "toAccount": "Saldo RDN",
       "date": "2026-07-13",
       "notes": "Penjualan RANS"
+    },
+    {
+      "id": "tx_1783911817566",
+      "type": "transfer",
+      "amount": 374723,
+      "account": "Saldo RDN",
+      "category": "Transfer Dana",
+      "toAccount": "Reksadana & Obligasi",
+      "date": "2026-07-13",
+      "notes": "Pembelian Obligasi"
+    },
+    {
+      "id": "tx_1783911867733",
+      "type": "income",
+      "amount": 790,
+      "account": "Reksadana & Obligasi",
+      "category": "Kenaikan Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-13",
+      "notes": "Kenaikan nilai investasi"
     }
   ],
   "startingBalances": {
