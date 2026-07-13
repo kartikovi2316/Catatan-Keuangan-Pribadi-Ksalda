@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catatan Keuangan KSA Pro</title>
-    <!-- Masukkan ini di bawah tag <title> -->
-<link rel="icon" type="image/png" href="Favicon.png">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -22,7 +20,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- MENGHUBUNGKAN KE FILE CSS EKSTERNAL -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="text-slate-900 bg-slate-50 dark:bg-slate-900 dark:text-slate-100 antialiased min-h-screen flex flex-col relative">
@@ -32,7 +29,7 @@
         <i class="fa-solid fa-arrow-up text-sm"></i>
     </button>
 
-    <!-- PREMIUM FULL-SCREEN OVERLAY MONTH MODAL -->
+    <!-- OVERLAY MONTH MODAL -->
     <div id="monthModal" class="hidden fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-[100] flex items-center justify-center p-4 transition-all duration-300">
         <div class="bg-white dark:bg-slate-800 w-full max-w-sm rounded-2xl shadow-2xl border border-slate-200/80 dark:border-slate-700 p-5 space-y-4 animate-[fadeIn_0.3s_ease-in-out]">
             <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
@@ -52,7 +49,7 @@
         </div>
     </div>
 
-    <!-- PREMIUM FULL-SCREEN OVERLAY ACCOUNT FILTER MODAL -->
+    <!-- OVERLAY ACCOUNT FILTER MODAL -->
     <div id="accountModal" class="hidden fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-[100] flex items-center justify-center p-4 transition-all duration-300">
         <div class="bg-white dark:bg-slate-800 w-full max-w-sm rounded-2xl shadow-2xl border border-slate-200/80 dark:border-slate-700 p-5 space-y-4 animate-[fadeIn_0.3s_ease-in-out]">
             <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
@@ -110,7 +107,7 @@
         </div>
     </div>
 
-    <!-- POPUP MODAL UNTUK DETAIL TRANSAKSI KALENDER HARIAN (BARU DIINTEGRASIKAN) -->
+    <!-- POPUP MODAL UNTUK DETAIL TRANSAKSI KALENDER HARIAN -->
     <div id="calendarTxModal" class="hidden fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-[120] flex items-center justify-center p-4 transition-all duration-300">
         <div class="bg-white dark:bg-slate-800 w-full max-w-md rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 p-5 flex flex-col justify-between animate-[fadeIn_0.3s_ease-in-out]">
             <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
@@ -136,13 +133,13 @@
         </div>
     </div>
 
-    <!-- HEADER PREMIUM: LOGO COLOR MATCHED -->
+    <!-- HEADER PREMIUM -->
     <header class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-700 sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between py-4 md:py-0 md:h-20 gap-3">
                 <div class="flex items-center space-x-3">
                     <div class="shrink-0 flex items-center justify-center">
-                        <img src="Logo.png" alt="Logo KSA Pro" class="w-8 h-8 sm:w-9 sm:h-9 object-contain">
+                        <img src="logo.png" alt="Logo KSA Pro" class="w-8 h-8 sm:w-9 sm:h-9 object-contain">
                     </div>
                     <div>
                         <h1 class="text-sm sm:text-base md:text-lg font-extrabold tracking-tight text-slate-900 dark:text-white">Catatan Keuangan KSA Pro</h1>
@@ -151,10 +148,10 @@
                 
                 <div class="flex items-center justify-between md:justify-end w-full md:w-auto gap-2 border-t md:border-t-0 pt-2 md:pt-0 border-slate-100 dark:border-slate-700">
                     <div class="flex items-center gap-2">
-                        <button onclick="executeUndo()" id="btnUndo" class="hidden bg-emerald-100 hover:bg-emerald-200 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300 px-2.5 py-1.5 rounded-xl text-[11px] font-bold transition flex items-center space-x-1" title="Batalkan Aksi Terakhir Sesi Ini">
+                        <button onclick="executeUndo()" id="btnUndo" class="hidden bg-emerald-100 hover:bg-emerald-200 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300 px-2.5 py-1.5 rounded-xl text-[11px] font-bold transition flex items-center space-x-1" title="Batalkan Aksi Terakhir">
                             <i class="fa-solid fa-rotate-left"></i> <span>Undo</span>
                         </button>
-                        <button onclick="executeRedo()" id="btnRedo" class="hidden bg-orange-100 hover:bg-orange-200 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300 px-2.5 py-1.5 rounded-xl text-[11px] font-bold transition flex items-center space-x-1" title="Kembalikan Pembatalan Sesi Ini">
+                        <button onclick="executeRedo()" id="btnRedo" class="hidden bg-orange-100 hover:bg-orange-200 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300 px-2.5 py-1.5 rounded-xl text-[11px] font-bold transition flex items-center space-x-1" title="Kembalikan Pembatalan">
                             <i class="fa-solid fa-rotate-right"></i> <span>Redo</span>
                         </button>
                         
@@ -170,7 +167,7 @@
             </div>
         </div>
 
-        <!-- RESPONSIVE NAVIGATION FOR TABLET / DESKTOP -->
+        <!-- NAVIGATION DESKTOP -->
         <div class="border-t border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 hidden lg:block">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="flex space-x-2 py-2">
@@ -199,7 +196,7 @@
             </div>
         </div>
 
-        <!-- MOBILE SELECT NAVIGATION BOX -->
+        <!-- MOBILE NAVIGATION -->
         <div class="border-t border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 block lg:hidden px-4 py-2.5 relative">
             <button onclick="toggleMobileMenu()" id="mobileMenuBtn" class="w-full flex items-center justify-between py-2 px-3 text-xs font-bold rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-100 shadow-sm">
                 <span id="mobileMenuCurrentText"><i class="fa-solid fa-chart-pie mr-2"></i>Dashboard Kas</span>
@@ -217,10 +214,10 @@
         </div>
     </header>
 
-    <!-- MAIN APP WRAPPER -->
+    <!-- MAIN APP CONTENT -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
         
-        <!-- MONTH FILTER CONTROLLER TRIGGER -->
+        <!-- MONTH FILTER -->
         <div id="monthFilterWrapper" class="mb-6 bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200/60 dark:border-slate-700 shadow-sm flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <div class="bg-emerald-50 dark:bg-slate-700 p-2 rounded-xl text-emerald-600 dark:text-emerald-400">
@@ -238,17 +235,17 @@
 
         <!-- TAB: DASHBOARD -->
         <div id="content-dashboard" class="tab-content active space-y-6">
-            
-            <!-- Dashboard Insight Panel -->
-            <div class="bg-gradient-to-r from-emerald-900 via-slate-900 to-orange-950 text-white rounded-2xl p-5 shadow-md border border-slate-700">
-                <h3 class="font-bold text-[11px] uppercase tracking-wider text-emerald-300 mb-3 flex items-center space-x-2">
-                    <i class="fa-solid fa-lightbulb"></i> <span>Dashboard Insight Buku Besar</span>
+            <!-- PANEL INSIGHT BUKU BESAR REAL-TIME -->
+            <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-950 text-white rounded-2xl p-5 shadow-lg border border-slate-700">
+                <h3 class="font-bold text-[11px] uppercase tracking-wider text-emerald-400 mb-3 flex items-center space-x-2">
+                    <i class="fa-solid fa-gauge-high"></i> <span>Dashboard Insight Buku Besar (Kunci Finansial Real-time)</span>
                 </h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" id="insightContainer">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="insightContainer">
+                    <!-- Generasi Dinamis Melalui JavaScript -->
                 </div>
             </div>
 
-            <!-- MAIN CARDS GRID -->
+            <!-- KEY PERFORMANCE INDICATORS -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200/70 dark:border-slate-700 shadow-sm relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-[3px] bg-emerald-500"></div>
@@ -307,7 +304,7 @@
                 </div>
             </div>
 
-            <!-- HUTANG PIUTANG OVERVIEW PANEL -->
+            <!-- DEBT & CREDIT OVERVIEW -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200/70 dark:border-slate-700 shadow-sm flex items-center justify-between">
                     <div class="flex items-center space-x-3">
@@ -334,7 +331,7 @@
                 </div>
             </div>
 
-            <!-- BENTENG DANA DARURAT & RASIO ALOKASI -->
+            <!-- TARGETS & EMERGENCY FUND -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200/70 dark:border-slate-700 shadow-sm space-y-4">
                     <h3 class="font-bold text-[10px] uppercase tracking-wider text-slate-400 flex items-center space-x-2">
@@ -350,7 +347,6 @@
                             <div id="goalLandBar" class="bg-gradient-to-r from-emerald-500 to-emerald-600 h-full" style="width: 0%"></div>
                         </div>
                         <div class="flex justify-between text-[9px] text-slate-400 font-medium">
-                            <span>Berdasarkan Net Worth Global</span>
                             <span>Target: Rp 35.000.000</span>
                         </div>
                     </div>
@@ -375,10 +371,10 @@
                                 <i class="fa-solid fa-shield text-emerald-500"></i>
                                 <span>Benteng Dana Darurat</span>
                             </h4>
-                            <h4 id="lblEmergencyFund" class="text-base font-extrabold text-slate-900 dark:text-white mt-1.5">Rp 5.112.238</h4>
+                            <h4 id="lblEmergencyFund" class="text-base font-extrabold text-slate-900 dark:text-white mt-1.5">Rp 0</h4>
                         </div>
                         <div class="bg-emerald-50 dark:bg-emerald-900/20 p-2 rounded-xl">
-                            <p id="lblEmergencyStatus" class="text-[10px] font-bold text-emerald-800 dark:text-emerald-300 leading-tight">Aman! Mencukupi 229.8 bulan.</p>
+                            <p id="lblEmergencyStatus" class="text-[10px] font-bold text-emerald-800 dark:text-emerald-300 leading-tight">Rasio Alokasi Dana Aman.</p>
                         </div>
                     </div>
                     <div class="sm:pl-1 flex flex-col justify-between gap-3">
@@ -404,7 +400,7 @@
                 </div>
             </div>
 
-            <!-- LOWER GRID (ACCOUNTS, CHARTS) -->
+            <!-- ACCOUNTS AND TREN GRAPH -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                 <div class="lg:col-span-5 space-y-6">
                     <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/70 dark:border-slate-700 shadow-sm p-5">
@@ -424,7 +420,7 @@
                     <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/70 dark:border-slate-700 shadow-sm p-5 flex flex-col">
                         <h3 class="font-bold text-slate-900 text-xs dark:text-white flex items-center space-x-2 mb-3 border-b border-slate-100 dark:border-slate-700 pb-2">
                             <i class="fa-solid fa-chart-line text-emerald-600"></i>
-                            <span>Tren Pertumbuhan Net Worth Bulanan</span>
+                            <span>Tren Pertumbuhan Net Worth Bulanan (Data Riil Ledger)</span>
                         </h3>
                         <div class="w-full relative h-[180px]">
                             <canvas id="chartNetWorthTrend"></canvas>
@@ -441,7 +437,7 @@
                     <h3 class="text-[11px] font-bold uppercase tracking-wider text-emerald-200 flex items-center space-x-2">
                         <i class="fa-solid fa-chart-line"></i> <span>Cash Flow Forecast</span>
                     </h3>
-                    <p class="text-[10px] text-emerald-100 mt-1">Prediksi Saldo Akhir Bulan</p>
+                    <p class="text-[10px] text-emerald-100 mt-1">Prediksi Saldo Akhir Bulan (Telah Dikurangi Pokok & Bunga)</p>
                     <h2 id="lblForecastBalance" class="text-xl font-black mt-3">Rp 0</h2>
                 </div>
                 <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -465,24 +461,29 @@
                     <i class="fa-solid fa-pie-chart text-emerald-600"></i>
                     <span>Proporsi Anggaran Sektor Keuangan Arus Kas</span>
                 </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-                    <div class="flex flex-col items-center border border-slate-50 dark:border-slate-700 p-3 rounded-xl">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Porsi Pemasukan</span>
-                        <div id="chartIncomeWrapper" class="w-full max-w-[150px] aspect-square flex items-center justify-center">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                    <div class="flex flex-col border border-slate-100 dark:border-slate-700 p-4 rounded-xl bg-slate-50/50 dark:bg-slate-800/50">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 text-center">Porsi Pemasukan</span>
+                        <div id="chartIncomeWrapper" class="w-full max-w-[150px] aspect-square flex items-center justify-center mx-auto mb-4">
                             <canvas id="chartIncome"></canvas>
                         </div>
+                        <div id="incomeChartList" class="w-full text-xs space-y-1.5 border-t border-slate-200/60 dark:border-slate-700 pt-3">
+                        </div>
                     </div>
-                    <div class="flex flex-col items-center border border-slate-50 dark:border-slate-700 p-3 rounded-xl">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Porsi Pengeluaran</span>
-                        <div id="chartExpenseWrapper" class="w-full max-w-[150px] aspect-square flex items-center justify-center">
+                    
+                    <div class="flex flex-col border border-slate-100 dark:border-slate-700 p-4 rounded-xl bg-slate-50/50 dark:bg-slate-800/50">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 text-center">Porsi Pengeluaran</span>
+                        <div id="chartExpenseWrapper" class="w-full max-w-[150px] aspect-square flex items-center justify-center mx-auto mb-4">
                             <canvas id="chartExpense"></canvas>
+                        </div>
+                        <div id="expenseChartList" class="w-full text-xs space-y-1.5 border-t border-slate-200/60 dark:border-slate-700 pt-3">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- TAB RECURRING -->
+        <!-- TAB: TAGIHAN RUTIN & KALENDER -->
         <div id="content-recurring" class="tab-content space-y-6">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                 <div class="lg:col-span-5 bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
@@ -549,7 +550,6 @@
                 </div>
             </div>
 
-            <!-- Kalender Transaksi Sederhana -->
             <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
                 <div class="border-b border-slate-100 dark:border-slate-700 pb-2 mb-4 flex items-center justify-between">
                     <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider"><i class="fa-solid fa-calendar text-emerald-600"></i> Kalender Transaksi</h3>
@@ -562,7 +562,7 @@
             </div>
         </div>
 
-        <!-- TAB: INVESTMENT CONTROL -->
+        <!-- TAB: INVESTASI -->
         <div id="content-investment" class="tab-content space-y-6">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="bg-gradient-to-br from-emerald-800 to-slate-900 text-white p-5 rounded-2xl shadow-lg relative overflow-hidden border border-emerald-700">
@@ -588,7 +588,7 @@
                             <span>Kunci Performa Saham Harian</span>
                         </h3>
                         <p class="text-[11px] text-slate-400 leading-relaxed mb-4">
-                            Masukkan persentase perubahan naik atau turun portfolio saham hari ini. Sistem akan menghitung penyesuaian nominal arus kas secara otomatis.
+                            Masukkan persentase perubahan naik atau turun portfolio saham hari ini.
                         </p>
                         <form onsubmit="submitStockReturn(event)" class="space-y-4 relative z-10 text-xs">
                             <div>
@@ -627,7 +627,7 @@
             </div>
         </div>
 
-        <!-- TAB: INPUT TRANSACTION -->
+        <!-- TAB: INPUT ARUS KAS -->
         <div id="content-input" class="tab-content space-y-6">
             <div class="max-w-xl mx-auto">
                 <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm p-5">
@@ -645,8 +645,8 @@
                                 <option value="income">Pemasukan (Uang Masuk)</option>
                                 <option value="expense">Pengeluaran (Uang Keluar)</option>
                                 <option value="transfer">Transfer Dana (Antar Rekening)</option>
-                                <option value="hutang">Hutang (Kewajiban Baru / Bayar Cicilan)</option>
-                                <option value="piutang">Piutang (Beri Pinjaman / Terima Pelunasan)</option>
+                                <option value="hutang">Hutang (Kewajiban / Pinjaman Baru)</option>
+                                <option value="piutang">Piutang (Beri Pinjaman / Tagihan)</option>
                             </select>
                         </div>
 
@@ -676,6 +676,15 @@
                                 <select id="txToAccount" class="block w-full px-3 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl text-xs font-semibold text-slate-700 dark:text-white focus:outline-none">
                                 </select>
                             </div>
+                            
+                            <div id="divTenorHutang" class="hidden">
+                                <label for="txTenor" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Tenor Cicilan (Bulan)</label>
+                                <input type="number" id="txTenor" min="1" value="12" class="block w-full px-3 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl text-xs font-semibold text-slate-700 dark:text-white focus:outline-none">
+                            </div>
+                            <div id="divBungaHutang" class="hidden">
+                                <label for="txBunga" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Bunga Pinjaman (%)</label>
+                                <input type="number" id="txBunga" min="0" value="0" step="0.1" class="block w-full px-3 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl text-xs font-semibold text-slate-700 dark:text-white focus:outline-none" placeholder="0">
+                            </div>
                         </div>
 
                         <div>
@@ -698,10 +707,9 @@
             </div>
         </div>
 
-        <!-- TAB: LEDGER HISTORY -->
+        <!-- TAB: JURNAL TRANSAKSI -->
         <div id="content-history" class="tab-content space-y-6">
             <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/70 dark:border-slate-700 shadow-sm p-5">
-                
                 <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between border-b border-slate-100 dark:border-slate-700 pb-3 mb-4 gap-3">
                     <div>
                         <h3 class="font-bold text-slate-900 text-xs dark:text-white flex items-center space-x-2">
@@ -779,7 +787,6 @@
                         <i class="fa-solid fa-eye-low-vision"></i> <span>Buka Seluruh Arsip Historis</span>
                     </button>
                 </div>
-
             </div>
         </div>
 
@@ -791,23 +798,31 @@
                         <i class="fa-solid fa-sliders text-emerald-600"></i>
                         <span>Konfigurasi Buku Besar & Tanggal Gajian</span>
                     </h3>
-                    <div class="max-w-xs text-xs">
+                    <div class="max-w-xs text-xs mb-4">
                         <label class="block font-bold text-slate-400 uppercase mb-1">Tanggal Mulai Bulan Buku (1-28)</label>
                         <div class="flex space-x-2">
                             <input type="number" id="cfgMonthStartDay" min="1" max="28" class="px-3 py-1.5 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none font-bold text-slate-900 dark:text-white w-20">
                             <button onclick="saveFinancialDayConfig()" class="bg-slate-900 dark:bg-slate-700 text-white font-bold py-1.5 px-4 rounded-xl transition shadow-sm">Simpan</button>
                         </div>
                     </div>
+                    <div class="border-t border-slate-100 dark:border-slate-700 pt-3 flex flex-wrap gap-2 text-xs">
+                        <button onclick="resetToZero()" class="bg-rose-600 hover:bg-rose-700 text-white font-bold py-1.5 px-3 rounded-xl shadow-sm flex items-center space-x-1.5 transition">
+                            <i class="fa-solid fa-trash-arrow-up"></i> <span>Reset Semua Saldo ke Nol (0)</span>
+                        </button>
+                        <button onclick="resetToSeed()" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold py-1.5 px-3 rounded-xl shadow-sm flex items-center space-x-1.5 transition">
+                            <i class="fa-solid fa-flask"></i> <span>Muat Data Simulasi</span>
+                        </button>
+                        <button onclick="clearAllData()" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-1.5 px-3 rounded-xl shadow-sm flex items-center space-x-1.5 transition">
+                            <i class="fa-solid fa-eraser"></i> <span>Clear Storage</span>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm p-5 space-y-4">
                     <h3 class="font-bold text-slate-900 text-xs dark:text-white flex items-center space-x-2 border-b border-slate-100 pb-2">
                         <i class="fa-brands fa-github text-slate-900 dark:text-white"></i>
-                        <span>Sinkronisasi Cloud Awam GitHub API</span>
+                        <span>Sinkronisasi Cloud GitHub API</span>
                     </h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                        Hubungkan token GitHub Anda untuk mengamankan data pembukuan langsung ke repositori Git pribadi secara lintas perangkat.
-                    </p>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 text-xs">
                         <div>
                             <label class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">Personal Access Token</label>
@@ -815,7 +830,7 @@
                         </div>
                         <div>
                             <label class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">Repository Name</label>
-                            <input type="text" id="ghRepo" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none font-medium text-slate-900 dark:text-white" placeholder="username/nama-repo">
+                            <input type="text" id="ghRepo" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none font-medium text-slate-900 dark:text-white" placeholder="username/repo-name">
                         </div>
                         <div>
                             <label class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">File Path Target</label>
@@ -823,21 +838,14 @@
                         </div>
                     </div>
                     <div class="flex flex-wrap gap-2 pt-1 text-xs">
-                        <button onclick="saveGitHubConfig()" class="bg-slate-900 dark:bg-slate-700 text-white font-bold py-1.5 px-3 rounded-xl shadow-sm flex items-center space-x-1.5">
-                            <i class="fa-solid fa-key text-[9px]"></i> <span>Simpan</span>
-                        </button>
-                        <button onclick="pushToGitHub()" class="bg-emerald-600 text-white font-bold py-1.5 px-3 rounded-xl shadow-sm flex items-center space-x-1.5">
-                            <i class="fa-solid fa-cloud-arrow-up"></i> <span>Push Cloud</span>
-                        </button>
-                        <button onclick="pullFromGitHub()" class="bg-orange-500 text-white font-bold py-1.5 px-3 rounded-xl shadow-sm flex items-center space-x-1.5">
-                            <i class="fa-solid fa-cloud-arrow-down"></i> <span>Pull Cloud</span>
-                        </button>
+                        <button onclick="saveGitHubConfig()" class="bg-slate-900 dark:bg-slate-700 text-white font-bold py-1.5 px-3 rounded-xl shadow-sm flex items-center space-x-1.5"><i class="fa-solid fa-key text-[9px]"></i> <span>Simpan</span></button>
+                        <button onclick="pushToGitHub()" class="bg-emerald-600 text-white font-bold py-1.5 px-3 rounded-xl shadow-sm flex items-center space-x-1.5"><i class="fa-solid fa-cloud-arrow-up"></i> <span>Push Cloud</span></button>
+                        <button onclick="pullFromGitHub()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-1.5 px-3 rounded-xl shadow-sm flex items-center space-x-1.5"><i class="fa-solid fa-cloud-arrow-down"></i> <span>Pull Cloud</span></button>
                     </div>
                     <p id="ghSyncStatus" class="text-[10px] font-bold text-slate-400 mt-2 italic"></p>
                 </div>
             </div>
         </div>
-
     </main>
 
     <footer class="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 text-slate-400 text-[10px] py-5 mt-12">
@@ -846,7 +854,6 @@
         </div>
     </footer>
 
-    <!-- MENGHUBUNGKAN KE FILE JAVASCRIPT LOGIKA EKSTERNAL -->
     <script src="script.js"></script>
 </body>
 </html>
