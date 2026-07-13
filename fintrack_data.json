@@ -340,6 +340,36 @@
       "toAccount": "Dompet",
       "date": "2026-07-13",
       "notes": "Paylater untuk barang elektronik"
+    },
+    {
+      "id": "tx_1783911560840",
+      "type": "transfer",
+      "amount": 420630,
+      "account": "Saldo RDN",
+      "category": "Transfer Dana",
+      "toAccount": "Saham",
+      "date": "2026-07-13",
+      "notes": "Beli Saham BSSR 1 Lot"
+    },
+    {
+      "id": "tx_1783911602177",
+      "type": "transfer",
+      "amount": 22544,
+      "account": "Saham",
+      "category": "Transfer Dana",
+      "toAccount": "Saldo RDN",
+      "date": "2026-07-13",
+      "notes": "Penjualan PRDL"
+    },
+    {
+      "id": "tx_1783911627084",
+      "type": "transfer",
+      "amount": 97356,
+      "account": "Saham",
+      "category": "Transfer Dana",
+      "toAccount": "Saldo RDN",
+      "date": "2026-07-13",
+      "notes": "Penjualan RANS"
     }
   ],
   "startingBalances": {
