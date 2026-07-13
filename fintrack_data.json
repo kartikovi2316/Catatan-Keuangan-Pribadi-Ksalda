@@ -330,6 +330,16 @@
       "toAccount": "Dompet",
       "date": "2026-07-11",
       "notes": "Beli sosis dan bakso"
+    },
+    {
+      "id": "tx_1783911300751",
+      "type": "hutang",
+      "amount": 269604,
+      "account": "ShopeePay",
+      "category": "Terima Pinjaman Baru",
+      "toAccount": "Dompet",
+      "date": "2026-07-13",
+      "notes": "Paylater untuk barang elektronik"
     }
   ],
   "startingBalances": {
