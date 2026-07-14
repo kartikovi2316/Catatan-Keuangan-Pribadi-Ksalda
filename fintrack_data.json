@@ -527,15 +527,6 @@
       "notes": "BPJS Bapak dan Ibuk"
     },
     {
-      "id": "rec_1783674208922",
-      "type": "expense",
-      "amount": 100000,
-      "account": "Bank BCA 1",
-      "category": "Listrik & Utilitas",
-      "day": 15,
-      "notes": "Wifi IRA"
-    },
-    {
       "id": "rec_1783674257377",
       "type": "expense",
       "amount": 1000000,
@@ -552,6 +543,15 @@
       "category": "Keluarga & Orang Tua",
       "day": 28,
       "notes": "Kasih Ibu"
+    },
+    {
+      "id": "rec_1784005351935",
+      "type": "expense",
+      "amount": 100000,
+      "account": "Dompet",
+      "category": "Internet & Data",
+      "day": 18,
+      "notes": "Wifi IRA"
     }
   ],
   "recurringPaidLogs": [],
