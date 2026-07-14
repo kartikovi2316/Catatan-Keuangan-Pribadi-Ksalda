@@ -470,6 +470,18 @@
       "notes": "[Investasi] Saham Naik 0.97%",
       "tenor": 1,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784012946750",
+      "type": "transfer",
+      "amount": 430645,
+      "account": "Saldo RDN",
+      "category": "Transfer Dana",
+      "toAccount": "Saham",
+      "date": "2026-07-14",
+      "notes": "Beli Saham BSSR 1 Lot",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
@@ -555,5 +567,27 @@
     }
   ],
   "recurringPaidLogs": [],
-  "financialMonthStartDay": 27
+  "financialMonthStartDay": 27,
+  "accountsList": [
+    "Dompet",
+    "Bank BCA 1",
+    "Bank BCA 2",
+    "Bank Jago",
+    "Dana",
+    "GoPay",
+    "ShopeePay",
+    "Saldo RDN",
+    "Reksadana & Obligasi",
+    "Saham"
+  ],
+  "liquidAccounts": [
+    "Dompet",
+    "Bank BCA 1",
+    "Bank BCA 2",
+    "Bank Jago",
+    "Dana",
+    "GoPay",
+    "ShopeePay",
+    "Saldo RDN"
+  ]
 }
