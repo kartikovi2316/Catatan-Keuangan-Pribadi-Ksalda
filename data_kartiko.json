@@ -482,6 +482,18 @@
       "notes": "Beli Saham BSSR 1 Lot",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784013378318",
+      "type": "transfer",
+      "amount": 141643,
+      "account": "Saldo RDN",
+      "category": "Transfer Dana",
+      "toAccount": "Bank Jago",
+      "date": "2026-07-14",
+      "notes": "Pindah dana",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
