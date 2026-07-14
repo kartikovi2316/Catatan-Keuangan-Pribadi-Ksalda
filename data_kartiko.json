@@ -530,6 +530,18 @@
       "notes": "kenalikan nilai investasi",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784029248887",
+      "type": "expense",
+      "amount": 15000,
+      "account": "Dompet",
+      "category": "Makanan & Minuman",
+      "toAccount": "Dompet",
+      "date": "2026-07-14",
+      "notes": "Beli mi",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
