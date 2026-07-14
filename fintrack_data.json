@@ -458,6 +458,18 @@
       "notes": "Uang sisa",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_stock_1783996202027",
+      "type": "income",
+      "amount": 24861,
+      "account": "Saham",
+      "category": "Kenaikan Nilai",
+      "toAccount": "",
+      "date": "2026-07-14",
+      "notes": "[Investasi] Saham Naik 0.97%",
+      "tenor": 1,
+      "bunga": 0
     }
   ],
   "startingBalances": {
