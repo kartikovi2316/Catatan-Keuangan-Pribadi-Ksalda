@@ -518,6 +518,18 @@
       "notes": "Penyesuaian nilai terkini",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784023311509",
+      "type": "income",
+      "amount": 380,
+      "account": "Reksadana & Obligasi",
+      "category": "Kenaikan Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-14",
+      "notes": "kenalikan nilai investasi",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
