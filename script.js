@@ -896,34 +896,56 @@ function resetToSeed() { if(confirm("Muat data simulasi bawaan?")) { state = san
 function clearAllData() { if(confirm("Kosongkan local storage browser?")) { localStorage.clear(); state = sanitizeState({}); saveState(); refreshApp(); } }
 
 // ==========================================
-// 🎬 LOGIKA OTOMATIS PENUTUP INTRO VIDEO (STUCK 1 DETIK & SMOOTH FADE OUT)
+// 🎬 LOGIKA PENUTUP INTRO DENGAN PENGAMAN OPERA (FAIL-SAFE)
 // ==========================================
 window.addEventListener('load', () => {
     const splash = document.getElementById('splash-screen');
     const video = document.getElementById('intro-video');
     
     if (splash && video) {
-        video.play().catch(err => console.log("Pemutaran otomatis dicegah:", err));
+        // 1. Eksekusi pemutaran secara manual dan tangkap jika dicegah oleh Opera
+        video.play().catch(err => {
+            console.log("Autoplay dicegah oleh browser, langsung masuk ke web:", err);
+            tutupSplashInstan();
+        });
 
-        // Deteksi ketika video animasi selesai berputar
+        // 2. DETEKSI UTAMA: Jika video berjalan lancar sampai selesai
         video.addEventListener('ended', () => {
-            
-            // 1. EFEK STUCK: Tahan frame terakhir logo selama 1 detik
             setTimeout(() => {
-                
-                // 2. LOGIKA TRANSISI: Tukar kelas opacity untuk memicu efek pudar lembut 1 detik
+                tutupSplashHalus();
+            }, 1000); // Efek stuck 1 detik
+        });
+
+        // 3. 🛡️ PENGAMAN CADANGAN (FAIL-SAFE TIMER)
+        // Jika dalam 6 detik video macet/stuck di Opera, paksa tutup agar user bisa masuk web
+        const timerCadangan = setTimeout(() => {
+            console.log("Fail-safe aktif: Video stuck di Opera, memaksa masuk ke dashboard.");
+            tutupSplashHalus();
+        }, 6000); // 6000ms = 6 detik (Durasi video + toleransi)
+
+        // Fungsi untuk menutup intro secara pudar (Fade Out)
+        function tutupSplashHalus() {
+            clearTimeout(timerCadangan); // Matikan bom waktu cadangan agar tidak tabrakan
+            
+            if (splash.classList.contains('opacity-100')) {
                 splash.classList.remove('opacity-100');
                 splash.classList.add('opacity-0', 'pointer-events-none');
                 
-                // Buka kembali fungsi gulir (scroll) pada website KSaku
+                // Buka kembali fungsi gulir (scroll) website
                 document.body.classList.remove('overflow-hidden');
                 
-                // 3. PEMBERSIHAN DOM: Dihapus pas setelah 1000ms transisi pudar CSS selesai
+                // Hapus elemen dari struktur HTML setelah pudar selesai
                 setTimeout(() => {
                     splash.remove();
-                }, 1000); // Disinkronkan dengan duration-1000 pada HTML
+                }, 1000);
+            }
+        }
 
-            }, 1000); // Durasi stuck (1 detik)
-        });
+        // Fungsi darurat jika browser Opera benar-benar memblokir video sejak awal
+        function tutupSplashInstan() {
+            clearTimeout(timerCadangan);
+            document.body.classList.remove('overflow-hidden');
+            splash.remove();
+        }
     }
 });
