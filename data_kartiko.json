@@ -1,0 +1,559 @@
+{
+  "baseIHSG": 5873.37,
+  "currentIHSG": 5873.37,
+  "transactions": [
+    {
+      "id": "tx_1783504402911",
+      "type": "income",
+      "amount": 588000,
+      "account": "Saldo RDN",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-08",
+      "notes": "Pengembalian Dana Penawaran Umum"
+    },
+    {
+      "id": "tx_1783504444412",
+      "type": "income",
+      "amount": 2050583,
+      "account": "Reksadana & Obligasi",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-08",
+      "notes": "Obligasi"
+    },
+    {
+      "id": "tx_1783504466828",
+      "type": "income",
+      "amount": 3061655,
+      "account": "Reksadana & Obligasi",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-08",
+      "notes": "Reksadana"
+    },
+    {
+      "id": "tx_1783504489116",
+      "type": "income",
+      "amount": 2357800,
+      "account": "Saham",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-08",
+      "notes": "Investasi Saham"
+    },
+    {
+      "id": "tx_1783508765501",
+      "type": "income",
+      "amount": 122000,
+      "account": "Dompet",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-08",
+      "notes": "Cash"
+    },
+    {
+      "id": "tx_1783508803793",
+      "type": "income",
+      "amount": 60076,
+      "account": "Bank BCA 2",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-08",
+      "notes": "Sisa saldo"
+    },
+    {
+      "id": "tx_1783508884200",
+      "type": "income",
+      "amount": 1737013,
+      "account": "Bank BCA 1",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-08",
+      "notes": "Sisa saldo"
+    },
+    {
+      "id": "tx_1783508916678",
+      "type": "income",
+      "amount": 539,
+      "account": "Bank Jago",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-08",
+      "notes": "Sisa saldo"
+    },
+    {
+      "id": "tx_1783508994989",
+      "type": "income",
+      "amount": 9450,
+      "account": "ShopeePay",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-08",
+      "notes": "Sisa saldo"
+    },
+    {
+      "id": "tx_1783558872000",
+      "type": "transfer",
+      "amount": 85000,
+      "account": "Bank BCA 1",
+      "category": "Transfer Aset",
+      "toAccount": "Dana",
+      "date": "2026-07-09",
+      "notes": "Pindah dana"
+    },
+    {
+      "id": "tx_1783572841360",
+      "type": "income",
+      "amount": 126682,
+      "account": "Saldo RDN",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-09",
+      "notes": "Penjualan BACH"
+    },
+    {
+      "id": "tx_1783572934958",
+      "type": "expense",
+      "amount": 126682,
+      "account": "Saham",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-09",
+      "notes": "Penjualan BACH"
+    },
+    {
+      "id": "tx_1783572962885",
+      "type": "income",
+      "amount": 12000,
+      "account": "Saham",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-09",
+      "notes": "Saham PRDL"
+    },
+    {
+      "id": "tx_1783584131794",
+      "type": "expense",
+      "amount": 83250,
+      "account": "Dana",
+      "category": "Tagihan & Utilitas",
+      "toAccount": "",
+      "date": "2026-07-09",
+      "notes": "Bayar Langganan GPT"
+    },
+    {
+      "id": "tx_1783594072702",
+      "type": "expense",
+      "amount": 5000,
+      "account": "Dompet",
+      "category": "Transportasi",
+      "toAccount": "",
+      "date": "2026-07-09",
+      "notes": "Tambah angin"
+    },
+    {
+      "id": "tx_1783594092774",
+      "type": "expense",
+      "amount": 12000,
+      "account": "Dompet",
+      "category": "Makanan & Minuman",
+      "toAccount": "",
+      "date": "2026-07-09",
+      "notes": "Kebab"
+    },
+    {
+      "id": "tx_1783594110053",
+      "type": "transfer",
+      "amount": 50000,
+      "account": "Bank BCA 2",
+      "category": "Transfer Aset",
+      "toAccount": "Dompet",
+      "date": "2026-07-09",
+      "notes": "Tarik saldo"
+    },
+    {
+      "id": "tx_1783645394810",
+      "type": "income",
+      "amount": 72000,
+      "account": "Dompet",
+      "category": "Lainnya",
+      "toAccount": "",
+      "date": "2026-07-10",
+      "notes": "Penggantian biaya BPJS ortu"
+    },
+    {
+      "id": "tx_1783650057298",
+      "type": "expense",
+      "amount": 30000,
+      "account": "Dompet",
+      "category": "Transportasi",
+      "toAccount": "",
+      "date": "2026-07-10",
+      "notes": "Bensin motor Mio Soul GT"
+    },
+    {
+      "id": "tx_1783651973730",
+      "type": "transfer",
+      "amount": 176500,
+      "account": "Saham",
+      "category": "Transfer Aset",
+      "toAccount": "Saldo RDN",
+      "date": "2026-07-10",
+      "notes": "Penjualan saham JELI"
+    },
+    {
+      "id": "tx_1783651991028",
+      "date": "2026-07-10",
+      "account": "Saham",
+      "amount": 36992,
+      "type": "income",
+      "category": "Keuntungan Investasi",
+      "notes": "Kenaikan Portfolio Saham (+1.79%)"
+    },
+    {
+      "id": "tx_1783652040106",
+      "type": "income",
+      "amount": 121990,
+      "account": "Saham",
+      "category": "Penyesuaian Nilai",
+      "toAccount": "",
+      "date": "2026-07-10",
+      "notes": "Penyesuaian nilai saham harian"
+    },
+    {
+      "id": "tx_1783654832982",
+      "type": "piutang",
+      "amount": 309000,
+      "account": "Bank BCA 1",
+      "category": "Beri Pinjaman Ke Orang",
+      "toAccount": "",
+      "date": "2026-07-10",
+      "notes": "Mas Restu Servis Motor"
+    },
+    {
+      "id": "tx_1783664000498",
+      "type": "expense",
+      "amount": 10000,
+      "account": "Dompet",
+      "category": "Makanan & Minuman",
+      "toAccount": "",
+      "date": "2026-07-10",
+      "notes": "Pempek"
+    },
+    {
+      "id": "tx_1783671022275",
+      "type": "income",
+      "amount": 225000,
+      "account": "Bank BCA 1",
+      "category": "Bonus & THR",
+      "toAccount": "",
+      "date": "2026-07-10",
+      "notes": "SHU Nifty"
+    },
+    {
+      "id": "tx_1783682874785",
+      "type": "transfer",
+      "amount": 36000,
+      "account": "Bank BCA 1",
+      "category": "Transfer Dana",
+      "toAccount": "Dana",
+      "date": "2026-07-10",
+      "notes": "Pindah dana"
+    },
+    {
+      "id": "tx_1783682930637",
+      "type": "expense",
+      "amount": 25990,
+      "account": "Dana",
+      "category": "Listrik & Utilitas",
+      "toAccount": "Dompet",
+      "date": "2026-07-10",
+      "notes": "Pulsa Ibuk"
+    },
+    {
+      "id": "tx_1783682973655",
+      "type": "expense",
+      "amount": 11000,
+      "account": "Dana",
+      "category": "Listrik & Utilitas",
+      "toAccount": "Dompet",
+      "date": "2026-07-10",
+      "notes": "Pulsa bapak"
+    },
+    {
+      "id": "tx_1783735878225",
+      "type": "income",
+      "amount": 25000,
+      "account": "Dompet",
+      "category": "Lainnya",
+      "toAccount": "Dompet",
+      "date": "2026-07-11",
+      "notes": "Penggantian uang pulsa Ibuk"
+    },
+    {
+      "id": "tx_stock_1783744535680",
+      "type": "income",
+      "amount": 25817,
+      "account": "Saham",
+      "category": "Kenaikan Nilai",
+      "toAccount": "",
+      "date": "2026-07-11",
+      "notes": "[Investasi] Saham Naik 1.16%"
+    },
+    {
+      "id": "tx_1783750373796",
+      "type": "expense",
+      "amount": 10000,
+      "account": "Dompet",
+      "category": "Makanan & Minuman",
+      "toAccount": "Dompet",
+      "date": "2026-07-11",
+      "notes": "Pempek"
+    },
+    {
+      "id": "tx_1783762383458",
+      "type": "expense",
+      "amount": 15000,
+      "account": "Dompet",
+      "category": "Gaya Lifestyle & Hobby",
+      "toAccount": "Dompet",
+      "date": "2026-07-11",
+      "notes": "Potong rambut"
+    },
+    {
+      "id": "tx_1783768173938",
+      "type": "expense",
+      "amount": 50000,
+      "account": "Dompet",
+      "category": "Makanan & Minuman",
+      "toAccount": "Dompet",
+      "date": "2026-07-11",
+      "notes": "Beli sosis dan bakso"
+    },
+    {
+      "id": "tx_1783911560840",
+      "type": "transfer",
+      "amount": 420630,
+      "account": "Saldo RDN",
+      "category": "Transfer Dana",
+      "toAccount": "Saham",
+      "date": "2026-07-13",
+      "notes": "Beli Saham BSSR 1 Lot"
+    },
+    {
+      "id": "tx_1783911602177",
+      "type": "transfer",
+      "amount": 22544,
+      "account": "Saham",
+      "category": "Transfer Dana",
+      "toAccount": "Saldo RDN",
+      "date": "2026-07-13",
+      "notes": "Penjualan PRDL"
+    },
+    {
+      "id": "tx_1783911627084",
+      "type": "transfer",
+      "amount": 97356,
+      "account": "Saham",
+      "category": "Transfer Dana",
+      "toAccount": "Saldo RDN",
+      "date": "2026-07-13",
+      "notes": "Penjualan RANS"
+    },
+    {
+      "id": "tx_1783911817566",
+      "type": "transfer",
+      "amount": 374723,
+      "account": "Saldo RDN",
+      "category": "Transfer Dana",
+      "toAccount": "Reksadana & Obligasi",
+      "date": "2026-07-13",
+      "notes": "Pembelian Obligasi"
+    },
+    {
+      "id": "tx_1783911867733",
+      "type": "income",
+      "amount": 790,
+      "account": "Reksadana & Obligasi",
+      "category": "Kenaikan Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-13",
+      "notes": "Kenaikan nilai investasi"
+    },
+    {
+      "id": "tx_1783912000485",
+      "type": "expense",
+      "amount": 3000,
+      "account": "ShopeePay",
+      "category": "Lainnya",
+      "toAccount": "Dompet",
+      "date": "2026-07-13",
+      "notes": "Kasih tips kurir"
+    },
+    {
+      "id": "tx_1783912660988",
+      "type": "income",
+      "amount": 356559,
+      "account": "Saldo RDN",
+      "category": "Penyesuaian Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-13",
+      "notes": "Penyesuaian nilai terkini"
+    },
+    {
+      "id": "tx_1783912716638",
+      "type": "expense",
+      "amount": 32597,
+      "account": "Saham",
+      "category": "Penyesuaian Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-13",
+      "notes": "Penyesuaian nilai terkini"
+    },
+    {
+      "id": "tx_1783924041437",
+      "type": "hutang",
+      "amount": 269604,
+      "account": "ShopeePay",
+      "category": "Terima Pinjaman Baru",
+      "toAccount": "Dompet",
+      "date": "2026-07-13",
+      "notes": "Paylater Elektronik",
+      "tenor": 1,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1783953900538",
+      "type": "expense",
+      "amount": 3330,
+      "account": "ShopeePay",
+      "category": "Internet & Data",
+      "toAccount": "Dompet",
+      "date": "2026-07-13",
+      "notes": "Domain situs ini",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1783954171957",
+      "type": "income",
+      "amount": 43450,
+      "account": "Saham",
+      "category": "Kenaikan Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-13",
+      "notes": "Penyesuaian nilai saham",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1783954673021",
+      "type": "income",
+      "amount": 300,
+      "account": "GoPay",
+      "category": "Penyesuaian Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-13",
+      "notes": "Uang sisa",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_stock_1783996202027",
+      "type": "income",
+      "amount": 24861,
+      "account": "Saham",
+      "category": "Kenaikan Nilai",
+      "toAccount": "",
+      "date": "2026-07-14",
+      "notes": "[Investasi] Saham Naik 0.97%",
+      "tenor": 1,
+      "bunga": 0
+    }
+  ],
+  "startingBalances": {
+    "Dompet": 0,
+    "Bank BCA 1": 0,
+    "Bank BCA 2": 0,
+    "Bank Jago": 0,
+    "Dana": 0,
+    "GoPay": 0,
+    "ShopeePay": 0,
+    "Saldo RDN": 0,
+    "Reksadana & Obligasi": 0,
+    "Saham": 0
+  },
+  "github": {
+    "token": "",
+    "repo": "",
+    "path": ""
+  },
+  "recurringTransactions": [
+    {
+      "id": "rec_1783674122996",
+      "type": "income",
+      "amount": 3100000,
+      "account": "Bank BCA 1",
+      "category": "Gaji",
+      "day": 27,
+      "notes": "Gaji Bulanan"
+    },
+    {
+      "id": "rec_1783674146589",
+      "type": "income",
+      "amount": 225000,
+      "account": "Bank BCA 1",
+      "category": "Bonus & THR",
+      "day": 10,
+      "notes": "SHU Nifty"
+    },
+    {
+      "id": "rec_1783674164620",
+      "type": "expense",
+      "amount": 35000,
+      "account": "Bank BCA 1",
+      "category": "BPJS & Kesehatan",
+      "day": 1,
+      "notes": "BPJS Pribadi"
+    },
+    {
+      "id": "rec_1783674187378",
+      "type": "expense",
+      "amount": 70000,
+      "account": "Bank BCA 1",
+      "category": "BPJS & Kesehatan",
+      "day": 1,
+      "notes": "BPJS Bapak dan Ibuk"
+    },
+    {
+      "id": "rec_1783674257377",
+      "type": "expense",
+      "amount": 1000000,
+      "account": "Bank BCA 1",
+      "category": "Listrik & Utilitas",
+      "day": 5,
+      "notes": "UKT Bulanan Kuliah"
+    },
+    {
+      "id": "rec_1783674283873",
+      "type": "expense",
+      "amount": 300000,
+      "account": "Dompet",
+      "category": "Keluarga & Orang Tua",
+      "day": 28,
+      "notes": "Kasih Ibu"
+    },
+    {
+      "id": "rec_1784005351935",
+      "type": "expense",
+      "amount": 100000,
+      "account": "Dompet",
+      "category": "Internet & Data",
+      "day": 18,
+      "notes": "Wifi IRA"
+    }
+  ],
+  "recurringPaidLogs": [],
+  "financialMonthStartDay": 27
+}
