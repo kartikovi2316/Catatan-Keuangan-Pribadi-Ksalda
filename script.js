@@ -1,5 +1,8 @@
-const ACCOUNTS_LIST = ["Dompet", "Bank BCA 1", "Bank BCA 2", "Bank Jago", "Dana", "GoPay", "ShopeePay", "Saldo RDN", "Reksadana & Obligasi", "Saham"];
-const LIQUID_ACCOUNTS = ["Dompet", "Bank BCA 1", "Bank BCA 2", "Bank Jago", "Dana", "GoPay", "ShopeePay", "Saldo RDN"];
+// ==========================================
+// 💸 STATE UTAMA DAN KONFIGURASI DINAMIS KSAKU
+// ==========================================
+const DEFAULT_ACCOUNTS = ["Dompet", "Bank BCA 1", "Bank BCA 2", "Bank Jago", "Dana", "GoPay", "ShopeePay", "Saldo RDN", "Reksadana & Obligasi", "Saham"];
+const DEFAULT_LIQUID = ["Dompet", "Bank BCA 1", "Bank BCA 2", "Bank Jago", "Dana", "GoPay", "ShopeePay", "Saldo RDN"];
 
 const CATEGORIES = {
     income: ["Gaji", "Dividen", "Bonus & THR", "Bisnis & Freelance", "Investasi", "Kenaikan Nilai", "Penyesuaian Nilai", "Lainnya"],
@@ -20,6 +23,8 @@ const SEED_DATA = {
     startingBalances: {
         "Dompet": 500000, "Bank BCA 1": 3000000, "Bank BCA 2": 1500000, "Bank Jago": 1000000, "Dana": 300000, "GoPay": 200000, "ShopeePay": 100000, "Saldo RDN": 500000, "Reksadana & Obligasi": 1500000, "Saham": 1000000
     },
+    accountsList: [...DEFAULT_ACCOUNTS],
+    liquidAccounts: [...DEFAULT_LIQUID],
     github: { token: '', repo: '', path: 'fintrack_data.json' },
     recurringTransactions: [
         { id: "rec_1", type: "expense", amount: 150000, account: "Bank BCA 1", category: "Internet & Data", day: 2, notes: "Langganan WiFi" }
@@ -43,7 +48,12 @@ const MONTHS_NAMES = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "J
 function sanitizeState(data) {
     if (!data) data = {};
     if (!data.transactions) data.transactions = [];
-    if (!data.startingBalances) data.startingBalances = { ...SEED_DATA.startingBalances };
+    if (!data.accountsList) data.accountsList = [...DEFAULT_ACCOUNTS];
+    if (!data.liquidAccounts) data.liquidAccounts = [...DEFAULT_LIQUID];
+    if (!data.startingBalances) {
+        data.startingBalances = {};
+        data.accountsList.forEach(a => data.startingBalances[a] = 0);
+    }
     if (!data.github) data.github = { token: '', repo: '', path: 'fintrack_data.json' };
     if (!data.recurringTransactions) data.recurringTransactions = [];
     if (!data.recurringPaidLogs) data.recurringPaidLogs = [];
@@ -84,7 +94,13 @@ async function pushToGitHub() {
         const bodyPayload = { message: `Update: ${new Date().toISOString().slice(0,10)}`, content: base64Content };
         if (sha) bodyPayload.sha = sha;
         const putRes = await fetch(url, { method: "PUT", headers: { "Authorization": `token ${token}`, "Content-Type": "application/json" }, body: JSON.stringify(bodyPayload) });
-        if (putRes.ok) { showGHStatus("Upload Berhasil!", "text-emerald-600"); alert("Data Berhasil Diupload!"); }
+        if (putRes.ok) {
+            sessionUndoStack = [];
+            sessionRedoStack = [];
+            showGHStatus("Upload Berhasil! Riwayat aksi dibersihkan.", "text-emerald-600"); 
+            alert("Data Berhasil Diupload! Riwayat Undo/Redo di-reset demi sinkronisasi data."); 
+            saveState();
+        }
         else { throw new Error(`Status ${putRes.status}`); }
     } catch (error) { showGHStatus("Gagal mengunggah data.", "text-rose-600"); alert("Error saat melakukan upload."); }
 }
@@ -103,22 +119,28 @@ async function pullFromGitHub() {
         const data = await res.json();
         let parsedState = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\s/g, '')))));
         state = sanitizeState(parsedState);
-        sessionUndoStack = []; sessionRedoStack = [];
+        sessionUndoStack = []; 
+        sessionRedoStack = [];
         saveState(); refreshApp(); showGHStatus("Sinkronisasi Selesai!", "text-emerald-600");
-        alert("🎉 Sinkronisasi Berhasil!"); switchTab('dashboard');
+        alert("🎉 Sinkronisasi Berhasil! Riwayat Undo/Redo di-reset."); switchTab('dashboard');
     } catch (err) { showGHStatus(`Gagal menarik data: ${err.message}`, "text-rose-600"); alert(`Gagal menarik data.`); }
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    // 🔒 KUNCI UTAMA: Langsung matikan fungsi scroll saat struktur web siap
     document.body.classList.add('overflow-hidden');
-
-    initYearDropdown(); initModalMonthGrid(); loadState(); initFormDropdowns(); initModalAccountGrid(); setCurrentDateInForm(); updateRecurringCategories();
+    loadState();
+    initYearDropdown(); 
+    initModalMonthGrid(); 
+    initFormDropdowns(); 
+    initModalAccountGrid(); 
+    setCurrentDateInForm(); 
+    updateRecurringCategories();
     if (localStorage.getItem('darkMode') === 'true') {
         document.documentElement.classList.add('dark');
         document.getElementById('darkModeIcon').className = "fa-solid fa-sun";
     }
-    refreshApp(); initScrollDetection();
+    refreshApp(); 
+    initScrollDetection();
 });
 
 function toggleDarkMode() {
@@ -156,6 +178,9 @@ function initScrollDetection() {
     });
 }
 
+// ==========================================
+// 🛡️ BAGIAN NAVIGASI MODAL DAN FILTERING BUKU KAS
+// ==========================================
 function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 function openMonthModal() { document.getElementById('monthModal').classList.remove('hidden'); }
 function closeMonthModal() { document.getElementById('monthModal').classList.add('hidden'); }
@@ -180,9 +205,10 @@ function setMonthFilter(m) {
 
 function initModalAccountGrid() {
     const container = document.getElementById('modalAccountGrid');
-    ACCOUNTS_LIST.forEach(acc => {
-        const btn = document.createElement('button'); btn.id = `btn-modal-account-${acc.replace(/\s+/g, '-')}`; btn.onclick = () => setAccountFilter(acc);
-        btn.className = "w-full py-2 px-2 text-[11px] font-bold rounded-xl text-slate-600 dark:text-slate-200 bg-slate-50 dark:bg-slate-700 border border-slate-200/60 text-center";
+    container.innerHTML = '<button onclick="setAccountFilter(\'all\')" class="col-span-2 py-2.5 px-4 text-[11px] font-bold rounded-xl bg-emerald-600 text-white text-center shadow-md">Semua Rekening</button>';
+    state.accountsList.forEach(acc => {
+        const btn = document.createElement('button'); btn.onclick = () => setAccountFilter(acc);
+        btn.className = "w-full py-2 px-2 text-[11px] font-bold rounded-xl text-slate-600 dark:text-slate-200 bg-slate-50 dark:bg-slate-700 border border-slate-200/60 text-center mt-1";
         btn.innerText = acc; container.appendChild(btn);
     });
 }
@@ -240,16 +266,14 @@ function resetToZero() {
     if (confirm("Apakah Anda yakin ingin mengosongkan sistem? Semua saldo disetel ke Rp 0.")) {
         state = {
             transactions: [],
-            startingBalances: { "Dompet": 0, "Bank BCA 1": 0, "Bank BCA 2": 0, "Bank Jago": 0, "Dana": 0, "GoPay": 0, "ShopeePay": 0, "Saldo RDN": 0, "Reksadana & Obligasi": 0, "Saham": 0 },
+            startingBalances: {},
+            accountsList: [...DEFAULT_ACCOUNTS],
+            liquidAccounts: [...DEFAULT_LIQUID],
             github: { token: '', repo: '', path: 'fintrack_data.json' }, recurringTransactions: [], financialMonthStartDay: 27, recurringPaidLogs: []
         };
+        state.accountsList.forEach(a => state.startingBalances[a] = 0);
         sessionUndoStack = []; sessionRedoStack = []; saveState(); refreshApp(); alert("🎉 Sukses dikosongkan!");
     }
-}
-
-function refreshApp() { 
-    calculateKPIs(); renderAccountList(); updateHistoryCategoryFilterOptions(); renderHistoryTable(); 
-    renderCharts(); renderRecurringDashboard(); renderCalendar(); renderInsightsAndForecast(); renderInvestmentTable();
 }
 
 function handleFilterChange() { activeYear = parseInt(document.getElementById('globalYear').value); refreshApp(); }
@@ -286,7 +310,7 @@ function initFormDropdowns() {
     const accountSelect = document.getElementById('txAccount'); const toAccountSelect = document.getElementById('txToAccount'); const recAccountSelect = document.getElementById('recAccount');
     if (accountSelect) {
         accountSelect.innerHTML = ''; toAccountSelect.innerHTML = ''; recAccountSelect.innerHTML = '';
-        ACCOUNTS_LIST.forEach(acc => {
+        state.accountsList.forEach(acc => {
             const opt1 = document.createElement('option'); opt1.value = acc; opt1.innerText = acc; accountSelect.appendChild(opt1);
             const opt2 = document.createElement('option'); opt2.value = acc; opt2.innerText = acc; toAccountSelect.appendChild(opt2);
             const opt3 = document.createElement('option'); opt3.value = acc; opt3.innerText = acc; recAccountSelect.appendChild(opt3);
@@ -359,7 +383,6 @@ function getLiveBalances() {
     return balances;
 }
 
-// FUNGSI PEMBANTU UNTUK MENGHITUNG SALDO NET WORTH HISTORIS PADA TANGGAL TERTENTU
 function getNetWorthAtDate(targetDate) {
     let balances = { ...state.startingBalances };
     state.transactions.forEach(t => {
@@ -414,7 +437,7 @@ function calculateKPIs() {
     let totalNetWorth = 0; let liquidAssets = 0;
     Object.keys(balances).forEach(acc => {
         totalNetWorth += balances[acc];
-        if(LIQUID_ACCOUNTS.includes(acc)) liquidAssets += balances[acc];
+        if(state.liquidAccounts.includes(acc)) liquidAssets += balances[acc];
     });
 
     document.getElementById('kpiLiquid').innerText = formatRupiah(liquidAssets);
@@ -422,9 +445,9 @@ function calculateKPIs() {
     document.getElementById('dashTotalHutang').innerText = formatRupiah(totalHutang);
     document.getElementById('dashTotalPiutang').innerText = formatRupiah(totalPiutang);
 
-    document.getElementById('lblLiveSahamBalance').innerText = formatRupiah(balances["Saham"] || 0);
-    document.getElementById('lblLiveInvBalance').innerText = formatRupiah(balances["Reksadana & Obligasi"] || 0);
-    document.getElementById('lblTotalInvProfitLoss').innerText = formatRupiah(totalNetWorth);
+    if(document.getElementById('lblLiveSahamBalance')) document.getElementById('lblLiveSahamBalance').innerText = formatRupiah(balances["Saham"] || 0);
+    if(document.getElementById('lblLiveInvBalance')) document.getElementById('lblLiveInvBalance').innerText = formatRupiah(balances["Reksadana & Obligasi"] || 0);
+    if(document.getElementById('lblTotalInvProfitLoss')) document.getElementById('lblTotalInvProfitLoss').innerText = formatRupiah(totalNetWorth);
 
     const landTarget = 35000000; const houseTarget = 100000000;
     const landPct = Math.min(100, Math.round((totalNetWorth / landTarget) * 100));
@@ -434,14 +457,9 @@ function calculateKPIs() {
     document.getElementById('goalHousePercent').innerText = `${housePct}%`;
     document.getElementById('goalHouseBar').style.width = `${housePct}%`;
 
-    // ==========================================
-    // 🛡️ REVISI: BENTENG DANA DARURAT DARI REKSADANA & OBLIGASI
-    // ==========================================
-    // Mengambil nominal khusus dari akun Reksadana & Obligasi
     let emergencyFundAmt = balances["Reksadana & Obligasi"] || 0;
     document.getElementById('lblEmergencyFund').innerText = formatRupiah(emergencyFundAmt);
     
-    // Hitung status ketahanan bulan secara dinamis dari dana cadangan ini
     if (expSum > 0) {
         let runwayBulan = (emergencyFundAmt / expSum).toFixed(1);
         document.getElementById('lblEmergencyStatus').innerText = `Mencukupi ${runwayBulan} bulan pengeluaran (Bersumber dari Reksadana & Obligasi).`;
@@ -449,7 +467,6 @@ function calculateKPIs() {
         document.getElementById('lblEmergencyStatus').innerText = `Aman, cadangan utuh & belum terdeteksi pengeluaran bulan ini.`;
     }
     
-    // KALKULASI RASIO SEKTOR ASET RIIL
     let pctLiquid = totalNetWorth > 0 ? Math.round((liquidAssets / totalNetWorth) * 100) : 0;
     let pctInv = totalNetWorth > 0 ? Math.round(((balances["Reksadana & Obligasi"] || 0) / totalNetWorth) * 100) : 0;
     let pctSaham = totalNetWorth > 0 ? Math.round(((balances["Saham"] || 0) / totalNetWorth) * 100) : 0;
@@ -466,7 +483,7 @@ function calculateKPIs() {
 function renderAccountList() {
     const container = document.getElementById('accountListContainer'); container.innerHTML = '';
     const balances = getLiveBalances();
-    ACCOUNTS_LIST.forEach(acc => {
+    state.accountsList.forEach(acc => {
         container.innerHTML += `
             <div class="flex items-center justify-between p-2.5 rounded-xl border border-slate-100 dark:border-slate-700 bg-slate-50/30 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
                 <span class="text-xs font-bold text-slate-700 dark:text-slate-200">${acc}</span>
@@ -588,9 +605,6 @@ function openCalendarTxModal(dateStr, transactions) {
 }
 function closeCalendarTxModal() { document.getElementById('calendarTxModal').classList.add('hidden'); }
 
-// ==========================================
-// 🔴 PEMBARUAN DASHBOARD INSIGHT BUKU BESAR
-// ==========================================
 function renderInsightsAndForecast() {
     const currentMonthIdx = activeMonth === -1 ? new Date().getMonth() : activeMonth;
     const currentPeriodKey = `${activeYear}-${String(currentMonthIdx+1).padStart(2,'0')}`;
@@ -604,18 +618,18 @@ function renderInsightsAndForecast() {
 
     let catMap = {}; expenses.forEach(e => { catMap[e.category] = (catMap[e.category] || 0) + e.amount; });
     let topCat = "-"; let maxCatAmt = 0; Object.keys(catMap).forEach(k => { if(catMap[k] > maxCatAmt) { maxCatAmt = catMap[k]; topCat = k; } });
-    document.getElementById('lblTopExpenseCategory').innerText = topCat;
+    if(document.getElementById('lblTopExpenseCategory')) document.getElementById('lblTopExpenseCategory').innerText = topCat;
 
     let dayMap = {}; expenses.forEach(e => { dayMap[e.date] = (dayMap[e.date] || 0) + e.amount; });
     let topDay = "-"; let maxDayAmt = 0; Object.keys(dayMap).forEach(d => { if(dayMap[d] > maxDayAmt) { maxDayAmt = dayMap[d]; topDay = d; } });
-    document.getElementById('lblMostExpensiveDay').innerText = topDay;
+    if(document.getElementById('lblMostExpensiveDay')) document.getElementById('lblMostExpensiveDay').innerText = topDay;
 
-    document.getElementById('lblAvgDailyExpense').innerText = formatRupiah(totalExpAmt / 30);
-    document.getElementById('lblAvgMonthlyIncome').innerText = formatRupiah(totalIncAmt);
+    if(document.getElementById('lblAvgDailyExpense')) document.getElementById('lblAvgDailyExpense').innerText = formatRupiah(totalExpAmt / 30);
+    if(document.getElementById('lblAvgMonthlyIncome')) document.getElementById('lblAvgMonthlyIncome').innerText = formatRupiah(totalIncAmt);
 
     let balances = getLiveBalances();
     let currentNetWorth = Object.values(balances).reduce((a,b)=>a+b, 0);
-    let liquidAssets = 0; LIQUID_ACCOUNTS.forEach(acc => liquidAssets += (balances[acc] || 0));
+    let liquidAssets = 0; state.accountsList.forEach(acc => { if(state.liquidAccounts.includes(acc)) liquidAssets += (balances[acc] || 0); });
 
     let unexecutedRecurringAmt = 0;
     if(state.recurringTransactions) {
@@ -642,13 +656,10 @@ function renderInsightsAndForecast() {
         }
     });
 
-    let hasilForecast = currentNetWorth + unexecutedRecurringAmt - totalBebanCicilanHutang;
-    document.getElementById('lblForecastBalance').innerText = formatRupiah(hasilForecast);
+    if(document.getElementById('lblForecastBalance')) document.getElementById('lblForecastBalance').innerText = formatRupiah(currentNetWorth + unexecutedRecurringAmt - totalBebanCicilanHutang);
 
-    // KODE GENERASI INSIGHT KUNCI SECARA REALTIME & BERMAKNA
     const insightContainer = document.getElementById('insightContainer'); insightContainer.innerHTML = '';
     
-    // 1. Savings Rate
     let savingsRate = totalIncAmt > 0 ? Math.round(((totalIncAmt - totalExpAmt) / totalIncAmt) * 100) : 0;
     let savingsColor = savingsRate >= 20 ? 'text-emerald-400' : (savingsRate > 0 ? 'text-amber-400' : 'text-rose-400');
     insightContainer.innerHTML += `
@@ -659,18 +670,16 @@ function renderInsightsAndForecast() {
         </div>
     `;
 
-    // 2. Debt-to-Asset Ratio
     let debtToAsset = currentNetWorth > 0 ? Math.round((totalUtangAktif / currentNetWorth) * 100) : 0;
     let debtColor = debtToAsset > 50 ? 'text-rose-400' : (debtToAsset > 30 ? 'text-amber-400' : 'text-emerald-400');
     insightContainer.innerHTML += `
         <div class="bg-white/5 dark:bg-slate-800/60 p-3 rounded-xl border border-white/10">
-            <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Debt-to-Asset Ratio</span>
+            <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Debt-to-Asset</span>
             <span class="text-xs font-extrabold block mt-0.5 ${debtColor}">${debtToAsset}% Leverage</span>
             <p class="text-[9px] text-slate-400 mt-1">${debtToAsset > 50 ? '⚠️ Risiko beban tinggi' : 'Rasio batas aman'}</p>
         </div>
     `;
 
-    // 3. Runway Kas Likuid (Bulan)
     let runwayBulan = totalExpAmt > 0 ? (liquidAssets / totalExpAmt).toFixed(1) : '∞';
     let runwayColor = runwayBulan < 3 ? 'text-rose-400' : (runwayBulan < 6 ? 'text-amber-400' : 'text-emerald-400');
     insightContainer.innerHTML += `
@@ -681,7 +690,6 @@ function renderInsightsAndForecast() {
         </div>
     `;
 
-    // 4. Beban Kewajiban Cicilan
     insightContainer.innerHTML += `
         <div class="bg-white/5 dark:bg-slate-800/60 p-3 rounded-xl border border-white/10">
             <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Cicilan Hutang Aktif</span>
@@ -756,9 +764,6 @@ function updateHistoryCategoryFilterOptions() {
     let cats = new Set(); state.transactions.forEach(t => cats.add(t.category)); cats.forEach(c => filterDropdown.innerHTML += `<option value="${c}">${c}</option>`);
 }
 
-// ==========================================
-// 🔴 PEMBARUAN GRAFIK PERTUMBUHAN NET WORTH RIIL
-// ==========================================
 function renderCharts() {
     const filtered = getFilteredTransactions();
     let incData = {}; let expData = {};
@@ -813,7 +818,6 @@ function renderCharts() {
         }
     }
 
-    // LOGIKA PERBAIKAN GRAFIK TREN NET WORTH RIIL BERDASARKAN ALUR TANGGAL LEDGER
     const trendCtx = document.getElementById('chartNetWorthTrend');
     if (trendCtx) {
         if (trendChartInstance) trendChartInstance.destroy();
@@ -821,15 +825,12 @@ function renderCharts() {
         let labelBulan = [];
         let dataNetWorthRiil = [];
         
-        // Buat 6 bulan ke belakang dari bulan aktif sekarang
         let targetMonth = activeMonth === -1 ? new Date().getMonth() : activeMonth;
         for (let i = 5; i >= 0; i--) {
             let mIdx = targetMonth - i; let yOffset = activeYear;
             if (mIdx < 0) { mIdx += 12; yOffset -= 1; }
             
-            // Dapatkan tanggal batas akhir bulan finansial terkait
             const { endDate } = getFinancialPeriodBounds(yOffset, mIdx);
-            
             labelBulan.push(`${MONTHS_NAMES[mIdx].slice(0, 3)} ${String(yOffset).slice(2)}`);
             dataNetWorthRiil.push(getNetWorthAtDate(endDate));
         }
@@ -896,56 +897,99 @@ function resetToSeed() { if(confirm("Muat data simulasi bawaan?")) { state = san
 function clearAllData() { if(confirm("Kosongkan local storage browser?")) { localStorage.clear(); state = sanitizeState({}); saveState(); refreshApp(); } }
 
 // ==========================================
-// 🎬 LOGIKA PENUTUP INTRO DENGAN PENGAMAN OPERA (FAIL-SAFE)
+// 🛠️ FITUR MANAJEMEN AKUN DINAMIS & INITIAL BALANCES
+// ==========================================
+function renderAccountManagement() {
+    const container = document.getElementById('accountManagerContainer'); if (!container) return;
+    container.innerHTML = '';
+    state.accountsList.forEach(acc => {
+        const isLiquid = state.liquidAccounts.includes(acc);
+        container.innerHTML += `
+            <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-slate-700/50 border dark:border-slate-600 text-xs">
+                <div class="flex flex-col">
+                    <span class="font-bold text-slate-800 dark:text-slate-200">${acc}</span>
+                    <span class="text-[9px] text-slate-400 uppercase font-medium">${isLiquid ? 'Kas Lancar' : 'Investasi'}</span>
+                </div>
+                <button onclick="removeAccountFromSystem('${acc}')" class="text-rose-500 p-1 hover:bg-rose-50 rounded-lg transition"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
+        `;
+    });
+}
+
+function addNewAccountToSystem(e) {
+    e.preventDefault();
+    const input = document.getElementById('newAccountName'); const name = input.value.trim();
+    const type = document.getElementById('newAccountType').value;
+    
+    if (!name) return;
+    if (state.accountsList.includes(name)) { alert("Nama akun sudah digunakan!"); return; }
+    
+    state.accountsList.push(name);
+    if (type === 'liquid') state.liquidAccounts.push(name);
+    if (state.startingBalances[name] === undefined) state.startingBalances[name] = 0;
+    
+    saveState(); initFormDropdowns(); initModalAccountGrid(); refreshApp();
+    input.value = ''; alert(`Akun "${name}" berhasil ditambahkan!`);
+}
+
+function removeAccountFromSystem(name) {
+    if (confirm(`Hapus akun "${name}" beserta konfigurasi saldo awal terkait?`)) {
+        state.accountsList = state.accountsList.filter(a => a !== name);
+        state.liquidAccounts = state.liquidAccounts.filter(a => a !== name);
+        delete state.startingBalances[name];
+        saveState(); initFormDropdowns(); initModalAccountGrid(); refreshApp();
+    }
+}
+
+function renderInitialBalanceForm() {
+    const wrapper = document.getElementById('initialBalanceWrapper'); if (!wrapper) return;
+    if (state.transactions.length === 0) {
+        wrapper.classList.remove('hidden');
+        const container = document.getElementById('initialBalanceInputsContainer'); container.innerHTML = '';
+        state.accountsList.forEach(acc => {
+            const currentVal = state.startingBalances[acc] || 0;
+            container.innerHTML += `
+                <div>
+                    <label class="block font-bold text-slate-400 uppercase mb-1 text-[10px]">${acc}</label>
+                    <input type="text" data-account="${acc}" value="${new Intl.NumberFormat('id-ID').format(currentVal)}" oninput="formatInputNumber(this)" class="initial-balance-input w-full px-3 py-1.5 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none dark:text-white font-bold text-xs">
+                </div>
+            `;
+        });
+    } else { wrapper.classList.add('hidden'); }
+}
+
+function saveInitialBalancesSetup() {
+    document.querySelectorAll('.initial-balance-input').forEach(input => {
+        const accName = input.getAttribute('data-account');
+        state.startingBalances[accName] = parseInt(input.value.replace(/\./g, "")) || 0;
+    });
+    saveState(); refreshApp(); alert("Saldo awal berhasil disinkronkan!");
+}
+
+function refreshApp() { 
+    calculateKPIs(); renderAccountList(); updateHistoryCategoryFilterOptions(); renderHistoryTable(); 
+    renderCharts(); renderRecurringDashboard(); renderCalendar(); renderInsightsAndForecast(); renderInvestmentTable();
+    renderAccountManagement(); renderInitialBalanceForm();
+}
+
+// ==========================================
+// 🎬 LOGIKA PENUTUP INTRO VIDEO DENGAN PENGAMAN OPERA
 // ==========================================
 window.addEventListener('load', () => {
-    const splash = document.getElementById('splash-screen');
-    const video = document.getElementById('intro-video');
-    
+    const splash = document.getElementById('splash-screen'); const video = document.getElementById('intro-video');
     if (splash && video) {
-        // 1. Eksekusi pemutaran secara manual dan tangkap jika dicegah oleh Opera
-        video.play().catch(err => {
-            console.log("Autoplay dicegah oleh browser, langsung masuk ke web:", err);
-            tutupSplashInstan();
-        });
+        video.play().catch(err => { console.log("Autoplay dicegah browser:", err); tutupSplashInstan(); });
+        video.addEventListener('ended', () => { setTimeout(() => { tutupSplashHalus(); }, 1000); });
+        const timerCadangan = setTimeout(() => { tutupSplashHalus(); }, 6000);
 
-        // 2. DETEKSI UTAMA: Jika video berjalan lancar sampai selesai
-        video.addEventListener('ended', () => {
-            setTimeout(() => {
-                tutupSplashHalus();
-            }, 1000); // Efek stuck 1 detik
-        });
-
-        // 3. 🛡️ PENGAMAN CADANGAN (FAIL-SAFE TIMER)
-        // Jika dalam 6 detik video macet/stuck di Opera, paksa tutup agar user bisa masuk web
-        const timerCadangan = setTimeout(() => {
-            console.log("Fail-safe aktif: Video stuck di Opera, memaksa masuk ke dashboard.");
-            tutupSplashHalus();
-        }, 6000); // 6000ms = 6 detik (Durasi video + toleransi)
-
-        // Fungsi untuk menutup intro secara pudar (Fade Out)
         function tutupSplashHalus() {
-            clearTimeout(timerCadangan); // Matikan bom waktu cadangan agar tidak tabrakan
-            
+            clearTimeout(timerCadangan);
             if (splash.classList.contains('opacity-100')) {
-                splash.classList.remove('opacity-100');
-                splash.classList.add('opacity-0', 'pointer-events-none');
-                
-                // Buka kembali fungsi gulir (scroll) website
+                splash.classList.remove('opacity-100'); splash.classList.add('opacity-0', 'pointer-events-none');
                 document.body.classList.remove('overflow-hidden');
-                
-                // Hapus elemen dari struktur HTML setelah pudar selesai
-                setTimeout(() => {
-                    splash.remove();
-                }, 1000);
+                setTimeout(() => { splash.remove(); }, 1000);
             }
         }
-
-        // Fungsi darurat jika browser Opera benar-benar memblokir video sejak awal
-        function tutupSplashInstan() {
-            clearTimeout(timerCadangan);
-            document.body.classList.remove('overflow-hidden');
-            splash.remove();
-        }
+        function tutupSplashInstan() { clearTimeout(timerCadangan); document.body.classList.remove('overflow-hidden'); splash.remove(); }
     }
 });
