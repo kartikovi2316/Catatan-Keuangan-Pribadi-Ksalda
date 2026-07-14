@@ -494,6 +494,30 @@
       "notes": "Pindah dana",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_stock_1784023145422",
+      "type": "expense",
+      "amount": 14791,
+      "account": "Saham",
+      "category": "Penurunan Nilai",
+      "toAccount": "",
+      "date": "2026-07-14",
+      "notes": "[Investasi] Saham Turun 0.49%",
+      "tenor": 1,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784023197227",
+      "type": "expense",
+      "amount": 24965,
+      "account": "Saham",
+      "category": "Makanan & Minuman",
+      "toAccount": "Dompet",
+      "date": "2026-07-14",
+      "notes": "Penyesuaian nilai terkini",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
