@@ -110,6 +110,9 @@ async function pullFromGitHub() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+    // 🔒 KUNCI UTAMA: Langsung matikan fungsi scroll saat struktur web siap
+    document.body.classList.add('overflow-hidden');
+
     initYearDropdown(); initModalMonthGrid(); loadState(); initFormDropdowns(); initModalAccountGrid(); setCurrentDateInForm(); updateRecurringCategories();
     if (localStorage.getItem('darkMode') === 'true') {
         document.documentElement.classList.add('dark');
@@ -891,3 +894,36 @@ function toggleMobileMenu() { document.getElementById('mobileDropdownContainer')
 function selectMobileTab(id) { switchTab(id); toggleMobileMenu(); }
 function resetToSeed() { if(confirm("Muat data simulasi bawaan?")) { state = sanitizeState(JSON.parse(JSON.stringify(SEED_DATA))); saveState(); refreshApp(); } }
 function clearAllData() { if(confirm("Kosongkan local storage browser?")) { localStorage.clear(); state = sanitizeState({}); saveState(); refreshApp(); } }
+
+// ==========================================
+// 🎬 LOGIKA OTOMATIS PENUTUP INTRO VIDEO (STUCK 1 DETIK & SMOOTH FADE OUT)
+// ==========================================
+window.addEventListener('load', () => {
+    const splash = document.getElementById('splash-screen');
+    const video = document.getElementById('intro-video');
+    
+    if (splash && video) {
+        video.play().catch(err => console.log("Pemutaran otomatis dicegah:", err));
+
+        // Deteksi ketika video animasi selesai berputar
+        video.addEventListener('ended', () => {
+            
+            // 1. EFEK STUCK: Tahan frame terakhir logo selama 1 detik
+            setTimeout(() => {
+                
+                // 2. LOGIKA TRANSISI: Tukar kelas opacity untuk memicu efek pudar lembut 1 detik
+                splash.classList.remove('opacity-100');
+                splash.classList.add('opacity-0', 'pointer-events-none');
+                
+                // Buka kembali fungsi gulir (scroll) pada website KSaku
+                document.body.classList.remove('overflow-hidden');
+                
+                // 3. PEMBERSIHAN DOM: Dihapus pas setelah 1000ms transisi pudar CSS selesai
+                setTimeout(() => {
+                    splash.remove();
+                }, 1000); // Disinkronkan dengan duration-1000 pada HTML
+
+            }, 1000); // Durasi stuck (1 detik)
+        });
+    }
+});
