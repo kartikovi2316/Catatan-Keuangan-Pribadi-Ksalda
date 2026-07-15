@@ -26,7 +26,7 @@
 </head>
 <body class="text-slate-900 bg-slate-50 dark:bg-slate-900 dark:text-slate-100 antialiased min-h-screen flex flex-col relative">
 
-    <!-- LAPISAN INTRO SPLASH SCREEN (FADE OUT SINEMATIK) -->
+    <!-- LAPISAN INTRO SPLASH SCREEN -->
     <div id="splash-screen" class="fixed inset-0 w-screen h-screen bg-white z-[9999] flex items-center justify-center overflow-hidden select-none transition-opacity duration-1000 ease-in-out opacity-100">
         <video id="intro-video" autoplay muted playsinline disablePictureInPicture controlsList="nodownload nofullscreen noremoteplayback" class="w-full h-full object-contain">
             <source src="Logo Intro.mp4" type="video/mp4">
@@ -72,7 +72,6 @@
                 </button>
             </div>
             <div class="grid grid-cols-2 gap-2 max-h-[300px] overflow-y-auto pr-1 custom-scroll" id="modalAccountGrid">
-                <!-- Data Akun Dinamis Muncul di Sini -->
             </div>
         </div>
     </div>
@@ -134,7 +133,7 @@
             </div>
 
             <div class="flex justify-end border-t border-slate-100 dark:border-slate-700 pt-3">
-                <button onclick="closeCalendarTxModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-5 rounded-xl text-xs transition shadow-sm">
+                <button onclick="closeCalendarTxModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-sm">
                     Selesai
                 </button>
             </div>
@@ -244,7 +243,6 @@
                     <i class="fa-solid fa-gauge-high"></i> <span>Dashboard Insight Buku Besar (Kunci Finansial Real-time)</span>
                 </h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="insightContainer">
-                    <!-- Generasi Dinamis Melalui JavaScript -->
                 </div>
             </div>
 
@@ -334,37 +332,16 @@
                 </div>
             </div>
 
-            <!-- TARGETS & EMERGENCY FUND -->
+            <!-- TARGETS (Dinamis) & EMERGENCY FUND -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- PANEL GOALS DENGAN DESAIN MODERN -->
                 <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200/70 dark:border-slate-700 shadow-sm space-y-4">
                     <h3 class="font-bold text-[10px] uppercase tracking-wider text-slate-400 flex items-center space-x-2">
                         <i class="fa-solid fa-bullseye text-emerald-600"></i>
                         <span>Progresi Target Jangka Panjang</span>
                     </h3>
-                    <div class="space-y-1.5">
-                        <div class="flex justify-between text-xs font-bold">
-                            <span class="text-slate-700 dark:text-slate-200">Target 1: Beli Tanah</span>
-                            <span id="goalLandPercent" class="text-emerald-600 dark:text-emerald-400">0%</span>
-                        </div>
-                        <div class="w-full bg-slate-100 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
-                            <div id="goalLandBar" class="bg-gradient-to-r from-emerald-500 to-emerald-600 h-full" style="width: 0%"></div>
-                        </div>
-                        <div class="flex justify-between text-[9px] text-slate-400 font-medium">
-                            <span>Target: Rp 35.000.000</span>
-                        </div>
-                    </div>
-                    <div class="space-y-1.5 pt-1">
-                        <div class="flex justify-between text-xs font-bold">
-                            <span class="text-slate-700 dark:text-slate-200">Target 2: Bangun Rumah</span>
-                            <span id="goalHousePercent" class="text-orange-500 dark:text-orange-400">0%</span>
-                        </div>
-                        <div class="w-full bg-slate-100 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
-                            <div id="goalHouseBar" class="bg-gradient-to-r from-orange-500 to-amber-600 h-full" style="width: 0%"></div>
-                        </div>
-                        <div class="flex justify-between text-[9px] text-slate-400 font-medium">
-                            <span>Target: Rp 100.000.000</span>
-                        </div>
-                    </div>
+                    <!-- Kontainer Progress Bar Premium -->
+                    <div id="dynamicGoalsDashboardContainer" class="space-y-4"></div>
                 </div>
 
                 <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200/70 dark:border-slate-700 shadow-sm grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -377,7 +354,7 @@
                             <h4 id="lblEmergencyFund" class="text-base font-extrabold text-slate-900 dark:text-white mt-1.5">Rp 0</h4>
                         </div>
                         <div class="bg-emerald-50 dark:bg-emerald-900/20 p-2 rounded-xl">
-                            <p id="lblEmergencyStatus" class="text-[10px] font-bold text-emerald-800 dark:text-emerald-300 leading-tight">Rasio Alokasi Dana Aman.</p>
+                            <p id="lblEmergencyStatus" class="text-[10px] font-bold text-emerald-800 dark:text-emerald-300 leading-tight"></p>
                         </div>
                     </div>
                     <div class="sm:pl-1 flex flex-col justify-between gap-3">
@@ -389,14 +366,14 @@
                         </div>
                         <div class="space-y-2">
                             <div class="w-full bg-slate-100 dark:bg-slate-700 h-2 rounded-full overflow-hidden flex">
-                                <div id="ratioLiquidBar" class="bg-emerald-500 h-full" style="width: 25%"></div>
-                                <div id="ratioInvBar" class="bg-orange-500 h-full" style="width: 52%"></div>
-                                <div id="ratioSahamBar" class="bg-amber-500 h-full" style="width: 23%"></div>
+                                <div id="ratioLiquidBar" class="bg-emerald-500 h-full" style="width: 0%"></div>
+                                <div id="ratioInvBar" class="bg-orange-500 h-full" style="width: 0%"></div>
+                                <div id="ratioSahamBar" class="bg-amber-500 h-full" style="width: 0%"></div>
                             </div>
                             <div class="flex justify-between text-[9px] font-bold uppercase tracking-wider flex-wrap gap-1">
-                                <span class="text-emerald-600" id="lblRatioLiquid">Lancar: 25%</span>
-                                <span class="text-orange-600" id="lblRatioInv">Inv: 52%</span>
-                                <span class="text-amber-600" id="lblRatioSaham">Saham: 23%</span>
+                                <span class="text-emerald-600" id="lblRatioLiquid">Lancar: 0%</span>
+                                <span class="text-orange-600" id="lblRatioInv">Inv: 0%</span>
+                                <span class="text-amber-600" id="lblRatioSaham">Saham: 0%</span>
                             </div>
                         </div>
                     </div>
@@ -423,7 +400,7 @@
                     <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200/70 dark:border-slate-700 shadow-sm p-5 flex flex-col">
                         <h3 class="font-bold text-slate-900 text-xs dark:text-white flex items-center space-x-2 mb-3 border-b border-slate-100 dark:border-slate-700 pb-2">
                             <i class="fa-solid fa-chart-line text-emerald-600"></i>
-                            <span>Tren Pertumbuhan Net Worth Bulanan (Data Riil Ledger)</span>
+                            <span>Tren Pertumbuhan Net Worth Bulanan</span>
                         </h3>
                         <div class="w-full relative h-[180px]">
                             <canvas id="chartNetWorthTrend"></canvas>
@@ -440,7 +417,7 @@
                     <h3 class="text-[11px] font-bold uppercase tracking-wider text-emerald-200 flex items-center space-x-2">
                         <i class="fa-solid fa-chart-line"></i> <span>Cash Flow Forecast</span>
                     </h3>
-                    <p class="text-[10px] text-emerald-100 mt-1">Prediksi Saldo Akhir Bulan (Telah Dikurangi Pokok & Bunga)</p>
+                    <p class="text-[10px] text-emerald-100 mt-1">Prediksi Saldo Akhir Bulan</p>
                     <h2 id="lblForecastBalance" class="text-xl font-black mt-3">Rp 0</h2>
                 </div>
                 <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -496,29 +473,29 @@
                     <form onsubmit="saveRecurringTemplate(event)" class="space-y-3 text-xs">
                         <div>
                             <label class="block font-bold text-slate-400 uppercase mb-1">Nama Tagihan / Rutinitas</label>
-                            <input type="text" id="recNotes" required placeholder="Contoh: Gaji bulanan, internet, BPJS" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none dark:text-white">
+                            <input type="text" id="recNotes" required placeholder="Contoh: Gaji bulanan, internet" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none dark:text-white text-slate-900">
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
                                 <label class="block font-bold text-slate-400 uppercase mb-1">Jenis</label>
-                                <select id="recType" onchange="updateRecurringCategories()" class="w-full px-2.5 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none dark:text-white text-[11px] truncate">
-                                    <option value="income">Pemasukan (Gaji bulanan, dll)</option>
-                                    <option value="expense">Pengeluaran (Internet, BPJS, dll)</option>
+                                <select id="recType" onchange="updateRecurringCategories()" class="w-full px-2.5 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none dark:text-white text-slate-900 text-[11px] truncate">
+                                    <option value="income">Pemasukan</option>
+                                    <option value="expense">Pengeluaran</option>
                                 </select>
                             </div>
                             <div>
                                 <label class="block font-bold text-slate-400 uppercase mb-1">Jatuh Tempo (1-31)</label>
-                                <input type="number" id="recDay" min="1" max="31" required placeholder="27" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none dark:text-white">
+                                <input type="number" id="recDay" min="1" max="31" required placeholder="27" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none dark:text-white text-slate-900">
                             </div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
                                 <label class="block font-bold text-slate-400 uppercase mb-1">Akun Terkait</label>
-                                <select id="recAccount" class="w-full px-2.5 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none dark:text-white text-[11px] truncate"></select>
+                                <select id="recAccount" class="w-full px-2.5 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none dark:text-white text-slate-900 text-[11px] truncate"></select>
                             </div>
                             <div>
                                 <label class="block font-bold text-slate-400 uppercase mb-1">Kategori</label>
-                                <select id="recCategory" class="w-full px-2.5 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none dark:text-white text-[11px] truncate"></select>
+                                <select id="recCategory" class="w-full px-2.5 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none dark:text-white text-slate-900 text-[11px] truncate"></select>
                             </div>
                         </div>
                         <div>
@@ -539,9 +516,9 @@
                                 <thead>
                                     <tr class="bg-slate-50 dark:bg-slate-700 text-[10px] font-bold text-slate-400 dark:text-slate-300 border-b dark:border-slate-600">
                                         <th class="p-2 whitespace-nowrap">Jatuh Tempo</th>
-                                        <th class="p-2 whitespace-nowrap">Nama Rutinitas</th>
+                                        <th class="p-2 whitespace-nowrap">Nama</th>
                                         <th class="p-2 text-right whitespace-nowrap">Nominal</th>
-                                        <th class="p-2 text-center whitespace-nowrap">Status Kehadiran</th>
+                                        <th class="p-2 text-center whitespace-nowrap">Status</th>
                                         <th class="p-2 text-center whitespace-nowrap">Aksi</th>
                                     </tr>
                                 </thead>
@@ -596,7 +573,7 @@
                         <form onsubmit="submitStockReturn(event)" class="space-y-4 relative z-10 text-xs">
                             <div>
                                 <label class="block font-bold text-slate-400 uppercase mb-1.5">Persentase Perubahan (%)</label>
-                                <input type="number" id="inputStockReturn" value="0" step="0.01" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-2.5 text-white text-base font-extrabold focus:outline-none focus:border-orange-400" placeholder="Contoh: 2.5 atau -1.2" required>
+                                <input type="number" id="inputStockReturn" value="0" step="0.01" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-2.5 text-white text-base font-extrabold focus:outline-none focus:border-orange-400" required>
                             </div>
                             <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-slate-950 font-extrabold py-2.5 rounded-xl text-xs uppercase tracking-wider transition">
                                 Kunci Jurnal Investasi
@@ -616,8 +593,8 @@
                                 <thead>
                                     <tr class="bg-slate-50 dark:bg-slate-700 border-b border-slate-200 dark:border-slate-600 text-[10px] text-slate-400 dark:text-slate-300 font-bold uppercase tracking-wider">
                                         <th class="p-2.5 whitespace-nowrap">Tanggal</th>
-                                        <th class="p-2.5 whitespace-nowrap">Perubahan Keterangan</th>
-                                        <th class="p-2.5 text-right whitespace-nowrap">Nominal Ajusting</th>
+                                        <th class="p-2.5 whitespace-nowrap">Perubahan</th>
+                                        <th class="p-2.5 text-right whitespace-nowrap">Nominal</th>
                                         <th class="p-2.5 text-center whitespace-nowrap">Aksi</th>
                                     </tr>
                                 </thead>
@@ -644,12 +621,12 @@
                     <form id="transactionForm" onsubmit="saveTransaction(event)" class="space-y-4">
                         <div>
                             <label for="txType" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Jenis Arus Kas</label>
-                            <select id="txType" onchange="toggleTxType(this.value)" class="block w-full px-3 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl text-xs font-semibold text-slate-700 dark:text-white focus:outline-none">
+                            <select id="txType" onchange="toggleTxType(this.value)" class="block w-full px-3 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white rounded-xl text-xs font-semibold focus:outline-none">
                                 <option value="income">Pemasukan (Uang Masuk)</option>
                                 <option value="expense">Pengeluaran (Uang Keluar)</option>
                                 <option value="transfer">Transfer Dana (Antar Rekening)</option>
-                                <option value="hutang">Hutang (Kewajiban / Pinjaman Baru)</option>
-                                <option value="piutang">Piutang (Beri Pinjaman / Tagihan)</option>
+                                <option value="hutang">Hutang (Pinjaman Baru / Cicilan)</option>
+                                <option value="piutang">Piutang (Beri Pinjaman / Pelunasan)</option>
                             </select>
                         </div>
 
@@ -659,45 +636,45 @@
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <span class="text-slate-400 text-xs font-bold">IDR</span>
                                 </div>
-                                <input type="text" id="txAmount" required oninput="formatInputNumber(this)" class="block w-full pl-12 pr-4 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl text-slate-900 dark:text-white font-extrabold text-base focus:outline-none" placeholder="0">
+                                <input type="text" id="txAmount" required oninput="formatInputNumber(this)" class="block w-full pl-12 pr-4 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white font-extrabold text-base focus:outline-none" placeholder="0">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label for="txAccount" id="lblTxAccount" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Penyimpanan Akun</label>
-                                <select id="txAccount" required onchange="updateCategoryOptions()" class="block w-full px-3 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl text-xs font-semibold text-slate-700 dark:text-white focus:outline-none">
+                                <select id="txAccount" required onchange="updateCategoryOptions()" class="block w-full px-3 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white rounded-xl text-xs font-semibold focus:outline-none">
                                 </select>
                             </div>
                             <div id="divCategory">
                                 <label for="txCategory" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Klasifikasi Kategori</label>
-                                <select id="txCategory" class="block w-full px-3 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl text-xs font-semibold text-slate-700 dark:text-white focus:outline-none">
+                                <select id="txCategory" class="block w-full px-3 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white rounded-xl text-xs font-semibold focus:outline-none">
                                 </select>
                             </div>
                             <div id="divToAccount" class="hidden">
                                 <label for="txToAccount" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Akun Tujuan Transfer</label>
-                                <select id="txToAccount" class="block w-full px-3 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl text-xs font-semibold text-slate-700 dark:text-white focus:outline-none">
+                                <select id="txToAccount" class="block w-full px-3 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white rounded-xl text-xs font-semibold focus:outline-none">
                                 </select>
                             </div>
                             
                             <div id="divTenorHutang" class="hidden">
                                 <label for="txTenor" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Tenor Cicilan (Bulan)</label>
-                                <input type="number" id="txTenor" min="1" value="12" class="block w-full px-3 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl text-xs font-semibold text-slate-700 dark:text-white focus:outline-none">
+                                <input type="number" id="txTenor" min="1" value="12" class="block w-full px-3 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white rounded-xl text-xs font-semibold focus:outline-none">
                             </div>
                             <div id="divBungaHutang" class="hidden">
                                 <label for="txBunga" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Bunga Pinjaman (%)</label>
-                                <input type="number" id="txBunga" min="0" value="0" step="0.1" class="block w-full px-3 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl text-xs font-semibold text-slate-700 dark:text-white focus:outline-none" placeholder="0">
+                                <input type="number" id="txBunga" min="0" value="0" step="0.1" class="block w-full px-3 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white rounded-xl text-xs font-semibold focus:outline-none">
                             </div>
                         </div>
 
                         <div>
                             <label for="txDate" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Tanggal Mutasi</label>
-                            <input type="date" id="txDate" required class="block w-full px-3 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl text-xs font-semibold text-slate-700 dark:text-white focus:outline-none">
+                            <input type="date" id="txDate" required class="block w-full px-3 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white rounded-xl text-xs font-semibold focus:outline-none">
                         </div>
 
                         <div>
                             <label for="txNotes" class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Memo / Keterangan</label>
-                            <input type="text" id="txNotes" class="block w-full px-3 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl text-xs font-semibold text-slate-700 dark:text-white focus:outline-none" placeholder="Masukkan keterangan detail transaksi">
+                            <input type="text" id="txNotes" class="block w-full px-3 py-2 bg-slate-50/50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white rounded-xl text-xs font-semibold focus:outline-none" placeholder="Masukkan keterangan detail transaksi">
                         </div>
 
                         <div class="pt-1">
@@ -723,10 +700,10 @@
                     
                     <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 w-full xl:w-auto text-[11px]">
                         <select id="histPeriodFilter" onchange="renderHistoryTable()" class="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-white font-bold py-1.5 px-2 border border-slate-200/60 rounded-xl focus:outline-none cursor-pointer">
-                            <option value="month-filter">Bulan Terpilih (Default)</option>
+                            <option value="month-filter">Bulan Terpilih</option>
                             <option value="today">Hari Ini</option>
                             <option value="week">Minggu Ini</option>
-                            <option value="month">Bulan Ini (Kalender Real)</option>
+                            <option value="month">Bulan Ini</option>
                             <option value="year">Tahun Ini</option>
                             <option value="custom">Custom Range</option>
                         </select>
@@ -751,11 +728,11 @@
                 <div id="customRangeFields" class="hidden grid grid-cols-2 gap-2 max-w-xs mb-4 text-[11px]">
                     <div>
                         <label class="block font-bold text-slate-400 mb-1">Mulai:</label>
-                        <input type="date" id="customStart" onchange="renderHistoryTable()" class="w-full p-1.5 border border-slate-200 dark:border-slate-600 dark:bg-slate-700 rounded-xl">
+                        <input type="date" id="customStart" onchange="renderHistoryTable()" class="w-full p-1.5 border border-slate-200 dark:border-slate-600 dark:bg-slate-700 text-slate-900 rounded-xl">
                     </div>
                     <div>
                         <label class="block font-bold text-slate-400 mb-1">Sampai:</label>
-                        <input type="date" id="customEnd" onchange="renderHistoryTable()" class="w-full p-1.5 border border-slate-200 dark:border-slate-600 dark:bg-slate-700 rounded-xl">
+                        <input type="date" id="customEnd" onchange="renderHistoryTable()" class="w-full p-1.5 border border-slate-200 dark:border-slate-600 dark:bg-slate-700 text-slate-900 rounded-xl">
                     </div>
                 </div>
 
@@ -787,7 +764,7 @@
 
                 <div id="divExpandHistory" class="hidden text-center pt-3 border-t border-slate-100 dark:border-slate-700 mt-3">
                     <button onclick="openAllTxModal()" class="inline-flex items-center space-x-1.5 bg-emerald-50 dark:bg-slate-700 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 font-bold px-4 py-2 rounded-xl text-xs transition shadow-sm">
-                        <i class="fa-solid fa-eye-low-vision"></i> <span>Buka Seluruh Arsip Historis</span>
+                        <i class="fa-solid fa-eye"></i> <span>Buka Seluruh Arsip Historis</span>
                     </button>
                 </div>
             </div>
@@ -796,37 +773,23 @@
         <!-- TAB: BACKUP & CONFIG -->
         <div id="content-settings" class="tab-content space-y-6">
             <div class="max-w-3xl mx-auto space-y-6">
-                
-                <!-- PANEL PENGATURAN SALDO AWAL (MUNCUL OTOMATIS SAAT JURNAL KOSONG) -->
-                <div id="initialBalanceWrapper" class="hidden bg-gradient-to-br from-slate-900 to-emerald-950 text-white rounded-2xl border border-emerald-800 shadow-md p-5 space-y-3">
-                    <h3 class="font-bold text-emerald-400 text-xs flex items-center space-x-2 border-b border-white/10 pb-2">
-                        <i class="fa-solid fa-coins"></i>
-                        <span>Input Saldo Awal Aset (Deteksi Data Awal)</span>
-                    </h3>
-                    <p class="text-[10px] text-slate-300">Sistem mendeteksi jurnal transaksi Anda kosong bersih. Silakan tentukan modal saldo awal pembukaan akun sebelum mulai bekerja:</p>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1 text-xs" id="initialBalanceInputsContainer">
-                        <!-- Komponen Input Dinamis Via JS -->
-                    </div>
-                    <div class="pt-2 flex justify-end">
-                        <button onclick="saveInitialBalancesSetup()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1.5 px-4 rounded-xl text-xs shadow-sm transition">
-                            Kunci & Simpan Saldo Awal
-                        </button>
-                    </div>
-                </div>
 
-                <!-- PANEL BARU: MANAJEMEN EDIT AKUN SISTEM -->
+                <!-- PANEL: MANAJEMEN STRUKTUR AKUN SISTEM -->
                 <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm p-5 space-y-4">
                     <h3 class="font-bold text-slate-900 text-xs dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
                         <i class="fa-solid fa-folder-tree text-emerald-600"></i>
                         <span>Manajemen Struktur Rekening Akun</span>
                     </h3>
                     
-                    <form onsubmit="addNewAccountToSystem(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                    <form onsubmit="addNewAccountToSystem(event)" class="grid grid-cols-1 sm:grid-cols-4 gap-2 text-xs">
                         <div class="sm:col-span-2">
-                            <input type="text" id="newAccountName" required placeholder="Nama akun baru (contoh: Bank Mandiri, OVO)" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none dark:text-white font-medium">
+                            <input type="text" id="newAccountName" required placeholder="Nama akun baru (contoh: Bank Mandiri, OVO)" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none dark:text-white font-medium text-slate-900">
+                        </div>
+                        <div>
+                            <input type="text" id="newAccountBalance" oninput="formatInputNumber(this)" placeholder="Saldo Awal (Rp)" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none dark:text-white font-bold text-slate-900">
                         </div>
                         <div class="flex gap-2">
-                            <select id="newAccountType" class="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-white font-bold px-2 py-1.5 border border-slate-200/60 rounded-xl focus:outline-none cursor-pointer flex-grow text-[11px]">
+                            <select id="newAccountType" class="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-white font-bold px-2 py-1.5 border border-slate-200/60 rounded-xl focus:outline-none cursor-pointer flex-grow text-[11px] text-slate-900">
                                 <option value="liquid">Kas Lancar</option>
                                 <option value="invest">Investasi/Non-Kas</option>
                             </select>
@@ -834,11 +797,37 @@
                         </div>
                     </form>
 
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-2" id="accountManagerContainer">
-                        <!-- List Akun Dinamis Muncul Di Sini -->
+                    <!-- Kontainer List Akun Card Dinamis -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-2" id="accountManagerContainer">
                     </div>
                 </div>
 
+                <!-- PANEL: MANAJEMEN TARGET FINANSIAL DINAMIS -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm p-5 space-y-4">
+                    <h3 class="font-bold text-slate-900 text-xs dark:text-white flex items-center space-x-2 border-b border-slate-100 dark:border-slate-700 pb-2">
+                        <i class="fa-solid fa-bullseye text-orange-500"></i>
+                        <span>Manajemen Target Finansial</span>
+                    </h3>
+                    
+                    <form onsubmit="addNewGoalToSystem(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                        <div>
+                            <input type="text" id="newGoalName" required placeholder="Nama Target (Contoh: Beli Laptop)" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none dark:text-white font-medium text-slate-900">
+                        </div>
+                        <div>
+                            <input type="text" id="newGoalAmount" required oninput="formatInputNumber(this)" placeholder="Nominal Target (Rp)" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none dark:text-white font-bold text-slate-900">
+                        </div>
+                        <div class="flex">
+                            <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-1.5 px-3 rounded-xl shadow-sm transition flex items-center justify-center space-x-1">
+                                <i class="fa-solid fa-plus"></i> <span>Tambah Target</span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2" id="goalManagerContainer">
+                    </div>
+                </div>
+
+                <!-- PANEL: CONFIG & TANGGAL GAJIAN -->
                 <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm p-5 space-y-3">
                     <h3 class="font-bold text-slate-900 text-xs dark:text-white flex items-center space-x-2 border-b border-slate-100 pb-2">
                         <i class="fa-solid fa-sliders text-emerald-600"></i>
@@ -864,6 +853,7 @@
                     </div>
                 </div>
 
+                <!-- PANEL: CLOUD STORAGE -->
                 <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
                     <h3 class="font-bold text-slate-900 text-xs dark:text-white flex items-center space-x-2 border-b border-slate-100 pb-2">
                         <i class="fa-brands fa-github text-slate-900 dark:text-white"></i>
@@ -872,15 +862,15 @@
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 text-xs">
                         <div>
                             <label class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">Personal Access Token</label>
-                            <input type="password" id="ghToken" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none font-medium text-slate-900 dark:text-white" placeholder="ghp_xxxxxxxxxxxx">
+                            <input type="password" id="ghToken" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none font-medium text-slate-900 dark:text-white" placeholder="ghp_xxxx">
                         </div>
                         <div>
                             <label class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">Repository Name</label>
-                            <input type="text" id="ghRepo" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none font-medium text-slate-900 dark:text-white" placeholder="username/repo-name">
+                            <input type="text" id="ghRepo" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none font-medium text-slate-900 dark:text-white" placeholder="user/repo">
                         </div>
                         <div>
                             <label class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">File Path Target</label>
-                            <input type="text" id="ghPath" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none font-medium text-slate-900 dark:text-white" placeholder="data.json">
+                            <input type="text" id="ghPath" class="w-full px-3 py-2 border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 rounded-xl focus:outline-none font-medium text-slate-900 dark:text-white" placeholder="fintrack_data.json">
                         </div>
                     </div>
                     <div class="flex flex-wrap gap-2 pt-1 text-xs">
