@@ -542,6 +542,18 @@
       "notes": "Beli mi",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784094479417",
+      "type": "expense",
+      "amount": 42500,
+      "account": "Dompet",
+      "category": "Makanan & Minuman",
+      "toAccount": "Dompet",
+      "date": "2026-07-15",
+      "notes": "Jajan kiloan",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
@@ -649,5 +661,17 @@
     "GoPay",
     "ShopeePay",
     "Saldo RDN"
+  ],
+  "goals": [
+    {
+      "id": "goal_1",
+      "name": "Beli Tanah",
+      "targetAmount": 35000000
+    },
+    {
+      "id": "goal_2",
+      "name": "Bangun Rumah",
+      "targetAmount": 100000000
+    }
   ]
 }
