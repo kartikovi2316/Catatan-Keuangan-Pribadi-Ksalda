@@ -554,6 +554,30 @@
       "notes": "Jajan kiloan",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_stock_1784115803552",
+      "type": "income",
+      "amount": 9830,
+      "account": "Saham",
+      "category": "Kenaikan Nilai",
+      "toAccount": "",
+      "date": "2026-07-15",
+      "notes": "[Investasi] Saham Naik 0.33%",
+      "tenor": 1,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784115965679",
+      "type": "income",
+      "amount": 120,
+      "account": "Saham",
+      "category": "Penyesuaian Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-15",
+      "notes": "-",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
