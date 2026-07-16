@@ -590,6 +590,18 @@
       "notes": "Jual RALS 1 Lot",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_stock_1784190943973",
+      "type": "income",
+      "amount": 29805,
+      "account": "Saham",
+      "category": "Kenaikan Nilai",
+      "toAccount": "",
+      "date": "2026-07-16",
+      "notes": "[Investasi] Saham Naik 1.01%",
+      "tenor": 1,
+      "bunga": 0
     }
   ],
   "startingBalances": {
