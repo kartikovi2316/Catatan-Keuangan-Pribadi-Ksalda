@@ -578,6 +578,18 @@
       "notes": "-",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784183732384",
+      "type": "transfer",
+      "amount": 37705,
+      "account": "Saham",
+      "category": "Transfer Dana",
+      "toAccount": "Saldo RDN",
+      "date": "2026-07-16",
+      "notes": "Jual RALS 1 Lot",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
