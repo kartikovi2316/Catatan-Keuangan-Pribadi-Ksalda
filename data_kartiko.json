@@ -674,6 +674,18 @@
       "notes": "Jual TOTL 1 Lot",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_stock_1784278236076",
+      "type": "income",
+      "amount": 9435,
+      "account": "Saham",
+      "category": "Kenaikan Nilai",
+      "toAccount": "",
+      "date": "2026-07-17",
+      "notes": "[Investasi] Saham Naik 0.33%",
+      "tenor": 1,
+      "bunga": 0
     }
   ],
   "startingBalances": {
