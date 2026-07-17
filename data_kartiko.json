@@ -650,6 +650,18 @@
       "notes": "Bensin Pertalite Motor Merah",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784266604821",
+      "type": "expense",
+      "amount": 10000,
+      "account": "Bank BCA 2",
+      "category": "Makanan & Minuman",
+      "toAccount": "Dompet",
+      "date": "2026-07-17",
+      "notes": "Pempek",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
