@@ -626,6 +626,30 @@
       "notes": "Penyesuaian nilai terkini",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784255548775",
+      "type": "expense",
+      "amount": 2000,
+      "account": "Dompet",
+      "category": "Keluarga & Orang Tua",
+      "toAccount": "Dompet",
+      "date": "2026-07-17",
+      "notes": "Jajan Tasya",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784255577895",
+      "type": "expense",
+      "amount": 30000,
+      "account": "Dompet",
+      "category": "Transportasi",
+      "toAccount": "Dompet",
+      "date": "2026-07-17",
+      "notes": "Bensin Pertalite Motor Merah",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
