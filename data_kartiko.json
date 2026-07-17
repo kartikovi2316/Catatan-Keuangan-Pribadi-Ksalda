@@ -662,6 +662,18 @@
       "notes": "Pempek",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784278102515",
+      "type": "transfer",
+      "amount": 103740,
+      "account": "Saham",
+      "category": "Transfer Dana",
+      "toAccount": "Reksadana & Obligasi",
+      "date": "2026-07-17",
+      "notes": "Jual TOTL 1 Lot",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
