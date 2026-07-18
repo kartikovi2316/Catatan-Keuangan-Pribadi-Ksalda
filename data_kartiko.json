@@ -746,6 +746,18 @@
       "notes": "[Rutin] Wifi IRA",
       "tenor": 1,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784369950343",
+      "type": "expense",
+      "amount": 99994,
+      "account": "Reksadana & Obligasi",
+      "category": "Penyesuaian Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-18",
+      "notes": "Penyesuaian nilai investasi",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
