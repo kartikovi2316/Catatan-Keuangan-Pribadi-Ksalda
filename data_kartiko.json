@@ -686,6 +686,18 @@
       "notes": "[Investasi] Saham Naik 0.33%",
       "tenor": 1,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784356977569",
+      "type": "expense",
+      "amount": 23000,
+      "account": "Dompet",
+      "category": "Makanan & Minuman",
+      "toAccount": "Dompet",
+      "date": "2026-07-18",
+      "notes": "Makan bakso esteh",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
