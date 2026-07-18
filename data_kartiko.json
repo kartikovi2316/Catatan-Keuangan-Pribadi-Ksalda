@@ -698,6 +698,54 @@
       "notes": "Makan bakso esteh",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784369169580",
+      "type": "transfer",
+      "amount": 250000,
+      "account": "Bank BCA 1",
+      "category": "Transfer Dana",
+      "toAccount": "Bank BCA 2",
+      "date": "2026-07-18",
+      "notes": "Pindah dana",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784369185813",
+      "type": "transfer",
+      "amount": 200000,
+      "account": "Bank BCA 2",
+      "category": "Transfer Dana",
+      "toAccount": "Dompet",
+      "date": "2026-07-18",
+      "notes": "Tarik tunai",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784369217189",
+      "type": "expense",
+      "amount": 1000,
+      "account": "Bank BCA 1",
+      "category": "Listrik & Utilitas",
+      "toAccount": "Dompet",
+      "date": "2026-07-18",
+      "notes": "Biaya admin bayar wifi",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_rec_1784369223969",
+      "type": "expense",
+      "amount": 100000,
+      "account": "Dompet",
+      "category": "Internet & Data",
+      "toAccount": "",
+      "date": "2026-07-18",
+      "notes": "[Rutin] Wifi IRA",
+      "tenor": 1,
+      "bunga": 0
     }
   ],
   "startingBalances": {
@@ -782,7 +830,9 @@
       "notes": "Wifi IRA"
     }
   ],
-  "recurringPaidLogs": [],
+  "recurringPaidLogs": [
+    "rec_1784005351935_2026-07"
+  ],
   "financialMonthStartDay": 27,
   "accountsList": [
     "Dompet",
