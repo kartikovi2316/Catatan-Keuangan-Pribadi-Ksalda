@@ -770,6 +770,18 @@
       "notes": "Minum perjalanan pulang purwodadi",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784465746240",
+      "type": "expense",
+      "amount": 292277,
+      "account": "Bank BCA 1",
+      "category": "Transportasi",
+      "toAccount": "Dompet",
+      "date": "2026-07-19",
+      "notes": "Beli Radiator GTR 150",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
