@@ -758,6 +758,18 @@
       "notes": "Penyesuaian nilai investasi",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784459746585",
+      "type": "expense",
+      "amount": 8500,
+      "account": "Dompet",
+      "category": "Makanan & Minuman",
+      "toAccount": "Dompet",
+      "date": "2026-07-18",
+      "notes": "Minum perjalanan pulang purwodadi",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
