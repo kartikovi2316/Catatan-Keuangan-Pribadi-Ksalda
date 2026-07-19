@@ -736,18 +736,6 @@
       "bunga": 0
     },
     {
-      "id": "tx_rec_1784369223969",
-      "type": "expense",
-      "amount": 100000,
-      "account": "Dompet",
-      "category": "Internet & Data",
-      "toAccount": "",
-      "date": "2026-07-18",
-      "notes": "[Rutin] Wifi IRA",
-      "tenor": 1,
-      "bunga": 0
-    },
-    {
       "id": "tx_1784369950343",
       "type": "expense",
       "amount": 99994,
@@ -781,6 +769,42 @@
       "date": "2026-07-19",
       "notes": "Beli Radiator GTR 150",
       "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784466030130",
+      "type": "expense",
+      "amount": 50000,
+      "account": "Dompet",
+      "category": "Transportasi",
+      "toAccount": "Dompet",
+      "date": "2026-07-18",
+      "notes": "Bensin 2 motor",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784466111844",
+      "type": "expense",
+      "amount": 5000,
+      "account": "Dompet",
+      "category": "Penyesuaian Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-19",
+      "notes": "Gatau hilang kemana",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_rec_1784466202709",
+      "type": "expense",
+      "amount": 100000,
+      "account": "Bank BCA 1",
+      "category": "Internet & Data",
+      "toAccount": "",
+      "date": "2026-07-18",
+      "notes": "[Rutin] WIFI IRA",
+      "tenor": 1,
       "bunga": 0
     }
   ],
@@ -857,17 +881,18 @@
       "notes": "Kasih Ibu"
     },
     {
-      "id": "rec_1784005351935",
+      "id": "rec_1784466197791",
       "type": "expense",
       "amount": 100000,
-      "account": "Dompet",
+      "account": "Bank BCA 1",
       "category": "Internet & Data",
       "day": 18,
-      "notes": "Wifi IRA"
+      "notes": "WIFI IRA"
     }
   ],
   "recurringPaidLogs": [
-    "rec_1784005351935_2026-07"
+    "rec_1784005351935_2026-07",
+    "rec_1784466197791_2026-07"
   ],
   "financialMonthStartDay": 27,
   "accountsList": [
