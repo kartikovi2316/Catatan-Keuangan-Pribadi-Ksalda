@@ -854,6 +854,30 @@
       "notes": "Penyesuaian nilai terkini",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784550149793",
+      "type": "piutang",
+      "amount": 20000,
+      "account": "Dompet",
+      "category": "Terima Pelunasan Piutang",
+      "toAccount": "Dompet",
+      "date": "2026-07-20",
+      "notes": "Paket Tata",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784550212537",
+      "type": "expense",
+      "amount": 35000,
+      "account": "Dompet",
+      "category": "Transportasi",
+      "toAccount": "Dompet",
+      "date": "2026-07-20",
+      "notes": "Bensin motor GTR",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
