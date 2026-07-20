@@ -676,18 +676,6 @@
       "bunga": 0
     },
     {
-      "id": "tx_stock_1784278236076",
-      "type": "income",
-      "amount": 9435,
-      "account": "Saham",
-      "category": "Kenaikan Nilai",
-      "toAccount": "",
-      "date": "2026-07-17",
-      "notes": "[Investasi] Saham Naik 0.33%",
-      "tenor": 1,
-      "bunga": 0
-    },
-    {
       "id": "tx_1784356977569",
       "type": "expense",
       "amount": 23000,
@@ -816,6 +804,30 @@
       "toAccount": "Dompet",
       "date": "2026-07-20",
       "notes": "Paket tata",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_stock_1784520626882",
+      "type": "income",
+      "amount": 25445,
+      "account": "Saham",
+      "category": "Kenaikan Nilai",
+      "toAccount": "",
+      "date": "2026-07-20",
+      "notes": "[Investasi] Saham Naik 0.89%",
+      "tenor": 1,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784520751573",
+      "type": "income",
+      "amount": 1296,
+      "account": "Saham",
+      "category": "Penyesuaian Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-20",
+      "notes": "Penyesuaian nilai terkini",
       "tenor": 12,
       "bunga": 0
     }
