@@ -806,6 +806,18 @@
       "notes": "[Rutin] WIFI IRA",
       "tenor": 1,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784519556800",
+      "type": "piutang",
+      "amount": 20000,
+      "account": "Dompet",
+      "category": "Beri Pinjaman Ke Orang",
+      "toAccount": "Dompet",
+      "date": "2026-07-20",
+      "notes": "Paket tata",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
