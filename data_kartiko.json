@@ -830,6 +830,30 @@
       "notes": "Penyesuaian nilai terkini",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_stock_1784538182111",
+      "type": "income",
+      "amount": 29434,
+      "account": "Saham",
+      "category": "Kenaikan Nilai",
+      "toAccount": "",
+      "date": "2026-07-20",
+      "notes": "[Investasi] Saham Naik 1.02%",
+      "tenor": 1,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784538230991",
+      "type": "expense",
+      "amount": 10435,
+      "account": "Saham",
+      "category": "Penyesuaian Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-20",
+      "notes": "Penyesuaian nilai terkini",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
