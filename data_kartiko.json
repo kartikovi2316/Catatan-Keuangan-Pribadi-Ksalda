@@ -808,18 +808,6 @@
       "bunga": 0
     },
     {
-      "id": "tx_stock_1784520626882",
-      "type": "income",
-      "amount": 25445,
-      "account": "Saham",
-      "category": "Kenaikan Nilai",
-      "toAccount": "",
-      "date": "2026-07-20",
-      "notes": "[Investasi] Saham Naik 0.89%",
-      "tenor": 1,
-      "bunga": 0
-    },
-    {
       "id": "tx_1784520751573",
       "type": "income",
       "amount": 1296,
@@ -900,6 +888,30 @@
       "toAccount": "Dompet",
       "date": "2026-07-21",
       "notes": "Pengembalian Tiket Penerbangan Mas Restu",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_stock_1784621295610",
+      "type": "income",
+      "amount": 29368,
+      "account": "Saham",
+      "category": "Kenaikan Nilai",
+      "toAccount": "",
+      "date": "2026-07-21",
+      "notes": "[Investasi] Saham Naik 1.02%",
+      "tenor": 1,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784621343237",
+      "type": "transfer",
+      "amount": 86930,
+      "account": "Saldo RDN",
+      "category": "Transfer Dana",
+      "toAccount": "Saham",
+      "date": "2026-07-21",
+      "notes": "Beli 2 Lot Saham PSAB",
       "tenor": 12,
       "bunga": 0
     }
