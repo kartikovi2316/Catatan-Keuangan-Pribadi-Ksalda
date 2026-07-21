@@ -878,11 +878,35 @@
       "notes": "Bensin motor GTR",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784621187535",
+      "type": "piutang",
+      "amount": 1800000,
+      "account": "Bank BCA 1",
+      "category": "Beri Pinjaman Ke Orang",
+      "toAccount": "Dompet",
+      "date": "2026-07-21",
+      "notes": "Tiket Penerbangan Mas Restu",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784621214660",
+      "type": "piutang",
+      "amount": 900000,
+      "account": "Bank BCA 1",
+      "category": "Terima Pelunasan Piutang",
+      "toAccount": "Dompet",
+      "date": "2026-07-21",
+      "notes": "Pengembalian Tiket Penerbangan Mas Restu",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
     "Dompet": 0,
-    "Bank BCA 1": 0,
+    "Bank BCA 1": 900000,
     "Bank BCA 2": 0,
     "Bank Jago": 0,
     "Dana": 0,
