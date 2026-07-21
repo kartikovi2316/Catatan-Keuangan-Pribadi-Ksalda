@@ -914,6 +914,18 @@
       "notes": "Beli 2 Lot Saham PSAB",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784626108377",
+      "type": "expense",
+      "amount": 40000,
+      "account": "Bank BCA 1",
+      "category": "Lainnya",
+      "toAccount": "Dompet",
+      "date": "2026-07-21",
+      "notes": "Pembayaran cetak kartu debit",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
