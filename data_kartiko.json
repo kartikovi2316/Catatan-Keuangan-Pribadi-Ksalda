@@ -962,6 +962,18 @@
       "notes": "Penurunan Nilai Saham",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784695830578",
+      "type": "transfer",
+      "amount": 800077,
+      "account": "Bank BCA 1",
+      "category": "Transfer Dana",
+      "toAccount": "Reksadana & Obligasi",
+      "date": "2026-07-22",
+      "notes": "Investasi Obligasi",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
