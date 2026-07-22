@@ -974,6 +974,66 @@
       "notes": "Investasi Obligasi",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784712025837",
+      "type": "expense",
+      "amount": 9337,
+      "account": "Bank Jago",
+      "category": "Belanja & Sembako",
+      "toAccount": "Dompet",
+      "date": "2026-07-22",
+      "notes": "Pembuatan CV online",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784712145043",
+      "type": "transfer",
+      "amount": 43064,
+      "account": "Saldo RDN",
+      "category": "Transfer Dana",
+      "toAccount": "Saham",
+      "date": "2026-07-22",
+      "notes": "Pembelian Saham 1 Lot PSAB",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_stock_1784712164783",
+      "type": "expense",
+      "amount": 12436,
+      "account": "Saham",
+      "category": "Penurunan Nilai",
+      "toAccount": "",
+      "date": "2026-07-22",
+      "notes": "[Investasi] Saham Turun 0.41%",
+      "tenor": 1,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784712192536",
+      "type": "income",
+      "amount": 12172,
+      "account": "Saham",
+      "category": "Penyesuaian Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-22",
+      "notes": "Penyesuaian nilai terkini",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784712455894",
+      "type": "transfer",
+      "amount": 132845,
+      "account": "Bank Jago",
+      "category": "Transfer Dana",
+      "toAccount": "Saham",
+      "date": "2026-07-22",
+      "notes": "Transfer dana untuk Saham",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
