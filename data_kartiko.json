@@ -1046,6 +1046,18 @@
       "notes": "Lupa mencatat pengeluaran untuk apa",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784728194788",
+      "type": "expense",
+      "amount": 35000,
+      "account": "Dompet",
+      "category": "Transportasi",
+      "toAccount": "Dompet",
+      "date": "2026-07-20",
+      "notes": "Bensin pertamax motor GTR",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
