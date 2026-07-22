@@ -938,6 +938,30 @@
       "notes": "Penyesuaian nilai terkini",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784694850478",
+      "type": "income",
+      "amount": 5860,
+      "account": "Reksadana & Obligasi",
+      "category": "Kenaikan Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-22",
+      "notes": "kenaikan nilai investasi",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784694931702",
+      "type": "expense",
+      "amount": 5453,
+      "account": "Saham",
+      "category": "Penurunan Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-22",
+      "notes": "Penurunan Nilai Saham",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
