@@ -1034,6 +1034,18 @@
       "notes": "Transfer dana untuk Saham",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784712565918",
+      "type": "expense",
+      "amount": 15000,
+      "account": "Dompet",
+      "category": "Lainnya",
+      "toAccount": "Dompet",
+      "date": "2026-07-22",
+      "notes": "Lupa mencatat pengeluaran untuk apa",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
