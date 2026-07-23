@@ -1058,6 +1058,18 @@
       "notes": "Bensin pertamax motor GTR",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784792519862",
+      "type": "transfer",
+      "amount": 80120,
+      "account": "Saldo RDN",
+      "category": "Transfer Dana",
+      "toAccount": "Saham",
+      "date": "2026-07-23",
+      "notes": "Beli 1 lot CUAN",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
