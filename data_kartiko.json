@@ -1070,6 +1070,30 @@
       "notes": "Beli 1 lot CUAN",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784876843312",
+      "type": "income",
+      "amount": 30000,
+      "account": "Dompet",
+      "category": "Lainnya",
+      "toAccount": "Dompet",
+      "date": "2026-07-24",
+      "notes": "Titip Jajan Figo dan Ika",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784876937626",
+      "type": "expense",
+      "amount": 30000,
+      "account": "Bank BCA 2",
+      "category": "Makanan & Minuman",
+      "toAccount": "Dompet",
+      "date": "2026-07-24",
+      "notes": "Jajan Pempek",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
