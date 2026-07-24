@@ -1106,6 +1106,54 @@
       "notes": "Titipan mba Ika Telur Gulung",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784900559053",
+      "type": "income",
+      "amount": 1802,
+      "account": "Reksadana & Obligasi",
+      "category": "Kenaikan Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-24",
+      "notes": "Kenaikan Nilai",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784900643111",
+      "type": "expense",
+      "amount": 128515,
+      "account": "Saham",
+      "category": "Penurunan Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-24",
+      "notes": "Penurunan nilai investasi",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784900696438",
+      "type": "income",
+      "amount": 68669,
+      "account": "Saldo RDN",
+      "category": "Penyesuaian Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-24",
+      "notes": "Penyesuaian supaya tidak negatif",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784900719252",
+      "type": "income",
+      "amount": 21110,
+      "account": "Saldo RDN",
+      "category": "Penyesuaian Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-24",
+      "notes": "Nilai terkini",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
