@@ -1094,6 +1094,18 @@
       "notes": "Jajan Pempek",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784884694468",
+      "type": "expense",
+      "amount": 10000,
+      "account": "Dompet",
+      "category": "Makanan & Minuman",
+      "toAccount": "Dompet",
+      "date": "2026-07-24",
+      "notes": "Titipan mba Ika Telur Gulung",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
