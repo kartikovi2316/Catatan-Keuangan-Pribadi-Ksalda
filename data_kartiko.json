@@ -1154,6 +1154,42 @@
       "notes": "Nilai terkini",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1784952091043",
+      "type": "hutang",
+      "amount": 50000,
+      "account": "Dompet",
+      "category": "Terima Pinjaman Baru",
+      "toAccount": "Dompet",
+      "date": "2026-07-25",
+      "notes": "Pinjam uang Ibuk",
+      "tenor": 1,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784952107796",
+      "type": "income",
+      "amount": 100000,
+      "account": "Bank BCA 2",
+      "category": "Lainnya",
+      "toAccount": "Dompet",
+      "date": "2026-07-25",
+      "notes": "TF dari Nila",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1784952133861",
+      "type": "expense",
+      "amount": 100000,
+      "account": "Dompet",
+      "category": "Lainnya",
+      "toAccount": "Dompet",
+      "date": "2026-07-25",
+      "notes": "Pengembalian Uang NIla Cash",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
