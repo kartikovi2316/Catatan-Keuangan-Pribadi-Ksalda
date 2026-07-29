@@ -1418,6 +1418,18 @@
       "notes": "Sarapan besok",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1785334939586",
+      "type": "piutang",
+      "amount": 200000,
+      "account": "Bank BCA 1",
+      "category": "Beri Pinjaman Ke Orang",
+      "toAccount": "Dompet",
+      "date": "2026-07-29",
+      "notes": "Mas Restu",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
