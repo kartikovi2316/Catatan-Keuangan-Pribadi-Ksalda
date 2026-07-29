@@ -1420,10 +1420,10 @@
       "bunga": 0
     },
     {
-      "id": "tx_1785334939586",
+      "id": "tx_1785335049192",
       "type": "piutang",
       "amount": 200000,
-      "account": "Bank BCA 1",
+      "account": "Bank BCA 2",
       "category": "Beri Pinjaman Ke Orang",
       "toAccount": "Dompet",
       "date": "2026-07-29",
