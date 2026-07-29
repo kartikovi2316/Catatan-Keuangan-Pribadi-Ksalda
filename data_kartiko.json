@@ -1430,6 +1430,18 @@
       "notes": "Mas Restu",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1785335385674",
+      "type": "transfer",
+      "amount": 69761,
+      "account": "Saldo RDN",
+      "category": "Transfer Dana",
+      "toAccount": "Bank Jago",
+      "date": "2026-07-29",
+      "notes": "-",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
