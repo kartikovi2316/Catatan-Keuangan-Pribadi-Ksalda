@@ -1406,6 +1406,18 @@
       "notes": "Penyesuaian nilai saldo",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1785327978005",
+      "type": "expense",
+      "amount": 4000,
+      "account": "Dompet",
+      "category": "Makanan & Minuman",
+      "toAccount": "Dompet",
+      "date": "2026-07-29",
+      "notes": "Sarapan besok",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
