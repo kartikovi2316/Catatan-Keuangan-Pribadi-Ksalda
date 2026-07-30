@@ -1514,6 +1514,18 @@
       "notes": "Penyesuaian nilai investasi",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1785424435211",
+      "type": "expense",
+      "amount": 30000,
+      "account": "Dompet",
+      "category": "Makanan & Minuman",
+      "toAccount": "Dompet",
+      "date": "2026-07-30",
+      "notes": "Bensin motor GTR",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
