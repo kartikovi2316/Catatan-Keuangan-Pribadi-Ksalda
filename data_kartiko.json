@@ -1420,18 +1420,6 @@
       "bunga": 0
     },
     {
-      "id": "tx_1785335049192",
-      "type": "piutang",
-      "amount": 200000,
-      "account": "Bank BCA 2",
-      "category": "Beri Pinjaman Ke Orang",
-      "toAccount": "Dompet",
-      "date": "2026-07-29",
-      "notes": "Mas Restu",
-      "tenor": 12,
-      "bunga": 0
-    },
-    {
       "id": "tx_1785335385674",
       "type": "transfer",
       "amount": 69761,
@@ -1456,14 +1444,26 @@
       "bunga": 0
     },
     {
-      "id": "tx_1785385578361",
-      "type": "expense",
+      "id": "tx_1785386736776",
+      "type": "piutang",
       "amount": 1000000,
       "account": "Bank Jago",
+      "category": "Beri Pinjaman Ke Orang",
+      "toAccount": "Dompet",
+      "date": "2026-07-30",
+      "notes": "Kasih ke Tita dari Ibuk",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785386993496",
+      "type": "expense",
+      "amount": 200000,
+      "account": "Bank BCA 2",
       "category": "Keluarga & Orang Tua",
       "toAccount": "Dompet",
       "date": "2026-07-30",
-      "notes": "Kasih ke Tita",
+      "notes": "Kasih ke mas Restu",
       "tenor": 12,
       "bunga": 0
     }
