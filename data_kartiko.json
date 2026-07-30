@@ -1466,6 +1466,54 @@
       "notes": "Kasih ke mas Restu",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1785402059755",
+      "type": "expense",
+      "amount": 10000,
+      "account": "Dompet",
+      "category": "Makanan & Minuman",
+      "toAccount": "Dompet",
+      "date": "2026-07-30",
+      "notes": "Beli Mie",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785402121528",
+      "type": "expense",
+      "amount": 6545,
+      "account": "Reksadana & Obligasi",
+      "category": "Penyesuaian Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-30",
+      "notes": "Penyesuaian Nilai RDPU Setelah tarik ke Jago",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_stock_1785402155689",
+      "type": "income",
+      "amount": 49432,
+      "account": "Saham",
+      "category": "Kenaikan Nilai",
+      "toAccount": "",
+      "date": "2026-07-30",
+      "notes": "[Investasi] Saham Naik 1.69%",
+      "tenor": 1,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785402195323",
+      "type": "expense",
+      "amount": 8632,
+      "account": "Saham",
+      "category": "Penyesuaian Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-07-30",
+      "notes": "Penyesuaian nilai investasi",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
