@@ -1442,6 +1442,30 @@
       "notes": "-",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1785385564109",
+      "type": "transfer",
+      "amount": 1000000,
+      "account": "Reksadana & Obligasi",
+      "category": "Transfer Dana",
+      "toAccount": "Bank Jago",
+      "date": "2026-07-30",
+      "notes": "Pindah dana",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785385578361",
+      "type": "expense",
+      "amount": 1000000,
+      "account": "Bank Jago",
+      "category": "Keluarga & Orang Tua",
+      "toAccount": "Dompet",
+      "date": "2026-07-30",
+      "notes": "Kasih ke Tita",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
