@@ -1526,6 +1526,42 @@
       "notes": "Bensin motor GTR",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1785481271296",
+      "type": "expense",
+      "amount": 10000,
+      "account": "Bank BCA 2",
+      "category": "Makanan & Minuman",
+      "toAccount": "Dompet",
+      "date": "2026-07-31",
+      "notes": "Pempek",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785481285698",
+      "type": "piutang",
+      "amount": 7000,
+      "account": "Bank BCA 2",
+      "category": "Beri Pinjaman Ke Orang",
+      "toAccount": "Dompet",
+      "date": "2026-07-31",
+      "notes": "Pempek Mas FIgo",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785481303639",
+      "type": "transfer",
+      "amount": 80562,
+      "account": "Saldo RDN",
+      "category": "Transfer Dana",
+      "toAccount": "Bank Jago",
+      "date": "2026-07-31",
+      "notes": "-",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
