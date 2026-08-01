@@ -1562,6 +1562,66 @@
       "notes": "-",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1785555325398",
+      "type": "expense",
+      "amount": 10000,
+      "account": "Bank BCA 2",
+      "category": "Gaya Lifestyle & Hobby",
+      "toAccount": "Dompet",
+      "date": "2026-08-01",
+      "notes": "Beli Udang Hias",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785555336063",
+      "type": "expense",
+      "amount": 10400,
+      "account": "Bank BCA 2",
+      "category": "Makanan & Minuman",
+      "toAccount": "Dompet",
+      "date": "2026-08-01",
+      "notes": "Beli Minum",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785555348165",
+      "type": "expense",
+      "amount": 20000,
+      "account": "Bank BCA 2",
+      "category": "Makanan & Minuman",
+      "toAccount": "Dompet",
+      "date": "2026-08-01",
+      "notes": "Beli Makan KRS",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785555361662",
+      "type": "expense",
+      "amount": 4000,
+      "account": "Dompet",
+      "category": "Makanan & Minuman",
+      "toAccount": "Dompet",
+      "date": "2026-08-01",
+      "notes": "Parkir Motor aku dan Devon",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785555382762",
+      "type": "income",
+      "amount": 727744,
+      "account": "Bank BCA 1",
+      "category": "Bonus & THR",
+      "toAccount": "Dompet",
+      "date": "2026-08-01",
+      "notes": "Bonus Bulan Juli",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
