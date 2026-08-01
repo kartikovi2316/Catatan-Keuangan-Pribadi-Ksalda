@@ -1622,6 +1622,66 @@
       "notes": "Bonus Bulan Juli",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1785556089374",
+      "type": "transfer",
+      "amount": 50000,
+      "account": "Bank BCA 2",
+      "category": "Transfer Dana",
+      "toAccount": "Dompet",
+      "date": "2026-08-01",
+      "notes": "Dari Afief",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785556134291",
+      "type": "expense",
+      "amount": 49583,
+      "account": "Bank Jago",
+      "category": "Listrik & Utilitas",
+      "toAccount": "Dompet",
+      "date": "2026-08-01",
+      "notes": "Listrik agustus",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785556151501",
+      "type": "expense",
+      "amount": 2750,
+      "account": "Bank Jago",
+      "category": "Lainnya",
+      "toAccount": "Dompet",
+      "date": "2026-08-01",
+      "notes": "Biaya admin Listrik",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785556184847",
+      "type": "expense",
+      "amount": 5000,
+      "account": "Bank Jago",
+      "category": "Lainnya",
+      "toAccount": "Dompet",
+      "date": "2026-08-01",
+      "notes": "Biaya k3kurangan saldo tidak jelas",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785556263825",
+      "type": "expense",
+      "amount": 4999,
+      "account": "Bank Jago",
+      "category": "Penyesuaian Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-08-01",
+      "notes": "Gatau hilang kemana",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
