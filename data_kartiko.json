@@ -1694,6 +1694,18 @@
       "notes": "Paket Data E-Sim",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1785586782550",
+      "type": "expense",
+      "amount": 107500,
+      "account": "Bank BCA 1",
+      "category": "BPJS & Kesehatan",
+      "toAccount": "Dompet",
+      "date": "2026-08-01",
+      "notes": "Bayar BPJS 3 orang",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
