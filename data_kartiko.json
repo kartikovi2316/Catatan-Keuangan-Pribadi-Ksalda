@@ -1730,6 +1730,30 @@
       "notes": "Bensin motor GTR",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1785743790109",
+      "type": "expense",
+      "amount": 5000,
+      "account": "Bank Jago",
+      "category": "Lainnya",
+      "toAccount": "Dompet",
+      "date": "2026-08-03",
+      "notes": "Biaya antah berantah",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785743812196",
+      "type": "transfer",
+      "amount": 33139,
+      "account": "Bank Jago",
+      "category": "Transfer Dana",
+      "toAccount": "Bank BCA 2",
+      "date": "2026-08-03",
+      "notes": "Pindah dana untuk mengamankan dana",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
