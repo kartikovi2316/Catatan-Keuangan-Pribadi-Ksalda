@@ -1754,6 +1754,18 @@
       "notes": "Pindah dana untuk mengamankan dana",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1785760637763",
+      "type": "piutang",
+      "amount": 10000,
+      "account": "Dompet",
+      "category": "Terima Pelunasan Piutang",
+      "toAccount": "Dompet",
+      "date": "2026-08-01",
+      "notes": "Paket Tata",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
