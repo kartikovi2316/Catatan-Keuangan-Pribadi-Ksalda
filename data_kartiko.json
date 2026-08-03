@@ -1706,6 +1706,30 @@
       "notes": "Bayar BPJS 3 orang",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1785731578884",
+      "type": "piutang",
+      "amount": 10000,
+      "account": "Bank BCA 2",
+      "category": "Beri Pinjaman Ke Orang",
+      "toAccount": "Dompet",
+      "date": "2026-08-03",
+      "notes": "Paket Tata",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785731592376",
+      "type": "expense",
+      "amount": 35000,
+      "account": "Dompet",
+      "category": "Transportasi",
+      "toAccount": "Dompet",
+      "date": "2026-08-03",
+      "notes": "Bensin motor GTR",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
