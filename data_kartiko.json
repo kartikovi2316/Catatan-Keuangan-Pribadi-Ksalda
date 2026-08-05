@@ -1766,6 +1766,42 @@
       "notes": "Paket Tata",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1785911949536",
+      "type": "expense",
+      "amount": 12000,
+      "account": "Bank BCA 2",
+      "category": "Makanan & Minuman",
+      "toAccount": "Dompet",
+      "date": "2026-08-05",
+      "notes": "Kebab",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785912056342",
+      "type": "transfer",
+      "amount": 2000000,
+      "account": "Reksadana & Obligasi",
+      "category": "Transfer Dana",
+      "toAccount": "Dompet",
+      "date": "2026-08-05",
+      "notes": "Tarik Tunai",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785912065930",
+      "type": "piutang",
+      "amount": 2000000,
+      "account": "Dompet",
+      "category": "Beri Pinjaman Ke Orang",
+      "toAccount": "Dompet",
+      "date": "2026-08-05",
+      "notes": "Pinjaman Bapak",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
