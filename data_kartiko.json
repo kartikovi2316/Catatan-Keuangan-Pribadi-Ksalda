@@ -1802,6 +1802,30 @@
       "notes": "Pinjaman Bapak",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1785912150795",
+      "type": "transfer",
+      "amount": 500000,
+      "account": "Bank BCA 1",
+      "category": "Transfer Dana",
+      "toAccount": "Saldo RDN",
+      "date": "2026-08-05",
+      "notes": "Pindah RDN Pluang",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785912167872",
+      "type": "expense",
+      "amount": 5000,
+      "account": "Saldo RDN",
+      "category": "Lainnya",
+      "toAccount": "Dompet",
+      "date": "2026-08-05",
+      "notes": "BIaya Admin",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
