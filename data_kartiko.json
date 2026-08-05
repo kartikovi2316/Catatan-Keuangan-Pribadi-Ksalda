@@ -1826,6 +1826,42 @@
       "notes": "BIaya Admin",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1785917104640",
+      "type": "expense",
+      "amount": 5000,
+      "account": "Bank Jago",
+      "category": "Lainnya",
+      "toAccount": "Dompet",
+      "date": "2026-08-05",
+      "notes": "Biaya kekurangan tf",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785917117226",
+      "type": "transfer",
+      "amount": 83000,
+      "account": "Bank BCA 1",
+      "category": "Transfer Dana",
+      "toAccount": "Bank Jago",
+      "date": "2026-08-05",
+      "notes": "Pindah dana",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785917130674",
+      "type": "expense",
+      "amount": 2500,
+      "account": "Bank BCA 1",
+      "category": "Lainnya",
+      "toAccount": "Dompet",
+      "date": "2026-08-05",
+      "notes": "Biaya admin",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
