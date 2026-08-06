@@ -1886,6 +1886,30 @@
       "notes": "Biaya admin",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1785988344574",
+      "type": "expense",
+      "amount": 5675,
+      "account": "Saham US",
+      "category": "Penurunan Nilai",
+      "toAccount": "Dompet",
+      "date": "2026-08-06",
+      "notes": "Saham VOO",
+      "tenor": 12,
+      "bunga": 0
+    },
+    {
+      "id": "tx_1785988374140",
+      "type": "expense",
+      "amount": 495000,
+      "account": "Saldo RDN",
+      "category": "Belanja & Sembako",
+      "toAccount": "Dompet",
+      "date": "2026-08-06",
+      "notes": "Belanja Saham US",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
@@ -1898,7 +1922,9 @@
     "ShopeePay": 0,
     "Saldo RDN": 49225,
     "Reksadana & Obligasi": 0,
-    "Saham": 0
+    "Saham": 0,
+    "Saham US": 495000,
+    "Saldo Invest Pluang": 325
   },
   "github": {
     "token": "",
@@ -1987,7 +2013,9 @@
     "ShopeePay",
     "Saldo RDN",
     "Reksadana & Obligasi",
-    "Saham"
+    "Saham",
+    "Saham US",
+    "Saldo Invest Pluang"
   ],
   "liquidAccounts": [
     "Dompet",
