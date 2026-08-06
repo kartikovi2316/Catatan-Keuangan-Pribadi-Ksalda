@@ -1910,6 +1910,18 @@
       "notes": "Belanja Saham US",
       "tenor": 12,
       "bunga": 0
+    },
+    {
+      "id": "tx_1786002276363",
+      "type": "transfer",
+      "amount": 212774,
+      "account": "Reksadana & Obligasi",
+      "category": "Transfer Dana",
+      "toAccount": "Bank Jago",
+      "date": "2026-08-06",
+      "notes": "Pencairan RDN",
+      "tenor": 12,
+      "bunga": 0
     }
   ],
   "startingBalances": {
